@@ -1,14 +1,14 @@
 const images = [
-    'images/1.png',
-    'images/2.png',
-    'images/3.png',
-    'images/4.jpg',
-    'images/5.jpg',
-    'images/6.png',
-    'images/7.jpg',
-    'images/8.png',
-    'images/10.svg',
-    'images/11.png'
+    'images/art/1.jpg',
+    'images/art/2.jpg',
+    'images/art/3.jpg',
+    'images/art/4.jpg',
+    'images/art/5.jpg'
+    // 'images/art/6.jpg',
+    // 'images/art/7.jpg',
+    // 'images/art/8.jpg',
+    // 'images/art/10.jpg',
+    // 'images/art/11.jpg'
 ];
 
 let current = 2;
@@ -72,4 +72,16 @@ document.addEventListener('wheel', (e) => {
 
     scrollCooldown = true;
     setTimeout(() => scrollCooldown = false, 400);
+});
+
+const mainImage = document.getElementById('main-image');
+const tooltip = document.getElementById('tooltip');
+
+mainImage.addEventListener('mouseenter', () => {
+    tooltip.textContent = mainImage.dataset.info;
+    tooltip.style.opacity = 1;
+});
+
+mainImage.addEventListener('mouseleave', () => {
+    tooltip.style.opacity = 0;
 });

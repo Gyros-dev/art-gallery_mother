@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>art gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-content">
+        <span class="logo">art gallery</span>
+        <div class="nav-links">
+            <a href="#home">Главная</a>
+            <a href="gallery.html">Галерея</a>
+            <a href="about.html">О нас</a>
+        </div>
+    </div>
+</nav>
+
+<div id="gallery">
+    <div class="side left">
+        <img id="left-image" src="images/art/2.jpg" alt="Предыдущая работа" data-info="Название: Работа 2, 2023 г.">
+    </div>
+    <div class="center">
+        <div class="tooltip-wrapper">
+            <img id="main-image" src="images/art/3.jpg" alt="Текущая работа" data-info="Название: Работа 3, 2024 г.">
+            <div class="tooltip" id="tooltip"></div>
+        </div>
+    </div>
+    <div class="side right">
+        <img id="right-image" src="images/art/4.jpg" alt="Следующая работа" data-info="Название: Работа 4, 2022 г.">
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
