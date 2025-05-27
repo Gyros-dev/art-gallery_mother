@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    background: #f3f3f3 url('images/paper-texture.jpg') repeat;
+    /*background: #f3f3f3 url('images/white-background.png') repeat;*/
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 25%);
+    z-index: 0;
+}
+#gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(90vw, 1200px);
+    margin-inline: auto;
+    gap: 2rem;
+    padding-block: 80px 40px;
+    box-sizing: border-box;
+}
+
+.center img {
+    max-width: 80%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    border: 8px solid white;
+    background: white;
+    transition: opacity 0.3s ease-in-out;
+    display: block;
+    margin: 0 auto;
+}
+
+.side {
+    width: 20vw;
+    max-width: 200px;
+    cursor: pointer;
+    filter: brightness(0.5) blur(1px);
+    transition: filter 0.3s;
+}
+
+.side:hover {
+    filter: brightness(0.8) blur(0);
+}
+
+.side img {
+    width: 100%;
+    opacity: 0.6;
+    border: 4px solid white;
+}
+
+/* Удаляем скролл */
+html, body {
+    overflow: hidden;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-content {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.logo {
+    font-weight: 600;
+    color: #333;
+}
+
+.nav-links a {
+    margin-left: 24px;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007aff; /* Apple blue */
+}
