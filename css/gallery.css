@@ -17,7 +17,7 @@
     max-height: 70vh;
     object-fit: contain;
     box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-    border: 8px solid white;
+    /*border: 8px solid white;*/
     background: white;
     transition: opacity 0.3s ease-in-out;
     display: block;
