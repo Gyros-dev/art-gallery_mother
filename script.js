@@ -7,7 +7,6 @@ const images = [
     'images/6.png',
     'images/7.jpg',
     'images/8.png',
-    // 'images/9.pxd',
     'images/10.svg',
     'images/11.png'
 ];
