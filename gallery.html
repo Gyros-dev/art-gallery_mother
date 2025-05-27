@@ -9,32 +9,51 @@
 <body>
 
 
-<nav class="navbar">
-    <div class="nav-content">
-        <span class="logo">art gallery</span>
-        <div class="nav-links">
-            <a href="#home">Главная</a>
-            <a href="gallery.html">Галерея</a>
-            <a href="about.html">О нас</a>
-        </div>
-    </div>
-</nav>
+<!--<nav class="navbar">-->
+<!--    <div class="nav-content">-->
+<!--        <span class="logo">art gallery</span>-->
+<!--        <div class="nav-links">-->
+<!--            <a href="#home">Главная</a>-->
+<!--            <a href="gallery.html">Галерея</a>-->
+<!--            <a href="literature.html">Библиотека</a>-->
+<!--            <a href="about.html">О нас</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<div id="navbar-placeholder"></div>
 
 <div id="gallery">
     <div class="side left">
-        <img id="left-image" src="images/art/1.jpg" alt="Предыдущая работа" data-info="Название: Работа 2, 2023 г.">
+        <img id="left-image" src="images/art/2.jpg" alt="Предыдущая работа">
     </div>
     <div class="center">
         <div class="tooltip-wrapper">
-            <img id="main-image" src="images/art/2.jpg" alt="Текущая работа" data-info="Название: Работа 3, 2024 г.">
+            <img id="main-image" src="images/art/3.jpg" alt="Текущая работа">
             <div class="tooltip" id="tooltip"></div>
         </div>
     </div>
     <div class="side right">
-        <img id="right-image" src="images/art/3.jpg" alt="Следующая работа" data-info="Название: Работа 4, 2022 г.">
+        <img id="right-image" src="images/art/4.jpg" alt="Следующая работа">
     </div>
 </div>
 
 <script src="script.js"></script>
+
+<script>
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+            // Выделение активной ссылки:
+            const current = location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.getAttribute('href') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+</script>
+
 </body>
 </html>

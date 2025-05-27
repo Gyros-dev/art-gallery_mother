@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Литература</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--<nav class="navbar">-->
+<!--    <div class="nav-content">-->
+<!--        <span class="logo">art gallery</span>-->
+<!--        <div class="nav-links">-->
+<!--            <a href="gallery.html">Главная</a>-->
+<!--            <a href="gallery.html#gallery">Галерея</a>-->
+<!--            <a href="literature.html">Литература</a>-->
+<!--            <a href="about.html" class="active">О нас</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<div id="navbar-placeholder"></div>
+
+<main class="content">
+    <h1>Литературные материалы</h1>
+    <ul class="literature-list">
+        <li><a href="#" data-pdf="docs/AV_Ruchnoe_tkachestvo.pdf">Ручное ткачество. Учебно-методическое пособие</a></li>
+        <li><a href="#" data-pdf="docs/искусствоведение.pdf">Основы искусствоведения</a></li>
+        <li><a href="#" data-pdf="docs/пособие_по_цвету.pdf">Пособие по цветоведению</a></li>
+    </ul>
+
+    <div id="pdf-overlay" style="display: none;">
+        <iframe id="pdf-viewer" src="" frameborder="0"></iframe>
+    </div>
+
+<!--        <iframe id="pdf-viewer" src="" width="100%" height="800px" style="border: none; display: none;"></iframe>-->
+</main>
+
+<script>
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+            // Выделение активной ссылки:
+            const current = location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.getAttribute('href') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+</script>
+
+</body>
+</html>
+
+<script>
+    const links = document.querySelectorAll('.literature-list a');
+    const viewer = document.getElementById('pdf-viewer');
+    const overlay = document.getElementById('pdf-overlay');
+
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pdf = link.getAttribute('data-pdf');
+            viewer.src = pdf;
+            overlay.style.display = 'flex';
+        });
+    });
+
+    // Закрытие по клику вне iframe
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.style.display = 'none';
+            viewer.src = ''; // очистка
+        }
+    });
+
+    // Закрытие по Esc
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            overlay.style.display = 'none';
+            viewer.src = '';
+        }
+    });
+</script>

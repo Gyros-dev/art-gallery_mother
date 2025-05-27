@@ -8,29 +8,53 @@
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-content">
-        <span class="logo">art gallery</span>
-        <div class="nav-links">
-            <a href="gallery.html">Главная</a>
-            <a href="gallery.html#gallery">Галерея</a>
-            <a href="about.html" class="active">О нас</a>
-        </div>
-    </div>
-</nav>
+<!--<nav class="navbar">-->
+<!--    <div class="nav-content">-->
+<!--        <span class="logo">art gallery</span>-->
+<!--        <div class="nav-links">-->
+<!--            <a href="gallery.html">Главная</a>-->
+<!--            <a href="gallery.html#gallery">Галерея</a>-->
+<!--            <a href="about.html" class="active">О нас</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<div id="navbar-placeholder"></div>
 
 <section class="about-section">
     <div class="about-text">
         <h1>О нас</h1>
         <p>
-            Мы — команда, которая помогает художникам делиться своими работами в интернете.
-            Наша цель — создать удобное и красивое пространство для искусства, вдохновения и самовыражения.
+            Анна Кирилловна Векслер – художник декоративного искусства, мастер ручного ткачества, член Союза художников России (2001), кандидат педагогических наук (2011).
+
+            В этом году Анна Кирилловна отмечает свой юбилей. Мастер работает в технике ручного ткачества, а также много экспериментирует с современными материалами, занимается «текстильной» абстракцией и коллажами из бумаги.
+
+            В экспозиции будут представлены графические работы и научные труды автора, центральное место займут гобелены, выполненные в технике ручного ткачества на раме.
+
+            В творчестве автора чувствуется тонкое ощущение жизни. В работах каждая нить словно пронизана особым философским отношением к течению времени, а общий спокойный колорит передаёт ощущение лёгкости и размеренности.
+
+            Анна Кирилловна — участник более 80 художественных экспозиций и 15 персональных выставок. Композиции автора находятся в собраниях музеев и частных коллекциях в России, Германии, Швеции, Финляндии, Америке, Венгрии.
         </p>
     </div>
     <div class="about-image">
         <img src="images/artist.jpg" alt="Наша команда">
     </div>
 </section>
+
+<script>
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+            // Выделение активной ссылки:
+            const current = location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.getAttribute('href') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+</script>
 
 </body>
 </html>

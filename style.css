@@ -1,7 +1,6 @@
 body {
     margin: 0;
     background: #f3f3f3 url('images/paper-texture.jpg') repeat;
-    /*background: #f3f3f3 url('images/white-background.png') repeat;*/
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     /*height: 100vh;*/
     display: flex;
@@ -226,6 +225,20 @@ html, body {
     padding: 0 16px;
 }
 
+.literature-list {
+    padding: 2rem;
+    list-style-type: none;
+}
+
+.literature-list li {
+    margin-bottom: 1rem;
+}
+
+.literature-list a {
+    text-decoration: underline;
+    color: #333;
+}
+
 @media (max-width: 1024px) {
     /* Планшеты */
     .some-class {
@@ -247,4 +260,21 @@ html, body {
     .some-class {
         font-size: 14px;
     }
+}
+
+#pdf-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#pdf-viewer {
+    width: 90vw;
+    height: 90vh;
+    border: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }

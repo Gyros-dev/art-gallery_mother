@@ -6,3 +6,13 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# Игнорируем настройки среды разработки
+.idea/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Игнорировать ничего из проекта не нужно, кроме того, что выше.
+# GitHub Pages требует, чтобы HTML, JS, CSS, images и прочее были доступны.

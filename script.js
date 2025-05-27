@@ -1,22 +1,23 @@
-const images = [
-    'images/art/1.jpg',
-    'images/art/2.jpg',
-    'images/art/3.jpg',
-    'images/art/4.jpg',
-    'images/art/5.jpg'
-    // 'images/art/6.jpg',
-    // 'images/art/7.jpg',
-    // 'images/art/8.jpg',
-    // 'images/art/10.jpg',
-    // 'images/art/11.jpg'
-];
+let images = [];
+let current = 0;
 
-let current = 2;
+fetch('images.json')
+    .then(response => response.json())
+    .then(data => {
+        images = data;
+        updateImages();
+    });
 
 function updateImages() {
-    document.getElementById('main-image').src = images[current];
-    document.getElementById('left-image').src = images[(current - 1 + images.length) % images.length];
-    document.getElementById('right-image').src = images[(current + 1) % images.length];
+    const main = images[current];
+    const left = images[(current - 1 + images.length) % images.length];
+    const right = images[(current + 1) % images.length];
+
+    document.getElementById('main-image').src = main.src;
+    document.getElementById('main-image').dataset.info = main.info;
+
+    document.getElementById('left-image').src = left.src;
+    document.getElementById('right-image').src = right.src;
 }
 
 function animateMainImage(direction) {
@@ -86,3 +87,4 @@ mainImage.addEventListener('mouseenter', () => {
 mainImage.addEventListener('mouseleave', () => {
     tooltip.style.opacity = 0;
 });
+
