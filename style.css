@@ -239,6 +239,72 @@ html, body {
     color: #333;
 }
 
+/*.exhibition-list {*/
+/*    display: grid;*/
+/*    gap: 2rem;*/
+/*    padding: 2rem;*/
+/*    max-width: 900px;*/
+/*    margin: auto;*/
+/*}*/
+
+/*.exhibition-card {*/
+/*    background: #fff;*/
+/*    border-radius: 12px;*/
+/*    padding: 1.5rem;*/
+/*    box-shadow: 0 4px 12px rgba(0,0,0,0.05);*/
+/*}*/
+
+/*.exhibition-card h2 {*/
+/*    margin-bottom: 0.5rem;*/
+/*    font-size: 1.4rem;*/
+/*}*/
+
+/*.exhibition-card p {*/
+/*    margin: 0.3rem 0;*/
+/*}*/
+
+.exhibition-list {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+}
+
+.exhibition-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.exhibition-card:hover {
+    transform: scale(1.03);
+    /*animation: shake 0.1s ease;*/
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/*@keyframes shake {*/
+/*    0% { transform: scale(1.03) translateX(0); }*/
+/*    25% { transform: scale(1.03) translateX(-2px); }*/
+/*    50% { transform: scale(1.03) translateX(2px); }*/
+/*    75% { transform: scale(1.03) translateX(-1px); }*/
+/*    100% { transform: scale(1.03) translateX(0); }*/
+/*}*/
+
+.exhibition-card h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.exhibition-card p {
+    margin: 0.3rem 0;
+}
+
+
 @media (max-width: 1024px) {
     /* Планшеты */
     .some-class {
