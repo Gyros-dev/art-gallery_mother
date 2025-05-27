@@ -3,23 +3,16 @@
     display: inline-block;
 }
 
-/*.tooltip {*/
-/*    position: absolute;*/
-/*    background: rgba(0, 0, 0, 0.75);*/
-/*    color: white;*/
-/*    padding: 10px 14px;*/
-/*    border-radius: 8px;*/
-/*    font-size: 14px;*/
-/*    line-height: 1.4;*/
-/*    max-width: 300px;*/
-/*    z-index: 20;*/
-/*    pointer-events: none;*/
-/*    opacity: 0;*/
-/*    transition: opacity 0.2s ease-in-out;*/
-/*}*/
-
 .tooltip {
     position: absolute;
+
+    /*top: 96%;*/
+    /*bottom: -9%;*/
+    /*left: 60%;*/
+    /*right: -60%;*/
+    /*transform: translateX(-50%);*/
+    /*margin-bottom: 4px;*/
+
     background: #ffffff;
     color: #1a1a1a;
     padding: 14px 18px;

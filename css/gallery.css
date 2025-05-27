@@ -29,7 +29,7 @@
     max-width: 200px;
     flex-shrink: 0;
     cursor: pointer;
-    filter: brightness(0.2) blur(1px);
+    filter: brightness(1) blur(10px);
     transition: filter 0.3s;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .side:hover {
-    filter: brightness(0.3) blur(0);
+    filter: brightness(1) blur(3px);
 }
 
 .side img {
