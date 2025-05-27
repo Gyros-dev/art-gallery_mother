@@ -227,41 +227,51 @@ html, body {
 
 .literature-list {
     padding: 2rem;
-    list-style-type: none;
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .literature-list li {
-    margin-bottom: 1rem;
+    background: #f9f9f9;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.literature-list li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
 }
 
 .literature-list a {
-    text-decoration: underline;
-    color: #333;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: inline-block;
+    position: relative;
 }
 
-/*.exhibition-list {*/
-/*    display: grid;*/
-/*    gap: 2rem;*/
-/*    padding: 2rem;*/
-/*    max-width: 900px;*/
-/*    margin: auto;*/
-/*}*/
+.literature-list a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #666;
+    transition: background-color 0.3s ease, height 0.3s ease;
+}
 
-/*.exhibition-card {*/
-/*    background: #fff;*/
-/*    border-radius: 12px;*/
-/*    padding: 1.5rem;*/
-/*    box-shadow: 0 4px 12px rgba(0,0,0,0.05);*/
-/*}*/
-
-/*.exhibition-card h2 {*/
-/*    margin-bottom: 0.5rem;*/
-/*    font-size: 1.4rem;*/
-/*}*/
-
-/*.exhibition-card p {*/
-/*    margin: 0.3rem 0;*/
-/*}*/
+.literature-list a:hover::after {
+    background-color: #000;
+    height: 3px;
+}
 
 .exhibition-list {
     display: grid;
@@ -343,4 +353,35 @@ html, body {
     height: 90vh;
     border: none;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#preview-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#preview-frame {
+    width: 90%;
+    height: 90%;
+    border: none;
+    border-radius: 8px;
+    background: white;
+}
+
+#preview-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
 }

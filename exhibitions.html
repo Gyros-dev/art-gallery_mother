@@ -15,7 +15,55 @@
     <div id="exhibitions-list" class="exhibition-list"></div>
 </main>
 
+<!-- Оверлей предпросмотра -->
+<div id="preview-overlay" style="display: none;">
+    <div id="preview-close">×</div>
+    <iframe id="preview-frame" src="" frameborder="0"></iframe>
+</div>
+
 <script src="load-navbar.js"></script>
-<script src="load-exhibitions.js"></script>
+<!--<script src="load-exhibitions.js"></script>-->
+
+
+
+<!-- Подключение скрипта -->
+<script>
+    fetch('exhibitions.json')
+        .then(res => res.json())
+        .then(data => {
+            const container = document.querySelector('.exhibition-list');
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'exhibition-card';
+                card.innerHTML = `
+        <h2>${item.title}</h2>
+        <p>${item.date}</p>
+        <p>${item.location}</p>
+        <p>${item.description}</p>
+      `;
+                if (item.url) {
+                    card.classList.add('clickable');
+                    card.addEventListener('click', () => {
+                        document.getElementById('preview-frame').src = item.url;
+                        document.getElementById('preview-overlay').style.display = 'flex';
+                    });
+                }
+                container.appendChild(card);
+            });
+        });
+
+    document.getElementById('preview-close').addEventListener('click', () => {
+        document.getElementById('preview-overlay').style.display = 'none';
+        document.getElementById('preview-frame').src = '';
+    });
+
+    document.getElementById('preview-overlay').addEventListener('click', (e) => {
+        if (e.target.id === 'preview-overlay') {
+            document.getElementById('preview-overlay').style.display = 'none';
+            document.getElementById('preview-frame').src = '';
+        }
+    });
+</script>
+
 </body>
 </html>
