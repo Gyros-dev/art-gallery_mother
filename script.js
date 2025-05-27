@@ -49,11 +49,12 @@ document.body.addEventListener('click', (e) => {
     const x = e.clientX;
     const width = window.innerWidth;
 
-    if (x < width / 2) {
+    if (x < width * 0.25) {
         prevImage();
-    } else {
+    } else if (x > width * 0.75) {
         nextImage();
     }
+    // Если клик по центру — ничего не делаем
 });
 
 // Клавиатура ← →
