@@ -6,9 +6,13 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /*align-items: center;*/
+    align-items: flex-start; /* <-- прижатие к верху */
+    padding-top: 40px; /* отступ сверху */
+    overflow: hidden;  /* <-- скрываем выходящие части */
     position: relative;
     z-index: 1;
+
 }
 body::before {
     content: "";
@@ -33,7 +37,7 @@ body::before {
 }
 
 .center img {
-    max-width: 80%;
+    max-width: 100%;
     max-height: 80vh;
     width: auto;
     height: auto;
@@ -43,15 +47,36 @@ body::before {
     background: white;
     transition: opacity 0.3s ease-in-out;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 40px auto;
+
 }
+
+/*.side {*/
+/*    width: 20vw;*/
+/*    max-width: 200px;*/
+/*    cursor: pointer;*/
+/*    filter: brightness(0.2) blur(1px);*/
+/*    transition: filter 0.3s;*/
+
+/*}*/
 
 .side {
     width: 20vw;
     max-width: 200px;
+    position: relative;
+    flex-shrink: 0;
     cursor: pointer;
-    filter: brightness(0.5) blur(1px);
+    filter: brightness(0.2) blur(1px);
     transition: filter 0.3s;
+    z-index: 1;
+}
+
+.side.left {
+    transform: translateX(-80%);
+}
+
+.side.right {
+    transform: translateX(80%);
 }
 
 .side:hover {
@@ -107,4 +132,23 @@ html, body {
 
 .nav-links a:hover {
     color: #007aff; /* Apple blue */
+}
+
+/* Анимации */
+@keyframes slideInFromRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInFromLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+#main-image.animate-left {
+    animation: slideInFromLeft 0.5s ease;
+}
+
+#main-image.animate-right {
+    animation: slideInFromRight 0.5s ease;
 }
