@@ -1,0 +1,26 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+@media (max-width: 1024px) {
+    .some-class {
+        font-size: 16px;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .some-class {
+        font-size: 15px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .some-class {
+        font-size: 14px;
+    }
+}

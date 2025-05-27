@@ -1,0 +1,33 @@
+#pdf-overlay, #preview-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#preview-overlay {
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+}
+
+#pdf-viewer, #preview-frame {
+    width: 90vw;
+    height: 90vh;
+    border: none;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#preview-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}

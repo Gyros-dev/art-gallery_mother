@@ -1,0 +1,30 @@
+.exhibition-list {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+}
+
+.exhibition-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.exhibition-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.exhibition-card h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.exhibition-card p {
+    margin: 0.3rem 0;
+}

@@ -1,0 +1,46 @@
+.about-section {
+    max-width: 1200px;
+    margin: 100px auto 80px auto;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    color: #333;
+}
+
+.about-text {
+    flex: 1 1 360px;
+    max-width: 600px;
+}
+
+.about-text h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    color: #111;
+    font-weight: 700;
+}
+
+.about-text p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #444;
+}
+
+.about-image {
+    flex: 1 1 320px;
+    max-width: 480px;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.about-image img:hover {
+    transform: scale(1.015);
+}
