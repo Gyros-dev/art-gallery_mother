@@ -1,22 +1,22 @@
 [
   {
-    "src": "images/art/1.jpg",
+    "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/1.jpg",
     "info": "Сан-Марко. Между небом и землей, 2020 г. — Санкт-Петербург."
   },
   {
-    "src": "images/art/2.jpg",
+    "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/2.jpg",
     "info": "Название: Работа 2, 2024 г. — описание второй работы"
   },
   {
-    "src": "images/art/3.jpg",
+    "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/3.jpg",
     "info": "Название: Работа 3, 2022 г. — описание третьей работы"
   },
   {
-    "src": "images/art/4.jpg",
-    "info": "Название: Работа 4, 2022 г. — описание еще одной работы"
+    "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/4.jpg",
+    "info": "Название: Работа 4, 2022 г. — описание четверной работы"
   },
   {
-    "src": "images/art/5.jpg",
-    "info": "Название: Работа 5, 2022 г. — описание другой работы"
+    "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/5.jpg",
+    "info": "Название: Работа 5, 2022 г. — описание пятой работы"
   }
 ]
