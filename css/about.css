@@ -56,31 +56,37 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 12px 24px;
-    background: #f8f8f8;
-    border-top: 1px solid #ddd;
+    padding: 10px 20px;
+    background: rgba(248, 248, 248, 0.95);
+    border-top: 1px solid rgba(200, 200, 200, 0.4);
     text-align: center;
-    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.05);
+    z-index: 100;
 }
 
 .contact-block h2 {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
     color: #000;
-    margin-bottom: 16px;
+    margin: 6px 0;
+    letter-spacing: -0.3px;
 }
 
 .contact-block p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #333;
+    font-size: 14px;
+    color: #444;
     margin: 4px 0;
+    letter-spacing: -0.2px;
 }
 
 .contact-block a {
-    color: #0071e3;
+    color: #007aff;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.2s ease;
 }
 
 .contact-block a:hover {
