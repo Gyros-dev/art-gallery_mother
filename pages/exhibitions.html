@@ -8,20 +8,37 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/exhibitions.css">
     <link rel="stylesheet" href="../css/overlay.css">
-    <!--    <link rel="stylesheet" href="css/layout.css">-->
-    <!--    <link rel="stylesheet" href="css/gallery.css">-->
-    <!--    <link rel="stylesheet" href="css/tooltip.css">-->
-    <!--    <link rel="stylesheet" href="css/about.css">-->
-    <!--    <link rel="stylesheet" href="css/literature.css">-->
-    <!--    <link rel="stylesheet" href="css/animations.css">-->
 </head>
 <body>
 
 <div id="navbar-placeholder"></div>
 
+<!--<main class="content">-->
+<!--&lt;!&ndash;    <h1>Расписание выставок</h1>&ndash;&gt;-->
+
+<!--    <section>-->
+<!--        <h2>Текущие и будущие выставки</h2>-->
+<!--        <div id="upcoming-exhibitions" class="exhibition-list"></div>-->
+<!--    </section>-->
+
+<!--    <section>-->
+<!--        <h2>Архив</h2>-->
+<!--        <div id="past-exhibitions" class="exhibition-list"></div>-->
+<!--    </section>-->
+<!--</main>-->
+
 <main class="content">
-    <h1>Расписание выставок</h1>
-    <div id="exhibitions-list" class="exhibition-list"></div>
+<!--    <h1>Расписание выставок</h1>-->
+    <br>
+    <section>
+        <h2>Текущие и будущие выставки</h2>
+        <div id="upcoming-exhibitions" class="exhibition-list"></div>
+    </section>
+
+    <section id="archive-section">
+        <h2>Архив</h2>
+        <div id="past-exhibitions" class="exhibition-list collapsed"></div>
+    </section>
 </main>
 
 <!-- Оверлей предпросмотра -->
@@ -31,24 +48,34 @@
 </div>
 
 <script src="../js/load-navbar.js"></script>
-<!--<script src="load-exhibitions.js"></script>-->
 
-
-<!-- Подключение скрипта -->
 <script>
     fetch('../data/exhibitions.json')
         .then(res => res.json())
         .then(data => {
-            const container = document.querySelector('.exhibition-list');
+            const upcomingContainer = document.getElementById('upcoming-exhibitions');
+            const pastContainer = document.getElementById('past-exhibitions');
+
             data.forEach(item => {
-                const card = document.createElement('div');
+                const card = document.createElement('article');
                 card.className = 'exhibition-card';
-                card.innerHTML = `
-        <h2>${item.title}</h2>
-        <p>${item.date}</p>
-        <p>${item.location}</p>
-        <p>${item.description}</p>
-      `;
+
+                const content = document.createElement('div');
+                content.className = 'exhibition-content';
+                content.innerHTML = `
+                <h2>${item.title}</h2>
+                <p class="exhibition-date">${item.date}</p>
+                <p class="exhibition-location">${item.location}</p>
+                <p class="exhibition-description">${item.description}</p>
+            `;
+
+                const arrow = document.createElement('div');
+                arrow.className = 'exhibition-arrow';
+                arrow.innerHTML = '→';
+
+                card.appendChild(content);
+                card.appendChild(arrow);
+
                 if (item.url) {
                     card.classList.add('clickable');
                     card.addEventListener('click', () => {
@@ -56,7 +83,12 @@
                         document.getElementById('preview-overlay').style.display = 'flex';
                     });
                 }
-                container.appendChild(card);
+
+                if (item.status === 'past') {
+                    pastContainer.appendChild(card);
+                } else {
+                    upcomingContainer.appendChild(card);
+                }
             });
         });
 

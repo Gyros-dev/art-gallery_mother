@@ -4,13 +4,15 @@
     "date": "19 января — 03 февраля 2023",
     "location": "Выставочный зал МОСХ России, ул. Беговая, 7, Москва",
     "description": "Выставка творческих работ: гобелен, коллаж, арт-объект.",
-    "url": "https://shr.su/exhibitions/begovaya-7-9/ivan-dyakov-i-anna-veksler-sobranie-sochineniy-tom-31-/"
+    "url": "https://shr.su/exhibitions/begovaya-7-9/ivan-dyakov-i-anna-veksler-sobranie-sochineniy-tom-31-/",
+    "status": "past"
   },
   {
     "title": "V Триеннале текстильного искусства и современного гобелена",
     "date": "16 мая — 30 ноября 2025",
     "location": "Хлебный дом, Большой дворец, Парк, Москва",
     "description": "Многообразие связей. Нити, разрывы, соединения.",
-    "url": "https://tsaritsyno-museum.ru/events/exhibitions/p/v-textile-and-tapestry-triennial/"
+    "url": "https://tsaritsyno-museum.ru/events/exhibitions/p/v-textile-and-tapestry-triennial/",
+    "status": "upcoming"
   }
 ]

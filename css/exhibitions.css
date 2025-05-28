@@ -1,30 +1,92 @@
 .exhibition-list {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     padding: 2rem;
-    max-width: 900px;
+    max-width: 1080px;
     margin: auto;
 }
 
 .exhibition-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     background: #fff;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
 
 .exhibition-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.exhibition-content {
+    flex: 1;
 }
 
 .exhibition-card h2 {
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
+    color: #222;
 }
 
 .exhibition-card p {
-    margin: 0.3rem 0;
+    margin: 0.25rem 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.exhibition-arrow {
+    font-size: 1.5rem;
+    color: #ccc;
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+}
+
+.exhibition-card:hover .exhibition-arrow {
+    color: #888;
+}
+
+ #archive-section {
+     margin-top: 6rem;
+     position: relative;
+     padding-top: 1rem;
+ }
+
+#archive-section h2 {
+    cursor: pointer;
+    font-size: 1.4rem;
+    /*font-style: italic;*/
+    color: #666;
+    letter-spacing: 0.5px;
+    /*text-align: center;*/
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#archive-section h2:hover {
+    color: #222;
+    /*transform: scale(1.03);*/
+}
+
+#past-exhibitions.collapsed {
+    max-height: 120px;
+    overflow: hidden;
+    transform: perspective(600px) rotateX(-35deg) scaleY(0.9);
+    transform-origin: top;
+    opacity: 0.3;
+    filter: blur(1px);
+    transition: all 0.6s ease;
+    pointer-events: none;
+}
+
+#archive-section:hover #past-exhibitions {
+    max-height: 1000px;
+    transform: perspective(1000px) rotateX(0deg) scaleY(1);
+    opacity: 1;
+    filter: none;
+    pointer-events: auto;
 }
