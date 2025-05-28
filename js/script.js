@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mainImg && leftImg && rightImg) {
             mainImg.src = main.src;
             mainImg.dataset.info = main.info;
+            mainImg.dataset.category = main.category || '';
+            mainImg.dataset.location = main.location || '';
+            mainImg.dataset.year = main.year || '';
 
             leftImg.src = left.src;
             rightImg.src = right.src;
@@ -82,14 +85,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainImage = document.getElementById('main-image');
     const tooltip = document.getElementById('tooltip');
 
+    // if (mainImage && tooltip) {
+    //     mainImage.addEventListener('mouseenter', () => {
+    //         tooltip.textContent = mainImage.dataset.info;
+    //         tooltip.style.opacity = 1;
+    //     });
+    //
+    //     mainImage.addEventListener('mouseleave', () => {
+    //         tooltip.style.opacity = 0;
+    //     });
+    // }
     if (mainImage && tooltip) {
         mainImage.addEventListener('mouseenter', () => {
-            tooltip.textContent = mainImage.dataset.info;
-            tooltip.style.opacity = 1;
+            const info = mainImage.dataset.info || '';
+            const category = mainImage.dataset.category || '';
+            const location = mainImage.dataset.location || '';
+            const year = mainImage.dataset.year || '';
+
+            tooltip.innerHTML = `
+            <strong>${info}</strong><br>
+            <span>${year}</span>
+            <span> &mdash; ${location}</span><br>
+            <span>${category}</span><br>
+        `;
+
+            tooltip.style.opacity = '1';
         });
 
         mainImage.addEventListener('mouseleave', () => {
-            tooltip.style.opacity = 0;
+            tooltip.style.opacity = '0';
         });
     }
 });

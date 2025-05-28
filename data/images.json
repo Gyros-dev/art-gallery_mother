@@ -1,22 +1,37 @@
 [
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/1.jpg",
-    "info": "Сан-Марко. Между небом и землей, 2020 г. — Санкт-Петербург."
+    "info": "Сан-Марко. Между небом и землей,",
+    "category": "гобелен",
+    "location": "Санкт-Петербург.",
+    "year": "2020 г."
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/2.jpg",
-    "info": "Название: Работа 2, 2024 г. — описание второй работы"
+    "info": "Название: Работа 2",
+    "category": "коллаж",
+    "location": "Санкт-Петербург.",
+    "year": "2021 г."
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/3.jpg",
-    "info": "Название: Работа 3, 2022 г. — описание третьей работы"
+    "info": "Название: Работа 3",
+    "category": "гобелен",
+    "location": "Санкт-Петербург.",
+    "year": "2020 г."
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/4.jpg",
-    "info": "Название: Работа 4, 2022 г. — описание четверной работы"
+    "info": "Название: Работа 4",
+    "category": "коллаж",
+    "location": "Санкт-Петербург.",
+    "year": "2015 г."
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/5.jpg",
-    "info": "Название: Работа 5, 2022 г. — описание пятой работы"
+    "info": "Название: Работа 5",
+    "category": "гобелен",
+    "location": "Санкт-Петербург.",
+    "year": "2012 г."
   }
 ]

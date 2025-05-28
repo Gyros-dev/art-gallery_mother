@@ -6,8 +6,8 @@
 .tooltip {
     position: absolute;
 
-    /*top: 96%;*/
-    /*bottom: -9%;*/
+    top: 101%;
+    /*bottom: 0%;*/
     /*left: 60%;*/
     /*right: -60%;*/
     /*transform: translateX(-50%);*/
