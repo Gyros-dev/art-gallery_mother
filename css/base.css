@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-    background: #f3f3f3 url('../images/paper-texture.jpg') repeat;
+    background: #f3f3f3 url('../images/other/paper-texture.jpg') repeat;
     display: flex;
     justify-content: center;
     align-items: flex-start;
