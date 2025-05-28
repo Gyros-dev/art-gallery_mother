@@ -1,37 +1,47 @@
 [
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/1.jpg",
-    "info": "Сан-Марко. Между небом и землей,",
+    "info": "Сан-Марко. Между небом и землей",
     "category": "гобелен",
-    "location": "Санкт-Петербург.",
-    "year": "2020 г."
+    "location": "Санкт-Петербург",
+    "year": "2020",
+    "material": "Коллаж, бумага, текстиль",
+    "size": "50 × 70 см"
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/2.jpg",
     "info": "Название: Работа 2",
     "category": "коллаж",
-    "location": "Санкт-Петербург.",
-    "year": "2021 г."
+    "location": "Санкт-Петербург",
+    "year": "2020",
+    "material": "Коллаж, бумага, текстиль",
+    "size": "50 × 70 см"
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/3.jpg",
     "info": "Название: Работа 3",
     "category": "гобелен",
-    "location": "Санкт-Петербург.",
-    "year": "2020 г."
+    "location": "Санкт-Петербург",
+    "year": "2020",
+    "material": "Коллаж, бумага, текстиль",
+    "size": "50 × 70 см"
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/4.jpg",
     "info": "Название: Работа 4",
     "category": "коллаж",
-    "location": "Санкт-Петербург.",
-    "year": "2015 г."
+    "location": "Санкт-Петербург",
+    "year": "2020",
+    "material": "Коллаж, бумага, текстиль",
+    "size": "50 × 70 см"
   },
   {
     "src": "https://gyros-dev.github.io/art-gallery_mother/images/art/5.jpg",
     "info": "Название: Работа 5",
     "category": "гобелен",
-    "location": "Санкт-Петербург.",
-    "year": "2012 г."
+    "location": "Санкт-Петербург",
+    "year": "2020",
+    "material": "Коллаж, бумага, текстиль",
+    "size": "50 × 70 см"
   }
 ]

@@ -21,9 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mainImg && leftImg && rightImg) {
             mainImg.src = main.src;
             mainImg.dataset.info = main.info;
-            mainImg.dataset.category = main.category || '';
             mainImg.dataset.location = main.location || '';
             mainImg.dataset.year = main.year || '';
+            mainImg.dataset.material = main.material || '';
+            mainImg.dataset.size = main.size || '';
 
             leftImg.src = left.src;
             rightImg.src = right.src;
@@ -98,15 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mainImage && tooltip) {
         mainImage.addEventListener('mouseenter', () => {
             const info = mainImage.dataset.info || '';
-            const category = mainImage.dataset.category || '';
             const location = mainImage.dataset.location || '';
             const year = mainImage.dataset.year || '';
+            const material = mainImage.dataset.material || '';
+            const size = mainImage.dataset.size || '';
 
             tooltip.innerHTML = `
             <strong>${info}</strong><br>
             <span>${year}</span>
-            <span> &mdash; ${location}</span><br>
-            <span>${category}</span><br>
+            <span>${material}</span><br>
+            <span>${size}</span><br>
+            <span>${location}</span><br>
         `;
 
             tooltip.style.opacity = '1';
