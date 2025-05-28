@@ -21,6 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tooltip.style.opacity = '0';
 
+        // // Сброс hover: временно отключить pointer-events
+        // [leftImg, rightImg].forEach(img => {
+        //     if (img) {
+        //         img.style.pointerEvents = 'none';
+        //     }
+        // });
+        //
+        // // Вернуть pointer-events чуть позже
+        // setTimeout(() => {
+        //     [leftImg, rightImg].forEach(img => {
+        //         if (img) {
+        //             img.style.pointerEvents = '';
+        //         }
+        //     });
+        // }, 100); // 100–150 мс достаточно
+
         if (mainImg && leftImg && rightImg) {
             mainImg.src = main.src;
             mainImg.dataset.info = main.info;
