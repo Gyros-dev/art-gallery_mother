@@ -44,7 +44,7 @@
 .about-image img {
     width: 100%;
     border-radius: 12px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 36px rgba(110, 107, 107, 0.3);
     object-fit: cover;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
