@@ -30,7 +30,7 @@
     display: block;
     margin: 0 auto;
     background: none;
-    box-shadow: none;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.8);
 }
 
 .side {
