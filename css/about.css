@@ -13,8 +13,11 @@
 }
 
 .about-text {
-    flex: 1 1 360px;
+    flex: 1 1 60%;
     max-width: 460px;
+    max-height: 60vh; /* фиксированная высота */
+    overflow-y: auto; /* включаем вертикальный скролл */
+    padding-right: 1rem;
 }
 
 .about-text h1 {
