@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('wheel', (e) => {
         if (scrollCooldown) return;
 
-        if (e.deltaY > 0) nextImage();
-        else if (e.deltaY < 0) prevImage();
+        if (e.deltaY < 0) nextImage();
+        else if (e.deltaY > 0) prevImage();
 
         scrollCooldown = true;
         setTimeout(() => scrollCooldown = false, 400);

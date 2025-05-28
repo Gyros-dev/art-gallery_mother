@@ -6,8 +6,8 @@
 .tooltip {
     position: absolute;
 
-    top: 101%;
-    /*bottom: 0%;*/
+    top: 102%;
+    /*bottom: -15%;*/
     /*left: 60%;*/
     /*right: -60%;*/
     /*transform: translateX(-50%);*/
@@ -15,9 +15,9 @@
 
     background: #ffffff;
     color: #1a1a1a;
-    padding: 14px 18px;
-    font-size: 14px;
-    line-height: 1.5;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.4;
     max-width: 300px;
     z-index: 20;
     pointer-events: none;
