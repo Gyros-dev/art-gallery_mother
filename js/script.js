@@ -13,10 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const main = images[current];
         const left = images[(current - 1 + images.length) % images.length];
         const right = images[(current + 1) % images.length];
+        const tooltip = document.getElementById('tooltip');
 
         const mainImg = document.getElementById('main-image');
         const leftImg = document.getElementById('left-image');
         const rightImg = document.getElementById('right-image');
+
+        tooltip.style.opacity = '0';
 
         if (mainImg && leftImg && rightImg) {
             mainImg.src = main.src;
