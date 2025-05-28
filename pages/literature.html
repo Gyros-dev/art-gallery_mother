@@ -22,13 +22,13 @@
 <main class="content">
     <h1>Литературные материалы</h1>
     <ul class="literature-list">
-        <li><a href="#" data-pdf="docs/AV_Ruchnoe_tkachestvo.pdf">Ручное ткачество. Учебно-методическое пособие</a></li>
-        <li><a href="#" data-pdf="docs/искусствоведение.pdf">Основы искусствоведения</a></li>
-        <li><a href="#" data-pdf="docs/пособие_по_цвету.pdf">Пособие по цветоведению</a></li>
+        <li><a href="#" data-pdf="/art-gallery_mother/docs/AV_Ruchnoe_tkachestvo.pdf">Ручное ткачество. Учебно-методическое пособие</a></li>
+        <li><a href="#" data-pdf="../docs/искусствоведение.pdf">Основы искусствоведения</a></li>
+        <li><a href="#" data-pdf="../docs/пособие_по_цвету.pdf">Пособие по цветоведению</a></li>
     </ul>
 
     <div id="pdf-overlay" style="display: none;">
-        <iframe id="pdf-viewer" src="" frameborder="0"></iframe>
+        <iframe id="pdf-viewer" src="" style="border: none;"></iframe>
     </div>
 
 </main>
@@ -59,8 +59,7 @@
     links.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const pdf = link.getAttribute('data-pdf');
-            viewer.src = pdf;
+            viewer.src = link.getAttribute('data-pdf');
             overlay.style.display = 'flex';
         });
     });

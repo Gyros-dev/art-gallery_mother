@@ -27,7 +27,7 @@
 <!-- Оверлей предпросмотра -->
 <div id="preview-overlay" style="display: none;">
     <div id="preview-close">×</div>
-    <iframe id="preview-frame" src="" frameborder="0"></iframe>
+    <iframe id="preview-frame" src="" style="border: none;"></iframe>
 </div>
 
 <script src="../js/load-navbar.js"></script>
@@ -36,7 +36,7 @@
 
 <!-- Подключение скрипта -->
 <script>
-    fetch('exhibitions.json')
+    fetch('../data/exhibitions.json')
         .then(res => res.json())
         .then(data => {
             const container = document.querySelector('.exhibition-list');

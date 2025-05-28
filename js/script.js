@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let images = [];
     let current = 0;
 
-    fetch('images.json')
+    fetch('../data/images.json')
         .then(response => response.json())
         .then(data => {
             images = data;
