@@ -63,16 +63,24 @@
   <script src="js/common.js"></script>
   <script>
     initLoom(document.getElementById('loom'));
-    fetch('data/images.json').then((r) => r.json()).then((items) => {
+    fetch('data/gallery.json').then((r) => r.json()).then((data) => {
       const strip = document.querySelector('[data-strip]');
-      items.slice(0, 6).forEach((it) => {
-        const fig = document.createElement('figure');
-        fig.innerHTML = `
-          <div class="frame"><img src="${it.src}" alt="${it.title}" loading="lazy"></div>
-          <figcaption><h3>${it.title}</h3><span class="cat">${it.category}</span></figcaption>`;
-        fig.addEventListener('click', () => (location.href = 'pages/gallery.html'));
-        strip.appendChild(fig);
-      });
+      const works = [];
+      (data.categories || []).forEach((c) =>
+        (c.works || []).forEach((w) => works.push({ ...w, label: c.label }))
+      );
+      // по паре из каждой категории, вперемешку
+      works
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 6)
+        .forEach((w) => {
+          const fig = document.createElement('figure');
+          fig.innerHTML = `
+            <div class="frame"><img src="${w.images[0]}" alt="${w.title}" loading="lazy"></div>
+            <figcaption><h3>${w.title}</h3><span class="cat">${w.label}</span></figcaption>`;
+          fig.addEventListener('click', () => (location.href = 'pages/gallery.html'));
+          strip.appendChild(fig);
+        });
     });
   </script>
 </body>

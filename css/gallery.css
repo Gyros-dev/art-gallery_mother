@@ -73,10 +73,13 @@
 }
 .cf-center .stack {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   max-width: min(58vw, 680px);
   max-height: 56vh;
 }
+.cf-center .stack.is-group { max-width: min(88vw, 1120px); }
 .cf-center img {
   display: block;
   max-width: min(58vw, 680px);
@@ -91,10 +94,13 @@
 .cf-center .layer {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
+  gap: clamp(0.5rem, 1.6vw, 1.2rem);
   opacity: 0;
   transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
 }
 .cf-center .layer.show { opacity: 1; position: relative; }
+/* серия: несколько частей в ряд, размер задаётся из JS */
+.cf-center .layer.multi img { max-height: 52vh; }
 .cf-center .layer.enter-left { transform: translateX(-40px) scale(0.97); }
 .cf-center .layer.enter-right { transform: translateX(40px) scale(0.97); }
 
@@ -181,9 +187,18 @@
   transition: opacity 0.3s, filter 0.3s, border-color 0.3s, transform 0.3s;
   scroll-snap-align: center;
 }
+.thumb { position: relative; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }
 .thumb:hover { opacity: 0.85; filter: none; transform: translateY(-2px); }
 .thumb.active { opacity: 1; filter: none; border-color: var(--terra); }
+.thumb-badge {
+  position: absolute; right: 2px; bottom: 2px;
+  min-width: 15px; height: 15px; padding: 0 3px;
+  display: grid; place-items: center;
+  font-size: 0.56rem; line-height: 1;
+  color: var(--cream); background: color-mix(in srgb, var(--ink) 78%, transparent);
+  border-radius: 8px;
+}
 
 /* Лайтбокс */
 .lightbox {
@@ -216,6 +231,16 @@
   font-size: 1rem;
 }
 .lb-x:hover { background: rgba(255,255,255,0.14); }
+.lb-prev, .lb-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  color: var(--paper); border: 1px solid rgba(255,255,255,0.35);
+  font-size: 1.1rem; z-index: 2;
+}
+.lb-prev { left: clamp(0.6rem, 2vw, 1.6rem); }
+.lb-next { right: clamp(0.6rem, 2vw, 1.6rem); }
+.lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.14); }
+.lightbox.single .lb-prev, .lightbox.single .lb-next { display: none; }
 
 @media (max-width: 860px) {
   .cf-side { display: none; }
