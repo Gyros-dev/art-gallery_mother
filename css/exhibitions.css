@@ -18,6 +18,27 @@
   content: ""; width: 26px; height: 2px; background: var(--terra);
 }
 
+/* Сворачиваемый архив */
+.archive-toggle {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.4rem, 3.4vw, 2rem);
+  color: var(--ink); margin-bottom: 1.2rem;
+}
+.archive-toggle > span:first-child { display: inline-flex; align-items: center; gap: 0.8rem; }
+.archive-toggle > span:first-child::before { content: ""; width: 26px; height: 2px; background: var(--terra); }
+.archive-count {
+  font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.1em;
+  color: var(--paper); background: var(--ink-soft);
+  min-width: 22px; height: 22px; padding: 0 6px;
+  border-radius: 100px; display: inline-grid; place-items: center;
+  transition: background 0.3s;
+}
+.archive-toggle:hover .archive-count { background: var(--terra); }
+.archive-chevron { font-size: 0.9rem; color: var(--ink-soft); transition: transform 0.35s var(--ease); }
+.archive-toggle.open .archive-chevron { transform: rotate(180deg); }
+.timeline.collapsed { display: none; }
+
 .timeline { position: relative; padding-left: 1.8rem; }
 .timeline::before {
   content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px;

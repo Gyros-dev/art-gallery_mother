@@ -57,6 +57,20 @@
         (isPast ? past : upcoming).appendChild(card);
       });
 
+      // Архив: показываем группу только если есть прошедшие, свёрнут по умолчанию
+      const pastCount = data.filter((i) => i.status === 'past').length;
+      const archiveGroup = document.getElementById('archive-group');
+      const toggle = document.getElementById('archive-toggle');
+      if (pastCount && archiveGroup && toggle) {
+        archiveGroup.hidden = false;
+        document.getElementById('archive-count').textContent = pastCount;
+        toggle.addEventListener('click', () => {
+          const open = past.classList.toggle('collapsed') === false;
+          toggle.classList.toggle('open', open);
+          toggle.setAttribute('aria-expanded', String(open));
+        });
+      }
+
       if (typeof initReveals === 'function') initReveals();
     });
 

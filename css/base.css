@@ -290,6 +290,25 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 }
 .footer-socials a:hover { color: var(--paper); border-color: var(--gold); }
 
+/* кнопки-иконки соцсетей */
+.social-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.4rem; }
+.social-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  color: inherit;
+  transition: background 0.3s var(--ease), color 0.3s, border-color 0.3s, transform 0.3s;
+}
+.social-btn svg { width: 20px; height: 20px; display: block; }
+.social-btn.is-text { width: auto; padding: 0 1rem; border-radius: 100px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.social-btn:hover { transform: translateY(-2px); }
+/* в тёмном подвале */
+.site-footer .social-btn { color: color-mix(in srgb, var(--paper) 78%, transparent); }
+.site-footer .social-btn:hover { background: var(--terra); border-color: var(--terra); color: var(--cream); }
+/* на светлых страницах (about) */
+.contact-block .social-btn { color: var(--ink-soft); }
+.contact-block .social-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
 /* ============ Появление при скролле ============ */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }

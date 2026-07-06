@@ -27,9 +27,13 @@
       <div class="timeline" id="upcoming-exhibitions"></div>
     </section>
 
-    <section class="exh-group">
-      <h2>Архив</h2>
-      <div class="timeline" id="past-exhibitions"></div>
+    <section class="exh-group" id="archive-group" hidden>
+      <button class="archive-toggle" id="archive-toggle" aria-expanded="false">
+        <span>Архив</span>
+        <span class="archive-count" id="archive-count"></span>
+        <span class="archive-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="timeline collapsed" id="past-exhibitions"></div>
     </section>
   </main>
 
