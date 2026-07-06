@@ -1,0 +1,14 @@
+{
+  "name": "Анна Векслер",
+  "tagline": "Гобелен · коллаж · текстильное искусство",
+  "location": "Санкт-Петербург, Россия",
+  "email": "anna.veksler@example.com",
+  "phone": "",
+  "subscribeNote": "Получать письма о новых работах и выставках",
+  "socials": [
+    { "label": "ВКонтакте", "url": "" },
+    { "label": "Telegram", "url": "" },
+    { "label": "WhatsApp", "url": "" },
+    { "label": "Instagram", "url": "" }
+  ]
+}

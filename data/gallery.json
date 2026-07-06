@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T10:34:31.054Z",
+  "generated": "2026-07-06T13:07:22.660Z",
   "categories": [
     {
       "id": "gobelin",
@@ -7,7 +7,7 @@
       "works": [
         {
           "title": "Берег",
-          "category": "gobelin",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Gobelin/Берег.jpg"
@@ -16,7 +16,7 @@
         },
         {
           "title": "Благовещение",
-          "category": "gobelin",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Gobelin/Благовещение.jpg"
@@ -25,7 +25,7 @@
         },
         {
           "title": "Рыба",
-          "category": "gobelin",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Gobelin/Рыба.jpg"
@@ -34,7 +34,7 @@
         },
         {
           "title": "Сан-Марко. Между небом и землёй",
-          "category": "gobelin",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Gobelin/Сан-Марко. Между небом и землёй.jpg"
@@ -43,7 +43,7 @@
         },
         {
           "title": "Цветок",
-          "category": "gobelin",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Gobelin/Цветок.jpg"
@@ -52,7 +52,7 @@
         },
         {
           "title": "Чудесный улов",
-          "category": "gobelin",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Gobelin/Чудесный улов.jpg"
@@ -61,7 +61,7 @@
         },
         {
           "title": "Рыбак",
-          "category": "gobelin",
+          "type": "art",
           "group": true,
           "images": [
             "images/art/Gobelin/Рыбак/Рыбак - 1.jpg",
@@ -77,7 +77,7 @@
       "works": [
         {
           "title": "Дуэт",
-          "category": "collage",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Collage/Дуэт.jpg"
@@ -86,7 +86,7 @@
         },
         {
           "title": "Натюрморт с алыми лодками",
-          "category": "collage",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Collage/Натюрморт с алыми лодками.jpg"
@@ -95,7 +95,7 @@
         },
         {
           "title": "Пещерная рыба",
-          "category": "collage",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Collage/Пещерная рыба.jpg"
@@ -104,7 +104,7 @@
         },
         {
           "title": "Птицы",
-          "category": "collage",
+          "type": "art",
           "group": false,
           "images": [
             "images/art/Collage/Птицы.jpg"
@@ -113,7 +113,7 @@
         },
         {
           "title": "Большой улов",
-          "category": "collage",
+          "type": "art",
           "group": true,
           "images": [
             "images/art/Collage/Большой улов/Большой улов - 1.jpg",
@@ -123,7 +123,7 @@
         },
         {
           "title": "Деревья",
-          "category": "collage",
+          "type": "art",
           "group": true,
           "images": [
             "images/art/Collage/Деревья/Деревья - 1.jpg",
@@ -133,7 +133,7 @@
         },
         {
           "title": "Тёмные бабочки",
-          "category": "collage",
+          "type": "art",
           "group": true,
           "images": [
             "images/art/Collage/Тёмные бабочки/Тёмные бабочки - 2.jpg"

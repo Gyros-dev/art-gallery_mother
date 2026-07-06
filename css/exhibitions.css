@@ -50,7 +50,35 @@
 }
 .exhibition-card.clickable:hover::before { transform: scale(1.25); }
 
-.exhibition-content { flex: 1; }
+.exhibition-content { flex: 1; min-width: 0; }
+
+/* действия под описанием */
+.exhibition-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+.exh-btn {
+  font-family: var(--sans);
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.5rem 0.95rem; border-radius: 100px;
+  border: 1px solid var(--line); color: var(--ink-soft);
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.exh-btn:hover { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.exh-photos { color: var(--ink); border-color: var(--ink-soft); }
+.exh-photos:hover { background: var(--terra); border-color: var(--terra); color: var(--cream); }
+
+/* миниатюры фото выставки */
+.exhibition-thumbs { display: flex; gap: 0.4rem; flex: none; }
+.exh-thumb {
+  width: 64px; height: 64px; padding: 0; overflow: hidden;
+  border: 1px solid var(--line);
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+}
+.exh-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.exh-thumb:hover { transform: translateY(-2px); border-color: var(--terra); }
+
+@media (max-width: 680px) {
+  .exhibition-card .inner { flex-direction: column; }
+  .exhibition-thumbs { order: -1; }
+}
 .exhibition-content h3 {
   font-family: var(--serif); font-weight: 500;
   font-size: clamp(1.15rem, 2.6vw, 1.5rem); line-height: 1.2;

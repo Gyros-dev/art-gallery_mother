@@ -139,11 +139,109 @@ function initLoom(canvas) {
   frame();
 }
 
+/* ---- переиспользуемый лайтбокс для фотографий ---- */
+function makePhotoLightbox() {
+  const lb = document.createElement('div');
+  lb.className = 'photobox';
+  lb.innerHTML = `
+    <button class="pb-x" aria-label="Закрыть">✕</button>
+    <button class="pb-prev" aria-label="Предыдущая">←</button>
+    <button class="pb-next" aria-label="Следующая">→</button>
+    <img alt="">
+    <p class="pb-cap"></p>`;
+  document.body.appendChild(lb);
+  const imgEl = lb.querySelector('img');
+  const cap = lb.querySelector('.pb-cap');
+  let imgs = [], idx = 0, title = '';
+  const fill = () => { imgEl.src = imgs[idx]; cap.textContent = imgs.length > 1 ? `${title} · ${idx + 1}/${imgs.length}` : title; };
+  const step = (d) => { if (imgs.length < 2) return; idx = (idx + d + imgs.length) % imgs.length; fill(); };
+  const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; setTimeout(() => lb.classList.remove('show'), 320); };
+  lb.querySelector('.pb-x').addEventListener('click', close);
+  lb.querySelector('.pb-prev').addEventListener('click', (e) => { e.stopPropagation(); step(-1); });
+  lb.querySelector('.pb-next').addEventListener('click', (e) => { e.stopPropagation(); step(1); });
+  lb.addEventListener('click', (e) => { if (e.target === lb || e.target === imgEl) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+  return (images, start, t) => {
+    imgs = images; idx = start || 0; title = t || '';
+    lb.classList.toggle('single', imgs.length < 2);
+    fill();
+    lb.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => lb.classList.add('open'));
+  };
+}
+let _openPhotos;
+function openPhotos(images, index, title) {
+  if (!_openPhotos) _openPhotos = makePhotoLightbox();
+  _openPhotos(images, index, title);
+}
+
+/* ---- конфиг сайта (контакты, соцсети) из data/site.json ---- */
+function loadSiteConfig() {
+  return fetch(`${BASE}/data/site.json`)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((site) => {
+      if (!site) return;
+      window.SITE = site;
+      const socials = (site.socials || []).filter((s) => s.url);
+      document.querySelectorAll('.site-footer').forEach((footer) => {
+        if (footer.querySelector('.footer-socials')) return;
+        const parts = [];
+        if (site.email) parts.push(`<a href="mailto:${site.email}">${site.email}</a>`);
+        if (site.phone) parts.push(`<a href="tel:${site.phone.replace(/[^+\d]/g, '')}">${site.phone}</a>`);
+        socials.forEach((s) => parts.push(`<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`));
+        if (!parts.length) return;
+        const links = footer.querySelector('.footer-links');
+        const block = document.createElement('div');
+        block.className = 'footer-socials';
+        block.innerHTML = parts.join('');
+        (links || footer).insertAdjacentElement(links ? 'afterend' : 'afterbegin', block);
+      });
+
+      // Контакты на странице «Художник»
+      const setContact = (sel, cond, fill) => {
+        const el = document.querySelector(sel);
+        if (el && cond) { fill(el); el.hidden = false; }
+      };
+      setContact('[data-contact-email]', site.email, (el) => {
+        const a = el.querySelector('a'); a.href = `mailto:${site.email}`; a.textContent = site.email;
+      });
+      setContact('[data-contact-phone]', site.phone, (el) => {
+        const a = el.querySelector('a'); a.href = `tel:${site.phone.replace(/[^+\d]/g, '')}`; a.textContent = site.phone;
+      });
+      setContact('[data-contact-location]', site.location, (el) => {
+        el.querySelector('span').textContent = site.location;
+      });
+      const socBox = document.querySelector('[data-contact-socials]');
+      if (socBox) socials.forEach((s) => {
+        const a = document.createElement('a');
+        a.href = s.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = s.label;
+        socBox.appendChild(a);
+      });
+      setContact('[data-subscribe]', site.email, (el) => {
+        const a = el.querySelector('a');
+        const note = site.subscribeNote || 'Написать';
+        a.href = `mailto:${site.email}?subject=${encodeURIComponent(note)}`;
+        const noteEl = a.querySelector('[data-subscribe-note]');
+        if (noteEl) noteEl.textContent = note;
+      });
+
+      document.dispatchEvent(new CustomEvent('siteconfig', { detail: site }));
+    })
+    .catch(() => {});
+}
+
 /* авто-старт общих вещей */
 document.addEventListener('DOMContentLoaded', () => {
   const navPath = IN_PAGES ? 'navbar.html' : 'pages/navbar.html';
   initNavbar(navPath).then(initReveals);
   initReveals();
+  loadSiteConfig();
   const yearEl = document.querySelector('[data-year]');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });

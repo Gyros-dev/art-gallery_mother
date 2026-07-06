@@ -243,6 +243,53 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
   color: color-mix(in srgb, var(--paper) 42%, transparent);
 }
 
+/* ============ Переиспользуемый лайтбокс фотографий ============ */
+.photobox {
+  position: fixed; inset: 0; z-index: 800;
+  display: none; align-items: center; justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: color-mix(in srgb, var(--ink) 92%, transparent);
+  backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity 0.35s;
+}
+.photobox.show { display: flex; }
+.photobox.open { opacity: 1; }
+.photobox img {
+  max-width: 94vw; max-height: 86vh; object-fit: contain;
+  background: var(--cream); padding: 12px;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.6);
+  cursor: zoom-out;
+}
+.photobox .pb-cap {
+  position: absolute; bottom: 1.4rem; left: 0; right: 0;
+  text-align: center; color: var(--paper);
+  font-family: var(--serif); font-size: 1.3rem;
+}
+.photobox .pb-x, .photobox .pb-prev, .photobox .pb-next {
+  position: absolute; z-index: 2;
+  border-radius: 50%;
+  color: var(--paper); border: 1px solid rgba(255,255,255,0.35);
+}
+.photobox .pb-x { top: 1.3rem; right: 1.3rem; width: 48px; height: 48px; font-size: 1rem; }
+.photobox .pb-prev, .photobox .pb-next { top: 50%; transform: translateY(-50%); width: 52px; height: 52px; font-size: 1.1rem; }
+.photobox .pb-prev { left: clamp(0.6rem, 2vw, 1.6rem); }
+.photobox .pb-next { right: clamp(0.6rem, 2vw, 1.6rem); }
+.photobox .pb-x:hover, .photobox .pb-prev:hover, .photobox .pb-next:hover { background: rgba(255,255,255,0.14); }
+.photobox.single .pb-prev, .photobox.single .pb-next { display: none; }
+
+/* соцсети в подвале */
+.footer-socials {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 1.2rem;
+  margin-top: 1.4rem;
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.footer-socials a {
+  color: color-mix(in srgb, var(--paper) 72%, transparent);
+  border-bottom: 1px solid transparent; padding-bottom: 2px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.footer-socials a:hover { color: var(--paper); border-color: var(--gold); }
+
 /* ============ Появление при скролле ============ */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }

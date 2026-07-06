@@ -7,6 +7,15 @@
   padding: calc(var(--nav-h) + clamp(2.5rem, 6vw, 5rem)) clamp(1.2rem, 5vw, 2.5rem) clamp(4rem, 8vw, 6rem);
 }
 
+.lit-subhead {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  margin: clamp(1.5rem, 4vw, 2.5rem) 0 0.6rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.lit-subhead::before { content: ""; width: 26px; height: 2px; background: var(--terra); }
+#publications-section { margin-bottom: 1.5rem; }
+
 .literature-list { list-style: none; }
 .literature-list li {
   border-bottom: 1px solid var(--line);
@@ -55,3 +64,28 @@
   font-size: 1.4rem; cursor: pointer;
 }
 #pdf-close:hover { background: rgba(255,255,255,0.14); }
+
+/* Читалка текстовых публикаций */
+#text-overlay {
+  position: fixed; inset: 0; z-index: 800;
+  display: none; align-items: center; justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: color-mix(in srgb, var(--ink) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+#text-reader {
+  width: min(46rem, 94vw); max-height: 86vh; overflow-y: auto;
+  background: var(--cream); color: var(--ink);
+  padding: clamp(1.8rem, 5vw, 3.6rem);
+  box-shadow: 0 40px 90px rgba(0,0,0,0.5);
+}
+#text-reader h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 1.2rem; }
+#text-reader p { margin-bottom: 1em; line-height: 1.75; }
+#text-close {
+  position: absolute; top: 1.2rem; right: 1.3rem;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--paper); border: 1px solid rgba(255,255,255,0.35);
+  font-size: 1.4rem; cursor: pointer;
+}
+#text-close:hover { background: rgba(255,255,255,0.14); }

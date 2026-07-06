@@ -1,15 +1,9 @@
-/* Галерея: работы строятся из папок images/art/<Категория>/.
-   Работа = одно изображение или серия (подпапка) из нескольких.
-   Источник: data/gallery.json (локально/фолбэк). На живом сайте —
-   тихое обновление из GitHub API, чтобы подхватывать новые файлы без пересборки.
+/* Галерея: работы строятся из папок images/art/<Категория>/ (data/gallery.json).
+   Работа = изображение, серия (подпапка) или текст (текстовый файл в категории).
+   Каталог собирается генератором scripts/build-gallery.mjs (в т.ч. в CI при пуше).
    BASE/REDUCED объявлены в common.js. */
 
 (function () {
-  const REPO = { owner: 'Gyros-dev', name: 'art-gallery_mother', branch: 'main' };
-  const CAT_LABELS = { gobelin: 'Гобелен', collage: 'Коллаж' };
-  const IMG_RE = /\.(jpe?g|png|webp|avif|gif)$/i;
-  const cmp = (a, b) => a.localeCompare(b, 'ru', { numeric: true, sensitivity: 'base' });
-
   let all = [];      // все работы (плоский список)
   let list = [];     // отфильтрованные
   let current = 0;
@@ -17,15 +11,13 @@
   let usingA = true;
   let cooldown = false;
   let lbIndex = 0;
-  let sig = '';      // подпись текущего набора — чтобы не перерисовывать зря
 
   const els = {};
 
   document.addEventListener('DOMContentLoaded', async () => {
     cache();
     bindEvents();
-    setData(await loadData(), false);
-    if (/(^|\.)github\.io$/.test(location.hostname)) refreshFromApi();
+    setData(await loadData());
   });
 
   function cache() {
@@ -46,9 +38,9 @@
     els.lb = document.querySelector('.lightbox');
     els.lbImg = els.lb.querySelector('img');
     els.lbCap = els.lb.querySelector('.lb-caption');
+    els.lbText = els.lb.querySelector('.lb-text');
   }
 
-  /* ---------- источники данных ---------- */
   async function loadData() {
     try {
       const r = await fetch(`${BASE}/data/gallery.json`, { cache: 'no-store' });
@@ -57,73 +49,36 @@
     return { categories: [] };
   }
 
-  function buildFromTree(tree) {
-    const cats = [
-      { id: 'gobelin', label: 'Гобелен', prefix: 'images/art/Gobelin/' },
-      { id: 'collage', label: 'Коллаж', prefix: 'images/art/Collage/' },
-    ];
-    return cats.map((c) => {
-      const singles = {}, groups = {};
-      tree
-        .filter((t) => t.type === 'blob' && t.path.startsWith(c.prefix) && IMG_RE.test(t.path))
-        .forEach((t) => {
-          const rest = t.path.slice(c.prefix.length);
-          const parts = rest.split('/');
-          if (parts.length === 1) singles[parts[0].replace(IMG_RE, '')] = t.path;
-          else (groups[parts[0]] ||= []).push(t.path);
-        });
-      const works = [];
-      Object.keys(singles).sort(cmp).forEach((title) => works.push({ title, group: false, images: [singles[title]] }));
-      Object.keys(groups).sort(cmp).forEach((g) => works.push({ title: g, group: true, images: groups[g].sort(cmp) }));
-      return { id: c.id, label: c.label, works };
-    });
-  }
-
-  async function refreshFromApi() {
-    try {
-      const url = `https://api.github.com/repos/${REPO.owner}/${REPO.name}/git/trees/${REPO.branch}?recursive=1`;
-      const r = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
-      if (!r.ok) return;
-      const json = await r.json();
-      if (!Array.isArray(json.tree)) return;
-      const categories = buildFromTree(json.tree);
-      if (categories.reduce((n, c) => n + c.works.length, 0) === 0) return;
-      setData({ categories }, true);
-    } catch { /* офлайн/лимит — остаёмся на gallery.json */ }
-  }
-
-  function setData(data, keepView) {
-    const flat = [];
+  function setData(data) {
+    all = [];
     (data.categories || []).forEach((c) => {
       (c.works || []).forEach((w) => {
-        flat.push({
+        all.push({
           title: w.title,
           category: c.id,
-          categoryLabel: c.label || CAT_LABELS[c.id] || c.id,
+          categoryLabel: c.label || c.id,
+          type: w.type === 'text' ? 'text' : 'art',
           group: !!w.group && (w.images || []).length > 1,
           images: (w.images || []).map((s) => `${BASE}/${s}`),
           info: w.info || '',
+          body: w.body || '',
         });
       });
     });
-    const newSig = JSON.stringify(flat.map((w) => w.images));
-    if (newSig === sig) return;      // ничего не изменилось
-    sig = newSig;
-    all = flat;
     buildFilters(data.categories || []);
-    applyFilter(keepView && all.some((w) => w.category === filter || filter === 'все') ? filter : 'все');
+    applyFilter('все');
   }
 
   /* ---------- фильтры ---------- */
   function buildFilters(categories) {
-    const cats = ['все', ...categories.filter((c) => (c.works || []).length).map((c) => c.id)];
+    const cats = categories.filter((c) => (c.works || []).length);
     els.filters.innerHTML = '';
-    cats.forEach((id) => {
+    [{ id: 'все', label: 'Все работы' }, ...cats].forEach((c) => {
       const b = document.createElement('button');
-      b.className = 'chip' + (id === filter ? ' active' : '');
-      b.textContent = id === 'все' ? 'Все работы' : (CAT_LABELS[id] || id);
-      b.dataset.cat = id;
-      b.addEventListener('click', () => applyFilter(id));
+      b.className = 'chip' + (c.id === filter ? ' active' : '');
+      b.textContent = c.label;
+      b.dataset.cat = c.id;
+      b.addEventListener('click', () => applyFilter(c.id));
       els.filters.appendChild(b);
     });
   }
@@ -141,20 +96,32 @@
     els.strip.innerHTML = '';
     list.forEach((w, i) => {
       const b = document.createElement('button');
-      b.className = 'thumb';
-      b.innerHTML = `<img src="${w.images[0]}" alt="${w.title}" loading="lazy">`;
-      if (w.group) b.insertAdjacentHTML('beforeend', '<span class="thumb-badge">' + w.images.length + '</span>');
+      b.className = 'thumb' + (w.type === 'text' ? ' text-thumb' : '');
+      if (w.type === 'text') b.innerHTML = '<span>Т</span>';
+      else b.innerHTML = `<img src="${w.images[0]}" alt="${w.title}" loading="lazy">`;
+      if (w.group) b.insertAdjacentHTML('beforeend', `<span class="thumb-badge">${w.images.length}</span>`);
       b.addEventListener('click', () => go(i));
       els.strip.appendChild(b);
     });
   }
 
-  /* ---------- отрисовка ---------- */
+  /* ---------- отрисовка центра ---------- */
   function fillLayer(layer, w) {
-    const n = w.images.length;
-    layer.classList.toggle('multi', n > 1);
-    layer.classList.toggle('single', n === 1);
+    layer.classList.remove('multi', 'single', 'text');
     layer.innerHTML = '';
+    if (w.type === 'text') {
+      layer.classList.add('text');
+      const card = document.createElement('div');
+      card.className = 'text-card';
+      const preview = w.body.length > 320 ? w.body.slice(0, 320).trim() + '…' : w.body;
+      card.innerHTML = `<h3></h3><p></p><span class="read">Читать</span>`;
+      card.querySelector('h3').textContent = w.title;
+      card.querySelector('p').textContent = preview;
+      layer.appendChild(card);
+      return;
+    }
+    const n = w.images.length;
+    layer.classList.add(n > 1 ? 'multi' : 'single');
     w.images.forEach((src) => {
       const img = new Image();
       img.src = src;
@@ -162,6 +129,18 @@
       if (n > 1) img.style.maxWidth = `calc((min(88vw, 1120px) - ${n - 1} * 1.2rem) / ${n})`;
       layer.appendChild(img);
     });
+  }
+
+  function setSide(sideEl, imgEl, w) {
+    if (w.type === 'text') {
+      sideEl.classList.add('is-text');
+      sideEl.dataset.label = w.title;
+      imgEl.removeAttribute('src');
+    } else {
+      sideEl.classList.remove('is-text');
+      imgEl.src = w.images[0];
+      imgEl.alt = w.title;
+    }
   }
 
   function metaHtml(w) {
@@ -184,8 +163,8 @@
     const prev = list[(current - 1 + n) % n];
     const next = list[(current + 1) % n];
 
-    els.leftImg.src = prev.images[0]; els.leftImg.alt = prev.title;
-    els.rightImg.src = next.images[0]; els.rightImg.alt = next.title;
+    setSide(els.left, els.leftImg, prev);
+    setSide(els.right, els.rightImg, next);
     els.left.style.display = n > 1 ? '' : 'none';
     els.right.style.display = n > 1 ? '' : 'none';
 
@@ -193,6 +172,7 @@
     const hideEl = usingA ? els.layerA : els.layerB;
     fillLayer(showEl, w);
     els.stack.classList.toggle('is-group', w.group);
+    els.stack.classList.toggle('is-text', w.type === 'text');
 
     showEl.classList.remove('enter-left', 'enter-right');
     if (dir === 1) showEl.classList.add('enter-right');
@@ -270,11 +250,13 @@
     els.lb.addEventListener('click', (e) => { if (e.target === els.lb || e.target === els.lbImg) closeLightbox(); });
   }
 
-  /* ---------- лайтбокс (с листанием частей серии) ---------- */
+  /* ---------- лайтбокс ---------- */
   function openLightbox() {
     if (!list.length) return;
+    const w = list[current];
     lbIndex = 0;
-    els.lb.classList.toggle('single', list[current].images.length < 2);
+    els.lb.classList.toggle('single', w.type === 'text' || w.images.length < 2);
+    els.lb.classList.toggle('is-text', w.type === 'text');
     fillLightbox();
     els.lb.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -282,13 +264,27 @@
   }
   function fillLightbox() {
     const w = list[current];
+    if (w.type === 'text') {
+      els.lbImg.style.display = 'none';
+      els.lbText.style.display = '';
+      els.lbText.innerHTML = '';
+      const h = document.createElement('h3'); h.textContent = w.title; els.lbText.appendChild(h);
+      w.body.split(/\n\s*\n/).filter(Boolean).forEach((par) => {
+        const p = document.createElement('p'); p.textContent = par; els.lbText.appendChild(p);
+      });
+      els.lbCap.textContent = w.categoryLabel;
+      return;
+    }
+    els.lbImg.style.display = '';
+    els.lbText.style.display = 'none';
     els.lbImg.src = w.images[lbIndex];
     els.lbImg.alt = w.title;
-    els.lbCap.textContent = w.images.length > 1 ? `${w.title} · ${lbIndex + 1}/${w.images.length}` : w.title;
+    const parts = w.images.length > 1 ? ` · ${lbIndex + 1}/${w.images.length}` : '';
+    els.lbCap.textContent = (w.info ? `${w.title} — ${w.info}` : w.title) + parts;
   }
   function lbStep(d) {
     const w = list[current];
-    if (w.images.length < 2) return;
+    if (w.type === 'text' || w.images.length < 2) return;
     lbIndex = (lbIndex + d + w.images.length) % w.images.length;
     fillLightbox();
   }

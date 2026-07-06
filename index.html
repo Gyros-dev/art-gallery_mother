@@ -67,7 +67,9 @@
       const strip = document.querySelector('[data-strip]');
       const works = [];
       (data.categories || []).forEach((c) =>
-        (c.works || []).forEach((w) => works.push({ ...w, label: c.label }))
+        (c.works || []).forEach((w) => {
+          if (w.images && w.images.length) works.push({ ...w, label: c.label });
+        })
       );
       // по паре из каждой категории, вперемешку
       works

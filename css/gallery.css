@@ -101,6 +101,55 @@
 .cf-center .layer.show { opacity: 1; position: relative; }
 /* серия: несколько частей в ряд, размер задаётся из JS */
 .cf-center .layer.multi img { max-height: 52vh; }
+
+/* текстовая работа в центре */
+.cf-center .stack.is-text { max-width: min(60vw, 640px); }
+.text-card {
+  background: color-mix(in srgb, var(--cream) 75%, transparent);
+  border: 1px solid var(--line);
+  padding: clamp(1.6rem, 4vw, 3rem);
+  max-height: 52vh; overflow: hidden;
+  text-align: left;
+  box-shadow: 0 30px 70px -35px rgba(33,28,23,0.7);
+}
+.text-card h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.8rem; }
+.text-card p { font-size: 0.98rem; color: var(--ink-soft); white-space: pre-line; }
+.text-card .read {
+  display: inline-block; margin-top: 1rem;
+  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra);
+}
+
+/* боковой превью для текстовой работы */
+.cf-side.is-text img { display: none; }
+.cf-side.is-text {
+  display: flex !important; align-items: center; justify-content: center;
+  min-height: 30vh; padding: 1.2rem;
+  background: color-mix(in srgb, var(--cream) 70%, transparent);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 40px -22px rgba(33,28,23,0.8);
+}
+.cf-side.is-text::after {
+  content: attr(data-label);
+  font-family: var(--serif); font-size: 1.1rem; color: var(--ink-soft);
+  text-align: center; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* миниатюра текстовой работы */
+.thumb.text-thumb {
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--cream) 80%, transparent);
+}
+.thumb.text-thumb span { font-family: var(--serif); font-size: 1.5rem; color: var(--ink-soft); }
+
+/* текст в лайтбоксе */
+.lightbox .lb-text {
+  max-width: min(46rem, 92vw); max-height: 80vh; overflow-y: auto;
+  background: var(--cream); color: var(--ink);
+  padding: clamp(1.8rem, 5vw, 3.4rem);
+}
+.lightbox .lb-text h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.6rem, 3.4vw, 2.4rem); margin-bottom: 1rem; }
+.lightbox .lb-text p { margin-bottom: 1em; line-height: 1.7; }
 .cf-center .layer.enter-left { transform: translateX(-40px) scale(0.97); }
 .cf-center .layer.enter-right { transform: translateX(40px) scale(0.97); }
 
