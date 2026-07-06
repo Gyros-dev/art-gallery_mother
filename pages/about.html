@@ -1,49 +1,62 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Анна Векслер — Художник</title>
-    <link rel="stylesheet" href="../css/base.css" />
-    <link rel="stylesheet" href="../css/navbar.css" />
-    <link rel="stylesheet" href="../css/about.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Художник — Анна Векслер</title>
+  <meta name="description" content="Анна Векслер — российский художник декоративного искусства, мастер ручного ткачества.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/about.css">
 </head>
 <body>
 
-<div id="navbar-placeholder"></div>
+  <div id="navbar-placeholder"></div>
 
-<section class="about-section">
-    <div class="about-text">
-        <h1>Анна Векслер</h1>
-        <p>Анна Кирилловна Векслер — российский художник декоративного искусства, мастер ручного ткачества, кандидат педагогических наук и доцент кафедры декоративно-прикладного искусства факультета изобразительного искусства РГПУ им. А. И. Герцена. Родилась в 1972 году в Ленинграде (ныне Санкт-Петербург). Член Союза художников России с 2001 года.</p>
-        <p>В своём творчестве Анна Векслер сочетает традиционные техники ручного ткачества с современными материалами, создавая абстрактные композиции и коллажи. Её работы отличаются философским подходом к теме времени и пространства, а также тонким чувством колорита и формы. Художница активно участвует в выставочной деятельности: на её счету более 80 художественных экспозиций и 15 персональных выставок. Произведения Анны Векслер находятся в собраниях музеев и частных коллекциях России, Германии, Швеции, Финляндии, США и Венгрии.</p>
-        <p>Помимо художественной деятельности, Анна Векслер занимается педагогической работой, обучая студентов традициям и инновациям в декоративно-прикладном искусстве. Её подход к творчеству основан на глубоком уважении к материалу и стремлении к гармонии между идеей и её воплощением.</p>
+  <main class="about-wrap">
+    <section class="about-hero">
+      <div class="txt">
+        <p class="role reveal">Художник · мастер ручного ткачества</p>
+        <h1 class="reveal d1">Анна Векслер</h1>
+        <p class="reveal d1">Российский художник декоративного искусства, кандидат педагогических наук и доцент кафедры декоративно-прикладного искусства РГПУ им. А. И. Герцена. Член Союза художников России с 2001 года.</p>
+        <p class="reveal d2">В своём творчестве Анна Векслер сочетает традиционные техники ручного ткачества с современными материалами, создавая абстрактные композиции и коллажи. Её работы отличаются философским подходом к теме времени и пространства, тонким чувством колорита и формы.</p>
+        <p class="reveal d3">Произведения художницы находятся в собраниях музеев и частных коллекциях России, Германии, Швеции, Финляндии, США и Венгрии. Помимо творчества, Анна занимается педагогической работой, обучая студентов традициям и инновациям в декоративно-прикладном искусстве.</p>
+      </div>
+      <div class="about-portrait reveal d2">
+        <span class="thread" aria-hidden="true"></span>
+        <div class="frame">
+          <img src="../images/other/artist.jpg" alt="Анна Векслер" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <section class="stats reveal">
+      <div class="stat"><div class="num">80+</div><div class="lbl">выставок</div></div>
+      <div class="stat"><div class="num">15</div><div class="lbl">персональных</div></div>
+      <div class="stat"><div class="num">2001</div><div class="lbl">в Союзе художников</div></div>
+    </section>
+
+    <section class="contact-block reveal">
+      <h2>Контакты</h2>
+      <p>📧 <a href="mailto:anna.veksler@example.com">anna.veksler@example.com</a></p>
+      <p>📍 Санкт-Петербург, Россия</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-name">Анна Векслер</p>
+    <div class="footer-links">
+      <a href="gallery.html">Галерея</a>
+      <a href="exhibitions.html">Выставки</a>
+      <a href="literature.html">Литература</a>
+      <a href="about.html">Художник</a>
     </div>
+    <p class="footer-note">© <span data-year></span> · Санкт-Петербург</p>
+  </footer>
 
-    <div class="about-image">
-        <img src="https://gyros-dev.github.io/art-gallery_mother/images/other/artist.jpg" alt="Анна Векслер" />
-    </div>
-</section>
-
-<div class="contact-block">
-    <h2>Контакты</h2>
-    <p>📧 <a href="mailto:anna.veksler@example.com">anna.veksler@example.com</a></p>
-    <p>📍 Санкт-Петербург, Россия</p>
-</div>
-
-<script>
-    fetch('navbar.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('navbar-placeholder').innerHTML = data;
-            const current = location.pathname.split('/').pop();
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                if (link.getAttribute('href') === current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-</script>
-
+  <script src="../js/common.js"></script>
 </body>
 </html>

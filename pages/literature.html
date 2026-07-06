@@ -1,82 +1,94 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Литература</title>
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/literature.css">
-    <link rel="stylesheet" href="../css/overlay.css">
-    <!--    <link rel="stylesheet" href="css/layout.css">-->
-    <!--    <link rel="stylesheet" href="css/gallery.css">-->
-    <!--    <link rel="stylesheet" href="css/tooltip.css">-->
-    <!--    <link rel="stylesheet" href="css/about.css">-->
-    <!--    <link rel="stylesheet" href="css/exhibitions.css">-->
-    <!--    <link rel="stylesheet" href="css/animations.css">-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Литература — Анна Векслер</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/literature.css">
 </head>
 <body>
 
-<div id="navbar-placeholder"></div>
+  <div id="navbar-placeholder"></div>
 
-<main class="content">
-    <h1>Литературные материалы</h1>
-    <ul class="literature-list">
-        <li><a href="#" data-pdf="/art-gallery_mother/docs/AV_Ruchnoe_tkachestvo.pdf">Ручное ткачество. Учебно-методическое пособие</a></li>
-        <li><a href="#" data-pdf="../docs/искусствоведение.pdf">Основы искусствоведения</a></li>
-        <li><a href="#" data-pdf="../docs/пособие_по_цвету.pdf">Пособие по цветоведению</a></li>
-    </ul>
-
-    <div id="pdf-overlay" style="display: none;">
-        <iframe id="pdf-viewer" src="" style="border: none;"></iframe>
+  <main class="page">
+    <div class="section-head reveal">
+      <span class="section-num">03</span>
+      <h1>Литература</h1>
+      <p class="section-sub">Учебные и научные материалы</p>
     </div>
 
-</main>
+    <ul class="literature-list">
+      <li class="reveal">
+        <button class="lit-link" data-pdf="docs/AV_Ruchnoe_tkachestvo.pdf">
+          <span class="lit-num">01</span>
+          <span class="lit-body">
+            <span class="lit-title">Ручное ткачество</span>
+            <span class="lit-kind">Учебно-методическое пособие</span>
+          </span>
+          <span class="lit-arrow">↗</span>
+        </button>
+      </li>
+      <li class="reveal d1">
+        <button class="lit-link" disabled>
+          <span class="lit-num">02</span>
+          <span class="lit-body">
+            <span class="lit-title">Основы искусствоведения</span>
+            <span class="lit-kind">Готовится к публикации</span>
+          </span>
+          <span class="lit-arrow">↗</span>
+        </button>
+      </li>
+      <li class="reveal d2">
+        <button class="lit-link" disabled>
+          <span class="lit-num">03</span>
+          <span class="lit-body">
+            <span class="lit-title">Пособие по цветоведению</span>
+            <span class="lit-kind">Готовится к публикации</span>
+          </span>
+          <span class="lit-arrow">↗</span>
+        </button>
+      </li>
+    </ul>
+  </main>
 
-<script>
-    fetch('navbar.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('navbar-placeholder').innerHTML = data;
-            // Выделение активной ссылки:
-            const current = location.pathname.split('/').pop();
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                if (link.getAttribute('href') === current) {
-                    link.classList.add('active');
-                }
-            });
+  <div id="pdf-overlay">
+    <div id="pdf-close">×</div>
+    <iframe id="pdf-viewer" src="" title="Просмотр документа"></iframe>
+  </div>
+
+  <footer class="site-footer">
+    <p class="footer-name">Анна Векслер</p>
+    <div class="footer-links">
+      <a href="gallery.html">Галерея</a>
+      <a href="exhibitions.html">Выставки</a>
+      <a href="literature.html">Литература</a>
+      <a href="about.html">Художник</a>
+    </div>
+    <p class="footer-note">© <span data-year></span> · Санкт-Петербург</p>
+  </footer>
+
+  <script src="../js/common.js"></script>
+  <script>
+    (function () {
+      const overlay = document.getElementById('pdf-overlay');
+      const viewer = document.getElementById('pdf-viewer');
+      document.querySelectorAll('.lit-link[data-pdf]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          viewer.src = `${BASE}/${btn.dataset.pdf}`;
+          overlay.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
         });
-</script>
-
+      });
+      function close() { overlay.style.display = 'none'; viewer.src = ''; document.body.style.overflow = ''; }
+      document.getElementById('pdf-close').addEventListener('click', close);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.style.display === 'flex') close(); });
+    })();
+  </script>
 </body>
 </html>
-
-<script>
-    const links = document.querySelectorAll('.literature-list a');
-    const viewer = document.getElementById('pdf-viewer');
-    const overlay = document.getElementById('pdf-overlay');
-
-    links.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            viewer.src = link.getAttribute('data-pdf');
-            overlay.style.display = 'flex';
-        });
-    });
-
-    // Закрытие по клику вне iframe
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-            overlay.style.display = 'none';
-            viewer.src = ''; // очистка
-        }
-    });
-
-    // Закрытие по Esc
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            overlay.style.display = 'none';
-            viewer.src = '';
-        }
-    });
-</script>

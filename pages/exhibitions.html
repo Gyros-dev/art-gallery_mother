@@ -1,109 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Выставки</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/exhibitions.css">
-    <link rel="stylesheet" href="../css/overlay.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Выставки — Анна Векслер</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/exhibitions.css">
 </head>
 <body>
 
-<div id="navbar-placeholder"></div>
+  <div id="navbar-placeholder"></div>
 
-<!--<main class="content">-->
-<!--&lt;!&ndash;    <h1>Расписание выставок</h1>&ndash;&gt;-->
+  <main class="page">
+    <div class="section-head reveal">
+      <span class="section-num">02</span>
+      <h1>Выставки</h1>
+      <p class="section-sub">Экспозиции и участие</p>
+    </div>
 
-<!--    <section>-->
-<!--        <h2>Текущие и будущие выставки</h2>-->
-<!--        <div id="upcoming-exhibitions" class="exhibition-list"></div>-->
-<!--    </section>-->
-
-<!--    <section>-->
-<!--        <h2>Архив</h2>-->
-<!--        <div id="past-exhibitions" class="exhibition-list"></div>-->
-<!--    </section>-->
-<!--</main>-->
-
-<main class="content">
-<!--    <h1>Расписание выставок</h1>-->
-    <br>
-    <section>
-        <h2>Текущие и будущие выставки</h2>
-        <div id="upcoming-exhibitions" class="exhibition-list"></div>
+    <section class="exh-group">
+      <h2>Текущие и будущие</h2>
+      <div class="timeline" id="upcoming-exhibitions"></div>
     </section>
 
-    <section id="archive-section">
-        <h2>Архив</h2>
-        <div id="past-exhibitions" class="exhibition-list collapsed"></div>
+    <section class="exh-group">
+      <h2>Архив</h2>
+      <div class="timeline" id="past-exhibitions"></div>
     </section>
-</main>
+  </main>
 
-<!-- Оверлей предпросмотра -->
-<div id="preview-overlay" style="display: none;">
+  <div id="preview-overlay">
     <div id="preview-close">×</div>
-    <iframe id="preview-frame" src="" style="border: none;"></iframe>
-</div>
+    <iframe id="preview-frame" src="" title="Предпросмотр выставки"></iframe>
+  </div>
 
-<script src="../js/load-navbar.js"></script>
+  <footer class="site-footer">
+    <p class="footer-name">Анна Векслер</p>
+    <div class="footer-links">
+      <a href="gallery.html">Галерея</a>
+      <a href="exhibitions.html">Выставки</a>
+      <a href="literature.html">Литература</a>
+      <a href="about.html">Художник</a>
+    </div>
+    <p class="footer-note">© <span data-year></span> · Санкт-Петербург</p>
+  </footer>
 
-<script>
-    fetch('../data/exhibitions.json')
-        .then(res => res.json())
-        .then(data => {
-            const upcomingContainer = document.getElementById('upcoming-exhibitions');
-            const pastContainer = document.getElementById('past-exhibitions');
-
-            data.forEach(item => {
-                const card = document.createElement('article');
-                card.className = 'exhibition-card';
-
-                const content = document.createElement('div');
-                content.className = 'exhibition-content';
-                content.innerHTML = `
-                <h2>${item.title}</h2>
-                <p class="exhibition-date">${item.date}</p>
-                <p class="exhibition-location">${item.location}</p>
-                <p class="exhibition-description">${item.description}</p>
-            `;
-
-                const arrow = document.createElement('div');
-                arrow.className = 'exhibition-arrow';
-                arrow.innerHTML = '→';
-
-                card.appendChild(content);
-                card.appendChild(arrow);
-
-                if (item.url) {
-                    card.classList.add('clickable');
-                    card.addEventListener('click', () => {
-                        document.getElementById('preview-frame').src = item.url;
-                        document.getElementById('preview-overlay').style.display = 'flex';
-                    });
-                }
-
-                if (item.status === 'past') {
-                    pastContainer.appendChild(card);
-                } else {
-                    upcomingContainer.appendChild(card);
-                }
-            });
-        });
-
-    document.getElementById('preview-close').addEventListener('click', () => {
-        document.getElementById('preview-overlay').style.display = 'none';
-        document.getElementById('preview-frame').src = '';
-    });
-
-    document.getElementById('preview-overlay').addEventListener('click', (e) => {
-        if (e.target.id === 'preview-overlay') {
-            document.getElementById('preview-overlay').style.display = 'none';
-            document.getElementById('preview-frame').src = '';
-        }
-    });
-</script>
-
+  <script src="../js/common.js"></script>
+  <script src="../js/exhibitions.js"></script>
 </body>
 </html>

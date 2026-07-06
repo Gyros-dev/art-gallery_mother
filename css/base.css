@@ -1,27 +1,283 @@
-html, body {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* ============================================================
+   Анна Векслер — галерея. Базовый слой: палитра, типографика,
+   бумага, зерно, навбар, подвал, служебные анимации.
+   Палитра выведена из работ художницы: индиго, бирюза,
+   терракота, золото, тёплый песок, графит.
+   ============================================================ */
+:root {
+  --paper: #ece3d2;
+  --paper-2: #e3d8c2;
+  --paper-deep: #d8ccb2;
+  --ink: #211c17;
+  --ink-soft: #6c6152;
+  --line: rgba(33, 28, 23, 0.15);
+
+  --indigo: #1f3a4d;
+  --teal: #2f6d7e;
+  --terra: #b0512b;
+  --rust: #9a3820;
+  --gold: #c1934a;
+  --cream: #f4ecdb;
+
+  --accent: var(--terra);
+
+  --serif: "Cormorant Garamond", "Times New Roman", serif;
+  --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-weave: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --nav-h: 68px;
+  --maxw: 1280px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-    background: #f3f3f3 url('../images/other/paper-texture.jpg') repeat;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 40px;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.65;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
+    url("../images/other/paper-texture.jpg");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 60vh, 480px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
-body::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 25%);
-    z-index: 0;
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; background: none; border: none; }
+
+::selection { background: var(--terra); color: var(--cream); }
+
+/* Плёнка-зерно поверх всего */
+.grain {
+  position: fixed;
+  inset: -60%;
+  width: 220%; height: 220%;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(5) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  20% { transform: translate(-4%,3%); }
+  40% { transform: translate(3%,-4%); }
+  60% { transform: translate(-3%,-3%); }
+  80% { transform: translate(4%,4%); }
+}
+
+/* ============ Навбар ============ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--paper) 78%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid var(--line);
+  transition: transform 0.5s var(--ease), background 0.4s;
+}
+.navbar.nav-hidden { transform: translateY(-100%); }
+
+.nav-content {
+  width: 92%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.logo-mark {
+  width: 22px; height: 22px;
+  flex: none;
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(90deg, var(--indigo) 0 2px, transparent 2px 4px),
+    linear-gradient(180deg, var(--terra), var(--gold));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+}
+
+.nav-links {
+  display: flex;
+  gap: clamp(1.1rem, 3vw, 2.4rem);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.nav-links a {
+  position: relative;
+  padding: 0.35rem 0;
+  color: var(--ink-soft);
+  transition: color 0.3s;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after,
+.nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+.nav-links a.active { color: var(--ink); }
+
+.nav-toggle { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 3; }
+.nav-toggle span {
+  width: 24px; height: 2px; background: var(--ink);
+  transition: transform 0.35s var(--ease), opacity 0.3s;
+}
+
+/* ============ Заголовки секций ============ */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.3rem;
+  margin-bottom: clamp(2rem, 5vw, 3.6rem);
+  border-bottom: 1px solid var(--line);
+}
+.section-num {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.section-head h1, .section-head h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.1rem, 5.5vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.section-sub {
+  margin-left: auto;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ============ Кнопки ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.7rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  border-radius: 100px;
+  transition: background 0.4s var(--ease), color 0.4s, border-color 0.4s, transform 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+.btn:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+.btn.solid { background: var(--ink); color: var(--paper); }
+.btn.solid:hover { background: var(--terra); border-color: var(--terra); }
+.btn .arrow { transition: transform 0.4s var(--ease); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* ============ Подвал ============ */
+.site-footer {
+  position: relative;
+  z-index: 2;
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem 2.4rem;
+  text-align: center;
+}
+.footer-name {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 6vw, 3.4rem);
+  font-weight: 500;
+  margin-bottom: 1.4rem;
+}
+.footer-links {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 1.6rem;
+  font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.footer-links a {
+  color: color-mix(in srgb, var(--paper) 70%, transparent);
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+.footer-links a:hover { color: var(--paper); border-color: var(--gold); }
+.footer-note {
+  margin-top: 2.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--paper) 42%, transparent);
+}
+
+/* ============ Появление при скролле ============ */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: 0.08s; }
+.reveal.d2 { transition-delay: 0.16s; }
+.reveal.d3 { transition-delay: 0.24s; }
+.reveal.d4 { transition-delay: 0.32s; }
+
+/* ============ Мобильные ============ */
+@media (max-width: 760px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    position: fixed;
+    inset: var(--nav-h) 0 auto 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+    padding: 2.4rem 1rem 2.8rem;
+    background: color-mix(in srgb, var(--paper) 96%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    font-size: 0.85rem;
+    transform: translateY(-120%);
+    transition: transform 0.5s var(--ease);
+  }
+  .navbar.open .nav-links { transform: none; }
+  .navbar.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .navbar.open .nav-toggle span:nth-child(2) { opacity: 0; }
+  .navbar.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .section-sub { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .grain { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.05ms !important; }
 }

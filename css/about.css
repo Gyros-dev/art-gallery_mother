@@ -1,120 +1,94 @@
-.about-section {
-    max-width: 1200px;
-    margin: 100px auto 80px auto;
-    padding: 0 24px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 48px;
-    color: #1d1d1f;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+/* Художник — биография с портретом */
 
+.about-wrap {
+  position: relative; z-index: 2;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: calc(var(--nav-h) + clamp(2.5rem, 6vw, 5rem)) clamp(1.2rem, 5vw, 3rem) clamp(3rem, 7vw, 5rem);
 }
 
-.about-text {
-    flex: 1 1 60%;
-    max-width: 460px;
-    max-height: 60vh; /* фиксированная высота */
-    overflow-y: auto; /* включаем вертикальный скролл */
-    padding-right: 1rem;
+.about-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+.about-hero .txt h1 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2.6rem, 7vw, 5rem); line-height: 1;
+  letter-spacing: -0.015em; margin-bottom: 0.5rem;
+}
+.about-hero .role {
+  font-size: 0.76rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--terra); margin-bottom: 1.8rem;
+}
+.about-hero .txt p {
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  margin-bottom: 1.1rem; color: var(--ink);
+}
+.about-hero .txt p:first-of-type { font-family: var(--serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem); line-height: 1.45; color: var(--ink); }
+
+.about-portrait {
+  position: relative;
+}
+.about-portrait .frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-deep);
+  box-shadow: 0 40px 80px -40px rgba(33,28,23,0.85);
+}
+.about-portrait img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+  transition: transform 1.4s var(--ease);
+}
+.about-portrait:hover img { transform: scale(1.04); }
+.about-portrait .frame::after {
+  content: ""; position: absolute; inset: 0;
+  border: 1px solid rgba(255,255,255,0.25);
+  pointer-events: none;
+}
+.about-portrait .thread {
+  position: absolute; left: -14px; top: 30px; bottom: 30px;
+  width: 4px;
+  background: repeating-linear-gradient(180deg, var(--terra) 0 8px, var(--gold) 8px 16px, var(--indigo) 16px 24px);
+  opacity: 0.85;
 }
 
-.about-text h1 {
-    font-size: 36px;
-    margin-bottom: 24px;
-    font-weight: 600;
-    color: #000;
-    letter-spacing: -0.5px;
+/* Статистика */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin: clamp(3rem, 7vw, 5rem) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: clamp(1.6rem, 4vw, 2.4rem) 0;
+}
+.stat { text-align: center; }
+.stat .num {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 1;
+  color: var(--terra);
+}
+.stat .lbl {
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-soft); margin-top: 0.5rem;
 }
 
-.about-text p {
-    font-size: 16px;
-    line-height: 1.65;
-    color: #444;
-    font-weight: 400;
-}
-
-.about-image {
-    flex: 1 1 300px;
-    max-width: 400px;
-
-}
-
-.about-image img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 12px 36px rgba(110, 107, 107, 0.3);
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.about-image img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
-}
-
-
-
-.contact-block {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px 20px;
-    background: rgba(248, 248, 248, 0.95);
-    border-top: 1px solid rgba(200, 200, 200, 0.4);
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.05);
-    z-index: 100;
-}
-
+/* Контакты */
+.contact-block { text-align: center; padding-bottom: clamp(2rem, 5vw, 3rem); }
 .contact-block h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #000;
-    margin: 6px 0;
-    letter-spacing: -0.3px;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 1.2rem;
 }
+.contact-block p { font-size: 1rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+.contact-block a { color: var(--terra); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+.contact-block a:hover { border-color: var(--terra); }
 
-.contact-block p {
-    font-size: 14px;
-    color: #444;
-    margin: 4px 0;
-    letter-spacing: -0.2px;
-}
-
-.contact-block a {
-    color: #007aff;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.contact-block a:hover {
-    color: #005bb5;
-    text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-    .about-section {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .about-text h1 {
-        font-size: 32px;
-    }
-
-    .about-text p {
-        font-size: 16px;
-    }
-
-    .about-image {
-        max-width: 100%;
-    }
-
+@media (max-width: 860px) {
+  .about-hero { grid-template-columns: 1fr; }
+  .about-portrait { max-width: 420px; margin: 0 auto; order: -1; }
+  .stats { grid-template-columns: 1fr; gap: 1.6rem; }
 }

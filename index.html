@@ -1,11 +1,79 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; URL=pages/gallery.html">
-    <title>Секунду...</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Анна Векслер — художник, ручное ткачество и коллаж</title>
+  <meta name="description" content="Онлайн-галерея художника Анны Векслер: гобелены ручного ткачества и текстильные коллажи. Выставки, публикации, биография.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/hero.css">
 </head>
 <body>
-<p>Если вы не были перенаправлены, <a href="pages/gallery.html">нажмите здесь</a>.</p>
+
+  <div id="navbar-placeholder"></div>
+
+  <header class="hero" id="top">
+    <canvas id="loom" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <p class="hero-kicker reveal">Художник · ручное ткачество</p>
+      <h1 class="hero-title reveal d1">Анна <span class="thin">Векслер</span></h1>
+      <p class="hero-tagline reveal d2">Гобелен · коллаж · текстильное искусство</p>
+      <div class="hero-cta reveal d3">
+        <a class="btn solid" href="pages/gallery.html">Смотреть работы <span class="arrow">→</span></a>
+        <a class="btn" href="pages/about.html">О художнике</a>
+      </div>
+    </div>
+    <a class="scroll-hint" href="#intro" aria-label="Ниже"><span></span></a>
+  </header>
+
+  <main>
+    <section class="intro" id="intro">
+      <p class="reveal">Более <strong>80 выставок</strong> и <strong>15 персональных</strong> экспозиций. Работы — в музеях и частных собраниях России, Германии, Швеции, Финляндии, США и Венгрии.</p>
+      <p class="lead reveal d1">Традиции ручного ткачества, сплетённые с современными материалами: абстракция, коллаж и философия времени в нити.</p>
+    </section>
+
+    <section class="featured">
+      <div class="section-head reveal">
+        <span class="section-num">—</span>
+        <h2>Избранное</h2>
+        <p class="section-sub">Гобелены и коллажи</p>
+      </div>
+      <div class="strip" data-strip></div>
+      <div class="more reveal">
+        <a class="btn" href="pages/gallery.html">Вся галерея <span class="arrow">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-name">Анна Векслер</p>
+    <div class="footer-links">
+      <a href="pages/gallery.html">Галерея</a>
+      <a href="pages/exhibitions.html">Выставки</a>
+      <a href="pages/literature.html">Литература</a>
+      <a href="pages/about.html">Художник</a>
+    </div>
+    <p class="footer-note">© <span data-year></span> · Санкт-Петербург</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    initLoom(document.getElementById('loom'));
+    fetch('data/images.json').then((r) => r.json()).then((items) => {
+      const strip = document.querySelector('[data-strip]');
+      items.slice(0, 6).forEach((it) => {
+        const fig = document.createElement('figure');
+        fig.innerHTML = `
+          <div class="frame"><img src="${it.src}" alt="${it.title}" loading="lazy"></div>
+          <figcaption><h3>${it.title}</h3><span class="cat">${it.category}</span></figcaption>`;
+        fig.addEventListener('click', () => (location.href = 'pages/gallery.html'));
+        strip.appendChild(fig);
+      });
+    });
+  </script>
 </body>
 </html>
