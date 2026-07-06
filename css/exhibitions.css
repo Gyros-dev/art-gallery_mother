@@ -18,6 +18,12 @@
   content: ""; width: 26px; height: 2px; background: var(--terra);
 }
 
+.exh-empty {
+  color: var(--ink-soft); font-style: italic;
+  font-family: var(--serif); font-size: 1.3rem;
+  padding: 2rem 0;
+}
+
 /* Сворачиваемый архив */
 .archive-toggle {
   display: inline-flex; align-items: center; gap: 0.7rem;

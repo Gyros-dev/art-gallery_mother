@@ -27,13 +27,14 @@
         if (photos.length) actions.push(`<button class="exh-btn exh-photos">▦ Фотографии · ${photos.length}</button>`);
         if (item.url) actions.push(`<button class="exh-btn exh-site">Сайт выставки ↗</button>`);
 
+        const line = (cls, val) => (val ? `<p class="${cls}">${val}</p>` : '');
         card.innerHTML = `
           <div class="inner">
             <div class="exhibition-content">
               <h3>${item.title}${badge}</h3>
-              <p class="exhibition-date">${item.date}</p>
-              <p class="exhibition-location">${item.location}</p>
-              <p class="exhibition-description">${item.description}</p>
+              ${line('exhibition-date', item.date)}
+              ${line('exhibition-location', item.location)}
+              ${line('exhibition-description', item.description)}
               ${actions.length ? `<div class="exhibition-actions">${actions.join('')}</div>` : ''}
             </div>
             ${photos.length ? `<div class="exhibition-thumbs">${thumbs}</div>` : ''}
@@ -57,6 +58,13 @@
         (isPast ? past : upcoming).appendChild(card);
       });
 
+      // Секцию «Текущие и будущие» показываем только если есть такие выставки
+      const upcomingCount = data.filter((i) => i.status !== 'past').length;
+      const upcomingGroup = document.getElementById('upcoming-group');
+      if (upcomingGroup) upcomingGroup.hidden = upcomingCount === 0;
+      const emptyMsg = document.getElementById('exh-empty');
+      if (emptyMsg) emptyMsg.hidden = data.length !== 0;
+
       // Архив: показываем группу только если есть прошедшие, свёрнут по умолчанию
       const pastCount = data.filter((i) => i.status === 'past').length;
       const archiveGroup = document.getElementById('archive-group');
@@ -64,11 +72,14 @@
       if (pastCount && archiveGroup && toggle) {
         archiveGroup.hidden = false;
         document.getElementById('archive-count').textContent = pastCount;
-        toggle.addEventListener('click', () => {
-          const open = past.classList.toggle('collapsed') === false;
+        const setOpen = (open) => {
+          past.classList.toggle('collapsed', !open);
           toggle.classList.toggle('open', open);
           toggle.setAttribute('aria-expanded', String(open));
-        });
+        };
+        // если нет текущих выставок — архив сразу раскрыт
+        setOpen(upcomingCount === 0);
+        toggle.addEventListener('click', () => setOpen(past.classList.contains('collapsed')));
       }
 
       if (typeof initReveals === 'function') initReveals();

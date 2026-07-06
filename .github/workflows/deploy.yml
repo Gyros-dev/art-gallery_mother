@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -36,5 +36,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Публикация Pages иногда падает с временной ошибкой GitHub
+      # («Deployment failed, try again later») — делаем автоповтор.
       - id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Пауза перед повтором
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 20
+      - name: Повторная публикация
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
