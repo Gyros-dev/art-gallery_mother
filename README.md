@@ -70,9 +70,9 @@ git commit -m "Прокачанная версия галереи: арт-дир
 git push
 ```
 
-В настройках репозитория: **Settings → Pages → Source → GitHub Actions**
-(workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) публикует
-сайт при каждом пуше). Сборка не нужна — сайт статический.
+Публикация уже настроена: **Settings → Pages → Source → Deploy from a branch**,
+ветка `main`, папка `/` (root). GitHub сам пересобирает сайт при каждом пуше —
+сборка не нужна, сайт статический.
 
 ## Структура
 
