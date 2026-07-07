@@ -26,7 +26,7 @@ const TEXT_EXT = new Set(['.txt', '.md']);
 // Как назвать категорию (папку) на сайте. Незнакомые папки берут имя как есть.
 const CATEGORY_LABELS = { Gobelin: 'Гобелен', Collage: 'Коллаж' };
 // Порядок категорий (кто не указан — по алфавиту после указанных).
-const CATEGORY_ORDER = ['Gobelin', 'Collage'];
+const CATEGORY_ORDER = ['Гобелен', 'Коллаж', 'Арт-объект', 'Gobelin', 'Collage'];
 
 const byName = (a, b) => a.localeCompare(b, 'ru', { numeric: true, sensitivity: 'base' });
 const isImage = (f) => IMAGE_EXT.has(path.extname(f).toLowerCase());
