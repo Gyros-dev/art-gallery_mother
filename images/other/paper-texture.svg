@@ -1,0 +1,65 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="paperTexture" x="0" y="0" width="100%" height="100%">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.015"
+        numOctaves="5"
+        seed="8"
+        result="noise"
+      />
+      <feColorMatrix
+        in="noise"
+        type="matrix"
+        values="
+          0.45 0 0 0 0.62
+          0 0.42 0 0 0.56
+          0 0 0.36 0 0.48
+          0 0 0 0.18 0"
+        result="paperNoise"
+      />
+      <feBlend in="SourceGraphic" in2="paperNoise" mode="multiply"/>
+    </filter>
+
+    <filter id="fibers" x="0" y="0" width="100%" height="100%">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.08 0.012"
+        numOctaves="3"
+        seed="21"
+        result="fiberNoise"
+      />
+      <feColorMatrix
+        in="fiberNoise"
+        type="matrix"
+        values="
+          0.25 0 0 0 0.72
+          0 0.23 0 0 0.66
+          0 0 0.18 0 0.56
+          0 0 0 0.08 0"
+      />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="#eadfca" filter="url(#paperTexture)" />
+
+  <g opacity="0.35" filter="url(#fibers)">
+    <rect width="1200" height="800" fill="#ffffff"/>
+  </g>
+
+  <g opacity="0.14">
+    <path d="M40 120 C260 95, 430 150, 620 115 S980 75, 1160 130" fill="none" stroke="#8b7355" stroke-width="1"/>
+    <path d="M80 310 C280 280, 470 335, 690 300 S980 260, 1140 315" fill="none" stroke="#8b7355" stroke-width="0.8"/>
+    <path d="M30 520 C240 500, 390 555, 650 520 S980 475, 1170 535" fill="none" stroke="#8b7355" stroke-width="1"/>
+    <path d="M100 700 C310 675, 500 730, 720 695 S1020 650, 1160 705" fill="none" stroke="#8b7355" stroke-width="0.7"/>
+  </g>
+
+  <g opacity="0.08">
+    <circle cx="160" cy="140" r="2" fill="#6d5438"/>
+    <circle cx="430" cy="260" r="1.6" fill="#6d5438"/>
+    <circle cx="870" cy="190" r="2.2" fill="#6d5438"/>
+    <circle cx="1020" cy="480" r="1.8" fill="#6d5438"/>
+    <circle cx="280" cy="610" r="2.4" fill="#6d5438"/>
+    <circle cx="760" cy="690" r="1.5" fill="#6d5438"/>
+  </g>
+</svg>

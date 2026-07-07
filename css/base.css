@@ -46,7 +46,9 @@ body {
   background-color: var(--paper);
   background-image:
     radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%),
-    url("../images/other/paper-texture.jpg");
+    /*url("../images/other/paper-texture.jpg");*/
+    /*url("../images/other/paper-texture.svg");*/
+    url("../images/other/paper-texture.png");
   background-repeat: no-repeat, repeat;
   background-size: 100% 60vh, 480px;
   -webkit-font-smoothing: antialiased;
