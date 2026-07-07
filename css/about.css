@@ -151,3 +151,32 @@
   .timeline-bio li, .honors li { grid-template-columns: 1fr; gap: 0.2rem; }
   .timeline-bio .yr, .honors .yr { font-size: 1.05rem; }
 }
+
+/* Полная биография — текстовые секции и списки */
+.about-text p {
+  font-size: clamp(0.98rem, 1.6vw, 1.08rem);
+  line-height: 1.7; margin-bottom: 0.9rem; color: var(--ink);
+}
+.num-list { list-style: none; counter-reset: n; display: grid; gap: 1rem; }
+.num-list li {
+  counter-increment: n;
+  position: relative; padding-left: 2.6rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem); line-height: 1.6;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--line);
+}
+.num-list li::before {
+  content: counter(n);
+  position: absolute; left: 0; top: 0;
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 500;
+  color: var(--terra); min-width: 1.8rem;
+}
+.dash-list { list-style: none; display: grid; gap: 0.9rem; }
+.dash-list li {
+  position: relative; padding-left: 1.4rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem); line-height: 1.6;
+  padding-bottom: 0.9rem; border-bottom: 1px solid var(--line);
+}
+.dash-list li::before {
+  content: ""; position: absolute; left: 0; top: 0.7em;
+  width: 10px; height: 2px; background: var(--gold);
+}

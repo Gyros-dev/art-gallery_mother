@@ -33,6 +33,8 @@ function initNavbar(navHtmlPath) {
       if (home) {
         home.setAttribute('href', IN_PAGES ? '../index.html' : 'index.html');
         home.addEventListener('click', () => { try { sessionStorage.setItem('loomReplay', '1'); } catch {} });
+        const mark = home.querySelector('.logo-mark');
+        if (mark && mark.tagName === 'IMG') mark.src = `${BASE}/assets/favicon-256.png`;
       }
 
       // Активная ссылка
@@ -185,24 +187,29 @@ function playLoomIntro() {
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(x + gap * 0.24, 0); ctx.lineTo(x + gap * 0.24, H); ctx.stroke();
     }
-    // горизонтальные нити утка ткутся слева направо, с шагом сверху вниз
+    // уток ткётся «змейкой» снизу вверх: нижняя строка слева направо,
+    // следующая справа налево, и так далее (как настоящий челнок)
     for (let j = 0; j < rows; j++) {
+      const order = (rows - 1) - j;                   // снизу вверх: нижняя строка первой
       const y = j * rgap + rgap / 2;
-      const rp = Math.max(0, Math.min((p - (0.2 + (j / rows) * 0.5)) / 0.34, 1));
+      const rp = Math.max(0, Math.min((p - (0.15 + (order / rows) * 0.6)) / 0.26, 1));
       if (rp <= 0) continue;
-      const reach = rp * W;
+      const ltr = (order % 2) === 0;                  // нижняя (order 0) — слева направо
+      const len = rp * W;
+      const lo = ltr ? 0 : W - len;                   // сотканный отрезок строки
+      const hi = ltr ? len : W;
       ctx.strokeStyle = 'rgba(228,216,192,0.97)';
       ctx.lineWidth = rgap * 0.44;
       ctx.beginPath();
-      for (let x = 0; x <= reach; x += 6) {
+      for (let x = lo; x <= hi; x += 6) {
         const yy = y + Math.sin(x * 0.03 + j) * 1.4;
-        x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+        x === lo ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
       }
       ctx.stroke();
       // переплетение: в шахматном порядке основа перекрывает уток (уходит назад)
       for (let i = 0; i <= cols; i++) {
         const x = i * gap;
-        if (x > reach) break;
+        if (x < lo || x > hi) continue;
         if (((i + j) & 1) === 0) {
           ctx.strokeStyle = 'rgba(250,247,240,0.96)';
           ctx.lineWidth = gap * 0.52;

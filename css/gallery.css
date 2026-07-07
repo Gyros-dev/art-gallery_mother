@@ -177,20 +177,18 @@
   position: absolute;
   top: 50%; transform: translateY(-50%);
   z-index: 6;
-  width: 52px; height: 52px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  font-size: 1.1rem;
-  color: var(--ink);
-  background: color-mix(in srgb, var(--paper) 60%, transparent);
-  backdrop-filter: blur(6px);
-  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  padding: 0; background: none; border: 0;
+  width: clamp(64px, 7vw, 104px);
+  filter: drop-shadow(0 6px 12px rgba(33,28,23,0.28));
+  opacity: 0.9;
+  transition: transform 0.3s var(--ease), opacity 0.3s;
 }
-.nav-arrow:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.nav-arrow.prev { left: clamp(0.4rem, 2vw, 1.6rem); }
-.nav-arrow.next { right: clamp(0.4rem, 2vw, 1.6rem); }
-.nav-arrow:hover.prev { transform: translateY(-50%) translateX(-3px); }
-.nav-arrow:hover.next { transform: translateY(-50%) translateX(3px); }
+.nav-arrow img { width: 100%; height: auto; display: block; }
+.nav-arrow:hover { opacity: 1; }
+.nav-arrow.prev { left: clamp(0.2rem, 1.5vw, 1.2rem); }
+.nav-arrow.next { right: clamp(0.2rem, 1.5vw, 1.2rem); }
+.nav-arrow:hover.prev { transform: translateY(-50%) translateX(-4px) scale(1.05); }
+.nav-arrow:hover.next { transform: translateY(-50%) translateX(4px) scale(1.05); }
 
 /* Информация о работе */
 .art-info {
