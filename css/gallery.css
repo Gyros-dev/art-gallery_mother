@@ -7,6 +7,20 @@
   flex-direction: column;
   overflow: hidden;
 }
+/* режим «Все работы» — сетка, страница прокручивается */
+.gallery-page.grid-mode {
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
+}
+
+.coverflow-view {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.coverflow-view[hidden], .works-grid[hidden] { display: none; }
 
 /* Фильтры по категориям */
 .gallery-filters {
@@ -155,22 +169,8 @@
 .cf-center .layer.enter-left { transform: translateX(-40px) scale(0.97); }
 .cf-center .layer.enter-right { transform: translateX(40px) scale(0.97); }
 
-/* «челнок» — тонкая нить, пробегающая при смене */
-.shuttle {
-  position: absolute; top: 0; bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, transparent, var(--terra), var(--gold), transparent);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-.shuttle.run { animation: shuttle 0.6s var(--ease-weave); }
-@keyframes shuttle {
-  0% { left: 0; opacity: 0; }
-  15% { opacity: 0.9; }
-  85% { opacity: 0.9; }
-  100% { left: 100%; opacity: 0; }
-}
+/* серия: клик по конкретной части открывает именно её */
+.cf-center .layer.multi img { cursor: zoom-in; }
 
 /* Стрелки */
 .nav-arrow {
@@ -296,4 +296,53 @@
 @media (max-width: 860px) {
   .cf-side { display: none; }
   .cf-center .stack, .cf-center img { max-width: 90vw; max-height: 56vh; }
+}
+
+/* ============ Сетка «Все работы» ============ */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: clamp(0.8rem, 2vw, 1.6rem);
+  padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+}
+.grid-card { cursor: pointer; display: flex; flex-direction: column; }
+.grid-media {
+  position: relative;
+  background: var(--cream);
+  aspect-ratio: 1 / 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px;
+  box-shadow: 0 16px 36px -24px rgba(33,28,23,0.75);
+  overflow: hidden;
+}
+.grid-media img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.7s var(--ease);
+}
+.grid-card:hover .grid-media img { transform: scale(1.05); }
+.grid-media.text span {
+  font-family: var(--serif); font-size: 3rem; color: var(--ink-soft);
+}
+.grid-badge {
+  position: absolute; right: 8px; bottom: 8px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  display: grid; place-items: center;
+  font-size: 0.62rem; color: var(--cream);
+  background: color-mix(in srgb, var(--ink) 78%, transparent);
+  border-radius: 9px;
+}
+.grid-card figcaption {
+  display: flex; align-items: baseline; gap: 0.6rem;
+  padding: 0.6rem 0.2rem 0;
+}
+.grid-card figcaption h3 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 1.05rem; line-height: 1.15;
+  transition: color 0.3s;
+}
+.grid-card:hover figcaption h3 { color: var(--terra); }
+.grid-card figcaption .cat {
+  margin-left: auto; flex: none;
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft);
 }

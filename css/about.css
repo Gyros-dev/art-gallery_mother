@@ -102,3 +102,52 @@
   .about-portrait { max-width: 420px; margin: 0 auto; order: -1; }
   .stats { grid-template-columns: 1fr; gap: 1.6rem; }
 }
+
+/* Биография — расширенные секции */
+.about-hero .txt .lead {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.45; color: var(--ink);
+}
+.about-section {
+  max-width: 60rem;
+  margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+}
+.about-section > h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.about-section > h2::before { content: ""; width: 28px; height: 2px; background: var(--terra); }
+
+.regalia { list-style: none; display: grid; gap: 0.7rem; }
+.regalia li {
+  position: relative; padding-left: 1.4rem;
+  font-size: clamp(0.98rem, 1.6vw, 1.08rem); color: var(--ink);
+}
+.regalia li::before {
+  content: ""; position: absolute; left: 0; top: 0.6em;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+}
+
+.timeline-bio, .honors { list-style: none; display: grid; gap: 1rem; }
+.timeline-bio li, .honors li {
+  display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem;
+  align-items: baseline;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--line);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+}
+.honors li { grid-template-columns: 5.5rem 1fr; }
+.timeline-bio .yr, .honors .yr {
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 500;
+  color: var(--terra); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.honors-note {
+  margin-top: 1.4rem; font-size: 0.98rem; color: var(--ink-soft); font-style: italic;
+}
+
+@media (max-width: 560px) {
+  .timeline-bio li, .honors li { grid-template-columns: 1fr; gap: 0.2rem; }
+  .timeline-bio .yr, .honors .yr { font-size: 1.05rem; }
+}

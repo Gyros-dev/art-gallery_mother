@@ -28,7 +28,11 @@ function initNavbar(navHtmlPath) {
       // Пути: из корня добавляем префикс pages/
       if (!IN_PAGES) {
         links.forEach((a) => (a.href = 'pages/' + a.getAttribute('href')));
-        if (home) home.setAttribute('href', 'pages/gallery.html');
+      }
+      // Логотип «Анна Векслер» ведёт на главную и запускает интро-анимацию
+      if (home) {
+        home.setAttribute('href', IN_PAGES ? '../index.html' : 'index.html');
+        home.addEventListener('click', () => { try { sessionStorage.setItem('loomReplay', '1'); } catch {} });
       }
 
       // Активная ссылка
@@ -137,6 +141,84 @@ function initLoom(canvas) {
   resize();
   addEventListener('resize', resize);
   frame();
+}
+
+/* ---- интро-анимация «ткацкий станок»: вертикальные белые нити основы,
+   сквозь которые ткутся светлые горизонтальные нити утка ---- */
+function playLoomIntro() {
+  if (REDUCED || document.querySelector('.loom-intro')) return;
+  const ov = document.createElement('div');
+  ov.className = 'loom-intro';
+  const cv = document.createElement('canvas');
+  const brand = document.createElement('div');
+  brand.className = 'brand';
+  brand.textContent = 'Анна Векслер';
+  ov.append(cv, brand);
+  document.body.appendChild(ov);
+  document.body.style.overflow = 'hidden';
+
+  const ctx = cv.getContext('2d');
+  let W, H, dpr, cols, gap, rows, rgap;
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.max(14, Math.floor(W / 44)); gap = W / cols;
+    rows = Math.max(12, Math.floor(H / 40)); rgap = H / rows;
+  }
+  size();
+  addEventListener('resize', size);
+
+  const DUR = 2200, start = performance.now();
+  function frame(now) {
+    const p = Math.min((now - start) / DUR, 1);
+    ctx.clearRect(0, 0, W, H);
+    const wa = Math.min(p / 0.16, 1);                 // проявление основы
+    // вертикальные нити основы (белая шерсть)
+    for (let i = 0; i <= cols; i++) {
+      const x = i * gap;
+      ctx.strokeStyle = `rgba(250,247,240,${0.92 * wa})`;
+      ctx.lineWidth = gap * 0.52;
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      ctx.strokeStyle = `rgba(198,186,164,${0.22 * wa})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x + gap * 0.24, 0); ctx.lineTo(x + gap * 0.24, H); ctx.stroke();
+    }
+    // горизонтальные нити утка ткутся слева направо, с шагом сверху вниз
+    for (let j = 0; j < rows; j++) {
+      const y = j * rgap + rgap / 2;
+      const rp = Math.max(0, Math.min((p - (0.2 + (j / rows) * 0.5)) / 0.34, 1));
+      if (rp <= 0) continue;
+      const reach = rp * W;
+      ctx.strokeStyle = 'rgba(228,216,192,0.97)';
+      ctx.lineWidth = rgap * 0.44;
+      ctx.beginPath();
+      for (let x = 0; x <= reach; x += 6) {
+        const yy = y + Math.sin(x * 0.03 + j) * 1.4;
+        x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+      }
+      ctx.stroke();
+      // переплетение: в шахматном порядке основа перекрывает уток (уходит назад)
+      for (let i = 0; i <= cols; i++) {
+        const x = i * gap;
+        if (x > reach) break;
+        if (((i + j) & 1) === 0) {
+          ctx.strokeStyle = 'rgba(250,247,240,0.96)';
+          ctx.lineWidth = gap * 0.52;
+          ctx.beginPath(); ctx.moveTo(x, y - rgap * 0.32); ctx.lineTo(x, y + rgap * 0.32); ctx.stroke();
+        }
+      }
+    }
+    if (p < 1) requestAnimationFrame(frame);
+    else setTimeout(() => {
+      ov.classList.add('done');
+      document.body.style.overflow = '';
+      removeEventListener('resize', size);
+      setTimeout(() => ov.remove(), 750);
+    }, 400);
+  }
+  requestAnimationFrame(frame);
 }
 
 /* ---- переиспользуемый лайтбокс для фотографий ---- */
@@ -274,6 +356,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbar(navPath).then(initReveals);
   initReveals();
   loadSiteConfig();
+  // интро-«ткачество»: при первом открытии сайта и при клике на имя (главная)
+  try {
+    if (!sessionStorage.getItem('loomSeen') || sessionStorage.getItem('loomReplay')) {
+      sessionStorage.setItem('loomSeen', '1');
+      sessionStorage.removeItem('loomReplay');
+      playLoomIntro();
+    }
+  } catch { /* sessionStorage недоступен */ }
   const yearEl = document.querySelector('[data-year]');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });

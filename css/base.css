@@ -309,6 +309,27 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .contact-block .social-btn { color: var(--ink-soft); }
 .contact-block .social-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
+/* ============ Интро-анимация «ткацкий станок» ============ */
+.loom-intro {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--paper);
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.7s ease;
+}
+.loom-intro.done { opacity: 0; pointer-events: none; }
+.loom-intro canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.loom-intro .brand {
+  position: absolute; left: 0; right: 0; bottom: 14%;
+  text-align: center;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.6rem, 5vw, 3rem);
+  letter-spacing: 0.05em; color: var(--ink);
+  opacity: 0;
+  animation: brandIn 1.4s 0.7s ease forwards;
+}
+@keyframes brandIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
 /* ============ Появление при скролле ============ */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }

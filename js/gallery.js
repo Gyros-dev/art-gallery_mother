@@ -1,11 +1,10 @@
-/* Галерея: работы строятся из папок images/art/<Категория>/ (data/gallery.json).
-   Работа = изображение, серия (подпапка) или текст (текстовый файл в категории).
-   Каталог собирается генератором scripts/build-gallery.mjs (в т.ч. в CI при пуше).
-   BASE/REDUCED объявлены в common.js. */
+/* Галерея: работы из data/gallery.json (папки images/art/<Категория>/).
+   «Все работы» — сеткой плиток; отдельная категория — coverflow.
+   Серия открывается в лайтбоксе с любой части. BASE/REDUCED — из common.js. */
 
 (function () {
-  let all = [];      // все работы (плоский список)
-  let list = [];     // отфильтрованные
+  let all = [];
+  let list = [];
   let current = 0;
   let filter = 'все';
   let usingA = true;
@@ -21,7 +20,10 @@
   });
 
   function cache() {
+    els.page = document.querySelector('.gallery-page');
     els.filters = document.querySelector('[data-filters]');
+    els.coverflow = document.querySelector('[data-coverflow]');
+    els.grid = document.querySelector('[data-grid]');
     els.left = document.querySelector('.cf-side.left');
     els.right = document.querySelector('.cf-side.right');
     els.leftImg = els.left.querySelector('img');
@@ -29,7 +31,6 @@
     els.stack = document.querySelector('.cf-center .stack');
     els.layerA = document.querySelector('.layer.a');
     els.layerB = document.querySelector('.layer.b');
-    els.shuttle = document.querySelector('.shuttle');
     els.info = document.querySelector('.art-info');
     els.counter = els.info.querySelector('.counter');
     els.title = els.info.querySelector('h2');
@@ -45,7 +46,7 @@
     try {
       const r = await fetch(`${BASE}/data/gallery.json`, { cache: 'no-store' });
       if (r.ok) return await r.json();
-    } catch { /* нет файла — покажем пусто */ }
+    } catch { /* нет файла */ }
     return { categories: [] };
   }
 
@@ -69,7 +70,7 @@
     applyFilter('все');
   }
 
-  /* ---------- фильтры ---------- */
+  /* ---------- фильтры / режимы ---------- */
   function buildFilters(categories) {
     const cats = categories.filter((c) => (c.works || []).length);
     els.filters.innerHTML = '';
@@ -88,8 +89,33 @@
     list = cat === 'все' ? all.slice() : all.filter((w) => w.category === cat);
     current = 0;
     els.filters.querySelectorAll('.chip').forEach((c) => c.classList.toggle('active', c.dataset.cat === cat));
-    buildStrip();
-    render(0);
+
+    const gridMode = cat === 'все';
+    els.page.classList.toggle('grid-mode', gridMode);
+    els.coverflow.hidden = gridMode;
+    els.grid.hidden = !gridMode;
+    if (gridMode) {
+      buildGrid();
+    } else {
+      buildStrip();
+      render(0);
+    }
+  }
+
+  /* ---------- сетка «Все работы» ---------- */
+  function buildGrid() {
+    els.grid.innerHTML = '';
+    all.forEach((w, i) => {
+      const fig = document.createElement('figure');
+      fig.className = 'grid-card';
+      const media = w.type === 'text'
+        ? `<div class="grid-media text"><span>${w.title[0] || 'Т'}</span></div>`
+        : `<div class="grid-media"><img src="${w.images[0]}" alt="${w.title}" loading="lazy">${w.group ? `<span class="grid-badge">${w.images.length}</span>` : ''}</div>`;
+      fig.innerHTML = `${media}<figcaption><h3></h3><span class="cat">${w.categoryLabel}</span></figcaption>`;
+      fig.querySelector('h3').textContent = w.title;
+      fig.addEventListener('click', () => { current = i; openLightbox(0); });
+      els.grid.appendChild(fig);
+    });
   }
 
   function buildStrip() {
@@ -105,7 +131,7 @@
     });
   }
 
-  /* ---------- отрисовка центра ---------- */
+  /* ---------- центр coverflow ---------- */
   function fillLayer(layer, w) {
     layer.classList.remove('multi', 'single', 'text');
     layer.innerHTML = '';
@@ -122,11 +148,15 @@
     }
     const n = w.images.length;
     layer.classList.add(n > 1 ? 'multi' : 'single');
-    w.images.forEach((src) => {
+    w.images.forEach((src, idx) => {
       const img = new Image();
       img.src = src;
       img.alt = w.title;
-      if (n > 1) img.style.maxWidth = `calc((min(88vw, 1120px) - ${n - 1} * 1.2rem) / ${n})`;
+      if (n > 1) {
+        img.style.maxWidth = `calc((min(88vw, 1120px) - ${n - 1} * 1.2rem) / ${n})`;
+        // клик по конкретной части серии — открыть именно её
+        img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(idx); });
+      }
       layer.appendChild(img);
     });
   }
@@ -184,8 +214,6 @@
     });
     usingA = !usingA;
 
-    if (!REDUCED && dir) { els.shuttle.classList.remove('run'); void els.shuttle.offsetWidth; els.shuttle.classList.add('run'); }
-
     els.counter.textContent = `${String(current + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`;
     els.title.textContent = w.title;
     els.meta.innerHTML = metaHtml(w);
@@ -214,7 +242,7 @@
     els.right.addEventListener('click', next);
     document.querySelector('.nav-arrow.prev').addEventListener('click', prev);
     document.querySelector('.nav-arrow.next').addEventListener('click', next);
-    document.querySelector('.cf-center').addEventListener('click', openLightbox);
+    document.querySelector('.cf-center').addEventListener('click', () => openLightbox(0));
 
     document.addEventListener('keydown', (e) => {
       if (els.lb.classList.contains('open')) {
@@ -223,6 +251,7 @@
         else if (e.key === 'ArrowRight') lbStep(1);
         return;
       }
+      if (filter === 'все') return;
       if (e.key === 'ArrowLeft') prev();
       else if (e.key === 'ArrowRight') next();
     });
@@ -251,19 +280,21 @@
   }
 
   /* ---------- лайтбокс ---------- */
-  function openLightbox() {
-    if (!list.length) return;
-    const w = list[current];
-    lbIndex = 0;
-    els.lb.classList.toggle('single', w.type === 'text' || w.images.length < 2);
-    els.lb.classList.toggle('is-text', w.type === 'text');
+  function activeList() { return filter === 'все' ? all : list; }
+  function openLightbox(startIndex) {
+    const src = activeList();
+    if (!src.length || !src[current]) return;
+    lbIndex = startIndex || 0;
+    const item = src[current];
+    els.lb.classList.toggle('single', item.type === 'text' || item.images.length < 2);
+    els.lb.classList.toggle('is-text', item.type === 'text');
     fillLightbox();
     els.lb.classList.add('show');
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => els.lb.classList.add('open'));
   }
   function fillLightbox() {
-    const w = list[current];
+    const w = activeList()[current];
     if (w.type === 'text') {
       els.lbImg.style.display = 'none';
       els.lbText.style.display = '';
@@ -283,7 +314,7 @@
     els.lbCap.textContent = (w.info ? `${w.title} — ${w.info}` : w.title) + parts;
   }
   function lbStep(d) {
-    const w = list[current];
+    const w = activeList()[current];
     if (w.type === 'text' || w.images.length < 2) return;
     lbIndex = (lbIndex + d + w.images.length) % w.images.length;
     fillLightbox();
