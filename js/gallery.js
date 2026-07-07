@@ -66,15 +66,20 @@
         });
       });
     });
-    buildFilters(data.categories || []);
-    applyFilter('все');
+    // buildFilters(data.categories || []);
+    // applyFilter('все');
+    const categories = data.categories || [];
+    const firstCategory = categories.find((c) => (c.works || []).length)?.id || 'все';
+
+    buildFilters(categories);
+    applyFilter(firstCategory);
   }
 
   /* ---------- фильтры / режимы ---------- */
   function buildFilters(categories) {
     const cats = categories.filter((c) => (c.works || []).length);
     els.filters.innerHTML = '';
-    [{ id: 'все', label: 'Все работы' }, ...cats].forEach((c) => {
+    [...cats, { id: 'все', label: 'Все работы' }].forEach((c) => {
       const b = document.createElement('button');
       b.className = 'chip' + (c.id === filter ? ' active' : '');
       b.textContent = c.label;
