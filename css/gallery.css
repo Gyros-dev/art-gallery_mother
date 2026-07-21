@@ -73,8 +73,16 @@
   padding: 8px;
   box-shadow: 0 18px 40px -22px rgba(33,28,23,0.8);
 }
-.cf-side.left { transform: rotateY(24deg) scale(0.9); transform-origin: right center; }
-.cf-side.right { transform: rotateY(-24deg) scale(0.9); transform-origin: left center; }
+.cf-side.left {
+  transform: rotateY(24deg) scale(0.9); transform-origin: right center;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 100%);
+}
+.cf-side.right {
+  transform: rotateY(-24deg) scale(0.9); transform-origin: left center;
+  -webkit-mask-image: linear-gradient(to left, transparent 0, #000 18%, #000 100%);
+  mask-image: linear-gradient(to left, transparent 0, #000 18%, #000 100%);
+}
 .cf-side.left:hover { transform: rotateY(12deg) scale(0.96); opacity: 0.9; filter: none; }
 .cf-side.right:hover { transform: rotateY(-12deg) scale(0.96); opacity: 0.9; filter: none; }
 
@@ -128,7 +136,7 @@
   text-align: left;
   box-shadow: 0 30px 70px -35px rgba(33,28,23,0.7);
 }
-.text-card h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.8rem; }
+.text-card h3 { font-family: var(--serif), serif; font-weight: 500; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.8rem; }
 .text-card p { font-size: 0.98rem; color: var(--ink-soft); white-space: pre-line; }
 .text-card .read {
   display: inline-block; margin-top: 1rem;
@@ -146,7 +154,7 @@
 }
 .cf-side.is-text::after {
   content: attr(data-label);
-  font-family: var(--serif); font-size: 1.1rem; color: var(--ink-soft);
+  font-family: var(--serif), serif; font-size: 1.1rem; color: var(--ink-soft);
   text-align: center; line-height: 1.3;
   display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
 }
@@ -156,7 +164,7 @@
   display: grid; place-items: center;
   background: color-mix(in srgb, var(--cream) 80%, transparent);
 }
-.thumb.text-thumb span { font-family: var(--serif); font-size: 1.5rem; color: var(--ink-soft); }
+.thumb.text-thumb span { font-family: var(--serif), serif; font-size: 1.5rem; color: var(--ink-soft); }
 
 /* текст в лайтбоксе */
 .lightbox .lb-text {
@@ -164,7 +172,7 @@
   background: var(--cream); color: var(--ink);
   padding: clamp(1.8rem, 5vw, 3.4rem);
 }
-.lightbox .lb-text h3 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.6rem, 3.4vw, 2.4rem); margin-bottom: 1rem; }
+.lightbox .lb-text h3 { font-family: var(--serif), serif; font-weight: 500; font-size: clamp(1.6rem, 3.4vw, 2.4rem); margin-bottom: 1rem; }
 .lightbox .lb-text p { margin-bottom: 1em; line-height: 1.7; }
 .cf-center .layer.enter-left { transform: translateX(-40px) scale(0.97); }
 .cf-center .layer.enter-right { transform: translateX(40px) scale(0.97); }
@@ -201,7 +209,7 @@
   font-variant-numeric: tabular-nums;
 }
 .art-info h2 {
-  font-family: var(--serif); font-weight: 500;
+  font-family: var(--serif), serif; font-weight: 500;
   font-size: clamp(1.5rem, 3.4vw, 2.4rem);
   line-height: 1.1; margin: 0.15rem 0 0.35rem;
 }
@@ -261,7 +269,7 @@
 }
 .lightbox.show { display: flex; }
 .lightbox.open { opacity: 1; }
-.lightbox img {
+.lightbox > img {
   max-width: 94vw; max-height: 86vh;
   object-fit: contain;
   box-shadow: 0 40px 90px rgba(0,0,0,0.6);
@@ -271,7 +279,7 @@
 .lb-caption {
   position: absolute; bottom: 1.4rem; left: 0; right: 0;
   text-align: center; color: var(--paper);
-  font-family: var(--serif); font-size: 1.3rem;
+  font-family: var(--serif), serif; font-size: 1.3rem;
 }
 .lb-x {
   position: absolute; top: 1.3rem; right: 1.3rem;
@@ -280,47 +288,93 @@
   font-size: 1rem;
 }
 .lb-x:hover { background: rgba(255,255,255,0.14); }
+/* стрелки лайтбокса — те же плетёные шнуры, что в галерее */
 .lb-prev, .lb-next {
   position: absolute; top: 50%; transform: translateY(-50%);
-  width: 52px; height: 52px; border-radius: 50%;
-  color: var(--paper); border: 1px solid rgba(255,255,255,0.35);
-  font-size: 1.1rem; z-index: 2;
+  z-index: 4;
+  width: clamp(56px, 6vw, 96px);
+  padding: 0; background: none; border: 0;
+  display: none;
+  opacity: 0.92;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.55));
+  transition: transform 0.3s var(--ease), opacity 0.3s;
 }
-.lb-prev { left: clamp(0.6rem, 2vw, 1.6rem); }
-.lb-next { right: clamp(0.6rem, 2vw, 1.6rem); }
-.lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.14); }
-.lightbox.single .lb-prev, .lightbox.single .lb-next { display: none; }
+.lb-prev img, .lb-next img { width: 100%; height: auto; display: block; }
+.lb-prev { left: clamp(0.4rem, 2.5vw, 2rem); }
+.lb-next { right: clamp(0.4rem, 2.5vw, 2rem); }
+.lb-prev:hover, .lb-next:hover { opacity: 1; }
+.lb-prev:hover { transform: translateY(-50%) translateX(-4px) scale(1.05); }
+.lb-next:hover { transform: translateY(-50%) translateX(4px) scale(1.05); }
+/* стрелки листают между работами — показываем, когда работ больше одной */
+.lightbox.has-nav .lb-prev, .lightbox.has-nav .lb-next { display: block; }
 
-@media (max-width: 860px) {
-  .cf-side { display: none; }
-  .cf-center .stack, .cf-center img { max-width: 90vw; max-height: 56vh; }
+/* серия целиком в лайтбоксе — все части сразу */
+.lightbox .lb-multi {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 1.6vw, 1.4rem);
+  max-width: 92vw;
+  max-height: 88vh;
+  overflow: auto;
+  padding: 0.2rem;
+  scrollbar-width: thin;
+}
+.lightbox.is-group .lb-multi { display: flex; }
+.lightbox .lb-multi img {
+  flex: 0 1 auto;
+  max-height: min(80vh, 880px);
+  width: auto; max-width: 90vw;
+  object-fit: contain;
+  background: var(--cream); padding: 10px;
+  box-shadow: 0 30px 70px -30px rgba(0,0,0,0.6);
+  cursor: default;
 }
 
-/* ============ Сетка «Все работы» ============ */
+/* ============ Сетка «Все работы» — кладка с сохранением пропорций ============ */
 .works-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: clamp(0.8rem, 2vw, 1.6rem);
+  column-width: clamp(210px, 21vw, 270px);
+  column-gap: clamp(0.8rem, 2vw, 1.6rem);
   padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
 }
-.grid-card { cursor: pointer; display: flex; flex-direction: column; }
+.grid-card {
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: clamp(0.8rem, 2vw, 1.6rem);
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.grid-card.in { opacity: 1; transform: none; }
 .grid-media {
   position: relative;
   background: var(--cream);
-  aspect-ratio: 1 / 1;
-  display: flex; align-items: center; justify-content: center;
-  padding: 12px;
+  display: block;
+  padding: clamp(8px, 1.3vw, 13px);
   box-shadow: 0 16px 36px -24px rgba(33,28,23,0.75);
   overflow: hidden;
+  transition: box-shadow 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.grid-card:hover .grid-media {
+  box-shadow: 0 28px 56px -26px rgba(33,28,23,0.85);
+  transform: translateY(-4px);
 }
 .grid-media img {
-  max-width: 100%; max-height: 100%;
-  object-fit: contain;
-  transition: transform 0.7s var(--ease);
+  width: 100%; height: auto; display: block;
+  transition: transform 0.9s var(--ease);
 }
-.grid-card:hover .grid-media img { transform: scale(1.05); }
+.grid-card:hover .grid-media img { transform: scale(1.045); }
+/* текстовая карточка — держим пропорцию, чтобы кладка не «рвалась» */
+.grid-media.text {
+  aspect-ratio: 3 / 4;
+  display: flex; align-items: center; justify-content: center;
+}
 .grid-media.text span {
-  font-family: var(--serif); font-size: 3rem; color: var(--ink-soft);
+  font-family: var(--serif), serif; font-size: 3rem; color: var(--ink-soft);
 }
 .grid-badge {
   position: absolute; right: 8px; bottom: 8px;
@@ -335,7 +389,7 @@
   padding: 0.6rem 0.2rem 0;
 }
 .grid-card figcaption h3 {
-  font-family: var(--serif); font-weight: 500;
+  font-family: var(--serif), serif; font-weight: 500;
   font-size: 1.05rem; line-height: 1.15;
   transition: color 0.3s;
 }
@@ -343,4 +397,47 @@
 .grid-card figcaption .cat {
   margin-left: auto; flex: none;
   font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft);
+}
+
+/* ============ Адаптив ============ */
+/* Планшеты */
+@media (max-width: 1024px) {
+  .cf-side { width: clamp(96px, 15vw, 180px); }
+  .cf-side img { max-height: 36vh; }
+  .cf-center .stack, .cf-center img { max-width: min(64vw, 560px); max-height: 52vh; }
+  .cf-center .stack.is-group { max-width: min(90vw, 900px); }
+}
+
+/* Мобильные */
+@media (max-width: 860px) {
+  .cf-side { display: none; }
+  .cf-center .stack, .cf-center img { max-width: 90vw; max-height: 54vh; }
+  .cf-center .stack.is-group { max-width: 94vw; }
+  .stage { padding: 0.5rem clamp(2.6rem, 12vw, 4rem); }
+  .nav-arrow { width: clamp(46px, 12vw, 66px); }
+  .lightbox .lb-multi img { max-height: 74vh; max-width: 88vw; }
+}
+
+@media (max-width: 640px) {
+  .works-grid { column-width: clamp(130px, 42vw, 220px); column-gap: 0.7rem; padding: 1rem 1rem 3rem; }
+  .grid-card { margin-bottom: 0.7rem; }
+  .grid-card figcaption { flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.1rem 0; }
+  .grid-card figcaption h3 { font-size: 0.95rem; }
+  .grid-card figcaption .cat { margin-left: 0; }
+  .gallery-filters { gap: 0.4rem; padding: 0.4rem 0.5rem 0.2rem; }
+  .chip { padding: 0.42rem 0.85rem; font-size: 0.6rem; letter-spacing: 0.1em; }
+  .art-info { padding: 0.3rem 1rem 0.15rem; min-height: 64px; }
+  .art-info h2 { font-size: clamp(1.3rem, 6.5vw, 1.9rem); margin: 0.1rem 0 0.25rem; }
+  .art-info .meta { font-size: 0.68rem; }
+  .art-info .meta .dot { margin: 0 0.3rem; }
+  .filmstrip { padding: 0.6rem 1rem 1rem; gap: 0.45rem; }
+  .thumb { width: 52px; height: 52px; }
+  .nav-arrow { width: clamp(40px, 13vw, 54px); }
+  .lb-x { top: 0.9rem; right: 0.9rem; width: 42px; height: 42px; }
+  .lb-prev, .lb-next { width: clamp(40px, 13vw, 60px); }
+  .lb-caption { font-size: 1.05rem; bottom: 0.9rem; padding: 0 1rem; }
+}
+
+@media (max-width: 300px) {
+  .works-grid { column-width: auto; column-count: 1; }
 }
