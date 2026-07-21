@@ -154,7 +154,7 @@ function playLoomIntro() {
   const cv = document.createElement('canvas');
   const brand = document.createElement('div');
   brand.className = 'brand';
-  brand.textContent = 'Анна Векслер';
+  brand.textContent = 'Ткачество, утратив своё мифологическое значение, продолжает своё развитие, как ремесло...';
   ov.append(cv, brand);
   document.body.appendChild(ov);
   document.body.style.overflow = 'hidden';
