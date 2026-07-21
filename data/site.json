@@ -6,8 +6,8 @@
   "phone": "",
   "subscribeNote": "Получать письма о новых работах и выставках",
   "socials": [
-    { "label": "ВКонтакте", "url": "@testvk" },
-    { "label": "Telegram", "url": "@testtg" },
+    { "label": "ВКонтакте", "url": "" },
+    { "label": "Telegram", "url": "" },
     { "label": "WhatsApp", "url": "" },
     { "label": "Instagram", "url": "" }
   ]
