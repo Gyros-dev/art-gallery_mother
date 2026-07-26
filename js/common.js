@@ -360,7 +360,7 @@ function loadSiteConfig() {
 /* авто-старт общих вещей */
 document.addEventListener('DOMContentLoaded', () => {
   const navPath = IN_PAGES ? 'navbar.html' : 'pages/navbar.html';
-  initNavbar(navPath).then(initReveals);
+  initNavbar(navPath);
   initReveals();
   loadSiteConfig();
   // интро-«ткачество»: при первом открытии сайта и при клике на имя (главная)

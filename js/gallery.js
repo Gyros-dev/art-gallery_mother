@@ -23,10 +23,6 @@
     els.filters = document.querySelector('[data-filters]');
     els.coverflow = document.querySelector('[data-coverflow]');
     els.grid = document.querySelector('[data-grid]');
-    els.left = document.querySelector('.cf-side.left');
-    els.right = document.querySelector('.cf-side.right');
-    els.leftImg = els.left.querySelector('img');
-    els.rightImg = els.right.querySelector('img');
     els.stack = document.querySelector('.cf-center .stack');
     els.layerA = document.querySelector('.layer.a');
     els.layerB = document.querySelector('.layer.b');
@@ -172,18 +168,6 @@
     });
   }
 
-  function setSide(sideEl, imgEl, w) {
-    if (w.type === 'text') {
-      sideEl.classList.add('is-text');
-      sideEl.dataset.label = w.title;
-      imgEl.removeAttribute('src');
-    } else {
-      sideEl.classList.remove('is-text');
-      imgEl.src = w.images[0];
-      imgEl.alt = w.title;
-    }
-  }
-
   function metaHtml(w) {
     const bits = [w.categoryLabel];
     if (w.group) bits.push(`серия · ${w.images.length} ${plural(w.images.length)}`);
@@ -201,13 +185,6 @@
     const n = list.length;
     if (!n) { els.title.textContent = 'Здесь пока нет работ'; els.meta.innerHTML = ''; els.counter.textContent = '—'; return; }
     const w = list[current];
-    const prev = list[(current - 1 + n) % n];
-    const next = list[(current + 1) % n];
-
-    setSide(els.left, els.leftImg, prev);
-    setSide(els.right, els.rightImg, next);
-    els.left.style.display = n > 1 ? '' : 'none';
-    els.right.style.display = n > 1 ? '' : 'none';
 
     const showEl = usingA ? els.layerB : els.layerA;
     const hideEl = usingA ? els.layerA : els.layerB;
@@ -249,8 +226,6 @@
 
   /* ---------- события ---------- */
   function bindEvents() {
-    els.left.addEventListener('click', prev);
-    els.right.addEventListener('click', next);
     document.querySelector('.nav-arrow.prev').addEventListener('click', prev);
     document.querySelector('.nav-arrow.next').addEventListener('click', next);
     document.querySelector('.cf-center').addEventListener('click', () => openLightbox());

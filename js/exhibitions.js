@@ -8,7 +8,7 @@
     const frame = document.getElementById('preview-frame');
 
     Promise.all([
-      fetch(`${BASE}/data/exhibitions.json`).then((r) => r.json()),
+      fetch(`${BASE}/data/exhibitions.json`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
       fetch(`${BASE}/data/exhibitions-media.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
     ]).then(([data, media]) => {
       data.forEach((item) => {

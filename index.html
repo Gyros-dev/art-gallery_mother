@@ -67,6 +67,7 @@
     initLoom(document.getElementById('loom'));
     fetch('data/gallery.json').then((r) => r.json()).then((data) => {
       const strip = document.querySelector('[data-strip]');
+      if (!strip) return;
       const works = [];
       (data.categories || []).forEach((c) =>
         (c.works || []).forEach((w) => {
@@ -85,7 +86,7 @@
           fig.addEventListener('click', () => (location.href = 'pages/gallery.html'));
           strip.appendChild(fig);
         });
-    });
+    }).catch(() => {});
   </script>
 </body>
 </html>
