@@ -34,8 +34,8 @@
 
   <main>
     <section class="intro" id="intro">
-      <p class="reveal">Более <strong>80 выставок</strong> и <strong>15 персональных</strong> экспозиций. Работы — в музеях и частных собраниях России, Германии, Швеции, Финляндии, США и Венгрии.</p>
-      <p class="lead reveal d1">Традиции ручного ткачества, сплетённые с современными материалами: абстракция, коллаж и философия времени в нити.</p>
+      <p class="reveal">Более <strong>200 выставочных проектов</strong> и <strong>15 персональных</strong> выставок. Работы — в музеях и частных собраниях России, Венгрии, Италии, Германии, Швеции, Финляндии и США.</p>
+      <p class="lead reveal d1">Ручное ткачество и текстильный коллаж — от классической шпалеры до авторских приёмов плетения: гобелены, коллажи и арт-объекты на сложные философские темы.</p>
     </section>
 
     <section class="featured">
@@ -46,7 +46,7 @@
       </div>
       <div class="strip" data-strip></div>
       <div class="more reveal">
-        <a class="btn" href="pages/gallery.html">Вся галерея <span class="arrow">→</span></a>
+        <a class="btn" href="pages/gallery.html?cat=все">Вся галерея <span class="arrow">→</span></a>
       </div>
     </section>
   </main>
@@ -65,27 +65,39 @@
   <script src="js/common.js"></script>
   <script>
     initLoom(document.getElementById('loom'));
-    fetch('data/gallery.json').then((r) => r.json()).then((data) => {
+    Promise.all([
+      fetch('data/gallery.json').then((r) => r.json()),
+      fetch('data/site.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+    ]).then(([data, site]) => {
       const strip = document.querySelector('[data-strip]');
       if (!strip) return;
       const works = [];
       (data.categories || []).forEach((c) =>
         (c.works || []).forEach((w) => {
-          if (w.images && w.images.length) works.push({ ...w, label: c.label });
+          if (w.type !== 'text' && w.images && w.images.length) {
+            works.push({ title: w.title, images: w.images, cat: c.id, label: c.label });
+          }
         })
       );
-      // по паре из каждой категории, вперемешку
-      works
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 6)
-        .forEach((w) => {
-          const fig = document.createElement('figure');
-          fig.innerHTML = `
-            <div class="frame"><img src="${w.images[0]}" alt="${w.title}" loading="lazy"></div>
-            <figcaption><h3>${w.title}</h3><span class="cat">${w.label}</span></figcaption>`;
-          fig.addEventListener('click', () => (location.href = 'pages/gallery.html'));
-          strip.appendChild(fig);
+      // Избранное задаётся списком названий в data/site.json → "featured".
+      // Если список пуст/не задан — показываем 6 случайных работ.
+      const norm = (s) => (s || '').normalize('NFC').toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+      const featured = Array.isArray(site.featured) ? site.featured : [];
+      const picks = featured.length
+        ? featured.map((t) => works.find((w) => norm(w.title) === norm(t))).filter(Boolean)
+        : works.slice().sort(() => Math.random() - 0.5).slice(0, 6);
+
+      picks.forEach((w) => {
+        const fig = document.createElement('figure');
+        fig.innerHTML = `
+          <div class="frame"><img src="${w.images[0]}" alt="${w.title}" loading="lazy"></div>
+          <figcaption><h3>${w.title}</h3><span class="cat">${w.label}</span></figcaption>`;
+        // переход в галерею именно на эту работу (категория + позиция)
+        fig.addEventListener('click', () => {
+          location.href = `pages/gallery.html?cat=${encodeURIComponent(w.cat)}&work=${encodeURIComponent(w.title)}`;
         });
+        strip.appendChild(fig);
+      });
     }).catch(() => {});
   </script>
 </body>

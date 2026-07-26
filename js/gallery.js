@@ -62,13 +62,26 @@
         });
       });
     });
-    // buildFilters(data.categories || []);
-    // applyFilter('все');
     const categories = data.categories || [];
     const firstCategory = categories.find((c) => (c.works || []).length)?.id || 'все';
 
     buildFilters(categories);
-    applyFilter(firstCategory);
+
+    // deep-link с главной: ?cat=<id|все>&work=<название>
+    const params = new URLSearchParams(location.search);
+    const wantCat = params.get('cat');
+    const wantWork = params.get('work');
+    const startCat = wantCat && (wantCat === 'все' || all.some((w) => w.category === wantCat))
+      ? wantCat : firstCategory;
+
+    applyFilter(startCat);
+
+    // перейти на конкретную работу (только в режиме категории, не в «Все работы»)
+    if (wantWork && startCat !== 'все') {
+      const norm = (s) => (s || '').normalize('NFC').toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+      const i = list.findIndex((w) => norm(w.title) === norm(wantWork));
+      if (i > 0) { current = i; render(0); }
+    }
   }
 
   /* ---------- фильтры / режимы ---------- */

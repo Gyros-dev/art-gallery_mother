@@ -254,3 +254,31 @@
   content: ""; position: absolute; left: 0; top: 0.7em;
   width: 10px; height: 2px; background: var(--gold);
 }
+
+/* Выставки — сворачиваемые списки */
+.exh-groups { display: grid; margin-top: 0.4rem; }
+.exh-group { border-top: 1px solid var(--line); }
+.exh-group:last-child { border-bottom: 1px solid var(--line); }
+.exh-group > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 1rem 0;
+  font-family: var(--serif), serif; font-weight: 500;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem); color: var(--ink);
+  transition: color 0.3s ease;
+}
+.exh-group > summary::-webkit-details-marker { display: none; }
+.exh-group > summary:hover { color: var(--terra); }
+.exh-group > summary .cnt {
+  margin-left: auto;
+  font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.exh-group > summary .chev {
+  flex: none; width: 9px; height: 9px;
+  border-right: 2px solid var(--terra); border-bottom: 2px solid var(--terra);
+  transform: rotate(45deg); transition: transform 0.3s var(--ease);
+}
+.exh-group[open] > summary .chev { transform: rotate(-135deg); }
+.exh-group .dash-list { padding: 0.2rem 0 1.4rem; }
+.exh-group .dash-list li:last-child { border-bottom: none; padding-bottom: 0; }
