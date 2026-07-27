@@ -14,7 +14,7 @@
  * Итог: data/gallery.json, data/texts.json, data/exhibitions-media.json
  * Запуск: node scripts/build-gallery.mjs   (в CI запускается сам при каждом пуше)
  */
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -41,6 +41,12 @@ async function read(rel) {
   try { return (await readFile(path.join(ROOT, rel), 'utf8')).trim(); }
   catch { return ''; }
 }
+// Эскиз для сетки/ленты: images/art/... → images/thumbs/....webp (если файл есть).
+async function thumbFor(imgPath) {
+  const t = imgPath.replace(/^images\/art\//, 'images/thumbs/').replace(/\.[^.]+$/, '.webp');
+  try { await access(path.join(ROOT, t)); return t; }
+  catch { return null; }
+}
 
 /* ---------- Галерея ---------- */
 async function buildCategory(dir) {
@@ -48,23 +54,27 @@ async function buildCategory(dir) {
   const entries = await ls(base);
   const files = entries.filter((e) => e.isFile() && !e.name.startsWith('.'));
   const imageFiles = files.filter((e) => isImage(e.name)).map((e) => e.name);
-  const imageBases = new Set(imageFiles.map(baseName));
+  // NFC-нормализация: имена файлов на macOS бывают в форме NFD (й = «и»+знак),
+  // и без этого сайдкар-описание ошибочно попадало в отдельную текстовую карточку.
+  const imageBases = new Set(imageFiles.map((n) => baseName(n).normalize('NFC')));
   const works = [];
 
   // одиночные изображения
   for (const f of imageFiles.sort(byName)) {
+    const images = [`${base}/${f}`];
     works.push({
       title: baseName(f),
       type: 'art',
       group: false,
-      images: [`${base}/${f}`],
+      images,
+      thumb: await thumbFor(images[0]),
       info: await read(`${base}/${baseName(f)}.txt`),
     });
   }
 
   // текстовые файлы БЕЗ одноимённой картинки = текстовая работа в категории
   for (const f of files.filter((e) => isText(e.name)).map((e) => e.name).sort(byName)) {
-    if (baseName(f) === '_info' || imageBases.has(baseName(f))) continue;
+    if (baseName(f) === '_info' || imageBases.has(baseName(f).normalize('NFC'))) continue;
     const raw = await read(`${base}/${f}`);
     const lines = raw.split('\n');
     works.push({
@@ -79,11 +89,13 @@ async function buildCategory(dir) {
     const parts = (await ls(`${base}/${d.name}`))
       .filter((e) => e.isFile() && isImage(e.name)).map((e) => e.name).sort(byName);
     if (!parts.length) continue;
+    const images = parts.map((p) => `${base}/${d.name}/${p}`);
     works.push({
       title: d.name,
       type: 'art',
       group: true,
-      images: parts.map((p) => `${base}/${d.name}/${p}`),
+      images,
+      thumb: await thumbFor(images[0]),
       info: await read(`${base}/${d.name}/_info.txt`),
     });
   }

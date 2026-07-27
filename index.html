@@ -75,7 +75,7 @@
       (data.categories || []).forEach((c) =>
         (c.works || []).forEach((w) => {
           if (w.type !== 'text' && w.images && w.images.length) {
-            works.push({ title: w.title, images: w.images, cat: c.id, label: c.label });
+            works.push({ title: w.title, images: w.images, thumb: w.thumb, cat: c.id, label: c.label });
           }
         })
       );
@@ -90,7 +90,7 @@
       picks.forEach((w) => {
         const fig = document.createElement('figure');
         fig.innerHTML = `
-          <div class="frame"><img src="${w.images[0]}" alt="${w.title}" loading="lazy"></div>
+          <div class="frame"><img src="${w.thumb || w.images[0]}" alt="${w.title}" loading="lazy"></div>
           <figcaption><h3>${w.title}</h3><span class="cat">${w.label}</span></figcaption>`;
         // переход в галерею именно на эту работу (категория + позиция)
         fig.addEventListener('click', () => {

@@ -57,6 +57,7 @@
           type: w.type === 'text' ? 'text' : 'art',
           group: !!w.group && (w.images || []).length > 1,
           images: (w.images || []).map((s) => `${BASE}/${s}`),
+          thumb: w.thumb ? `${BASE}/${w.thumb}` : ((w.images || [])[0] ? `${BASE}/${w.images[0]}` : ''),
           info: w.info || '',
           body: w.body || '',
         });
@@ -129,7 +130,7 @@
       fig.className = 'grid-card';
       const media = w.type === 'text'
         ? `<div class="grid-media text"><span>${w.title[0] || 'Т'}</span></div>`
-        : `<div class="grid-media"><img src="${w.images[0]}" alt="${w.title}" loading="lazy">${w.group ? `<span class="grid-badge">${w.images.length}</span>` : ''}</div>`;
+        : `<div class="grid-media"><img src="${w.thumb || w.images[0]}" alt="${w.title}" loading="lazy">${w.group ? `<span class="grid-badge">${w.images.length}</span>` : ''}</div>`;
       fig.innerHTML = `${media}<figcaption><h3></h3><span class="cat">${w.categoryLabel}</span></figcaption>`;
       fig.querySelector('h3').textContent = w.title;
       fig.addEventListener('click', () => { current = i; openLightbox(); });
@@ -144,7 +145,7 @@
       const b = document.createElement('button');
       b.className = 'thumb' + (w.type === 'text' ? ' text-thumb' : '');
       if (w.type === 'text') b.innerHTML = '<span>Т</span>';
-      else b.innerHTML = `<img src="${w.images[0]}" alt="${w.title}" loading="lazy">`;
+      else b.innerHTML = `<img src="${w.thumb || w.images[0]}" alt="${w.title}" loading="lazy">`;
       if (w.group) b.insertAdjacentHTML('beforeend', `<span class="thumb-badge">${w.images.length}</span>`);
       b.addEventListener('click', () => go(i));
       els.strip.appendChild(b);
