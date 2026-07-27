@@ -131,11 +131,6 @@ function initLoom(canvas) {
         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
       ctx.stroke();
-      // челнок
-      ctx.globalAlpha = 0.5;
-      ctx.fillStyle = th.color;
-      const yEnd = th.y + Math.sin(reach * 0.02 + t * 2 + th.phase) * th.amp;
-      ctx.beginPath(); ctx.arc(reach, yEnd, 2.4, 0, Math.PI * 2); ctx.fill();
       ctx.globalAlpha = 1;
     }
     requestAnimationFrame(frame);
