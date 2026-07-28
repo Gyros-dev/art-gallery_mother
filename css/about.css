@@ -255,6 +255,69 @@
   width: 10px; height: 2px; background: var(--gold);
 }
 
+/* ===== Блок о творчестве («кредо») — вместо сплошного текста ===== */
+.about-credo { max-width: 64rem; }
+.credo {
+  position: relative;
+  padding: clamp(2rem, 5vw, 3.2rem) clamp(1.4rem, 4vw, 3rem);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--cream) 60%, transparent),
+    color-mix(in srgb, var(--cream) 22%, transparent));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+/* тканая нить-акцент по левому краю */
+.credo::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: repeating-linear-gradient(180deg,
+    var(--terra) 0 10px, var(--gold) 10px 20px, var(--indigo) 20px 30px);
+  opacity: 0.75;
+}
+.credo-lead {
+  font-family: var(--serif), serif;
+  font-size: clamp(1.12rem, 1.9vw, 1.42rem);
+  line-height: 1.62;
+  color: var(--ink);
+  margin-bottom: 1.1rem;
+}
+.credo-lead em { font-style: italic; color: var(--terra); }
+/* буквица у первого абзаца */
+.credo-lead:first-child::first-letter {
+  float: left;
+  font-size: 3.5em; line-height: 0.78;
+  padding: 0.06em 0.14em 0 0;
+  color: var(--terra);
+  font-weight: 500;
+}
+.credo-lead:last-of-type { margin-bottom: 0; }
+
+.credo-thread {
+  display: block;
+  width: clamp(84px, 16%, 150px); height: 2px;
+  margin: clamp(1.6rem, 4vw, 2.4rem) 0 clamp(1.2rem, 3vw, 1.8rem);
+  background: repeating-linear-gradient(90deg,
+    var(--gold) 0 9px, transparent 9px 15px);
+  opacity: 0.85;
+}
+
+/* факты — в две колонки, чтобы не читалось «стеной» */
+.credo-facts {
+  columns: 2;
+  column-gap: clamp(1.6rem, 4vw, 3rem);
+  column-rule: 1px solid var(--line);
+}
+.credo-facts p {
+  font-size: 0.95rem; line-height: 1.66;
+  color: var(--ink-soft);
+  break-inside: avoid;
+}
+.credo-facts p + p { margin-top: 0.9rem; }
+
+@media (max-width: 720px) {
+  .credo-facts { columns: 1; column-rule: none; }
+  .credo-lead:first-child::first-letter { font-size: 3em; }
+}
+
 /* Выставки — сворачиваемые списки */
 .exh-groups { display: grid; margin-top: 0.4rem; }
 .exh-group { border-top: 1px solid var(--line); }

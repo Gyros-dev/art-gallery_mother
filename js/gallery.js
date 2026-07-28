@@ -58,6 +58,8 @@
           categoryLabel: c.label || c.id,
           type: w.type === 'text' ? 'text' : 'art',
           group: !!w.group && (w.images || []).length > 1,
+          layout: w.layout === 'grid' ? 'grid' : 'row',
+          parts: w.parts || [],
           images: (w.images || []).map((s) => `${BASE}/${s}`),
           thumb: w.thumb ? `${BASE}/${w.thumb}` : ((w.images || [])[0] ? `${BASE}/${w.images[0]}` : ''),
           info: w.info || '',
@@ -156,7 +158,9 @@
 
   /* ---------- центр coverflow ---------- */
   function fillLayer(layer, w) {
-    layer.classList.remove('multi', 'single', 'text');
+    layer.classList.remove('multi', 'single', 'text', 'as-grid');
+    layer.style.removeProperty('--cols');
+    layer.style.removeProperty('--rows');
     layer.innerHTML = '';
     if (w.type === 'text') {
       layer.classList.add('text');
@@ -171,15 +175,20 @@
     }
     const n = w.images.length;
     layer.classList.add(n > 1 ? 'multi' : 'single');
+    // раскладка серии: в ряд или сеткой («квадратом») — задаётся в data/gallery.json
+    if (n > 1) {
+      const asGrid = w.layout === 'grid';
+      const cols = asGrid ? Math.ceil(Math.sqrt(n)) : n;
+      if (asGrid) layer.classList.add('as-grid');
+      layer.style.setProperty('--cols', cols);
+      layer.style.setProperty('--rows', Math.ceil(n / cols));
+    }
     w.images.forEach((src, pi) => {
       const img = new Image();
       img.src = src;
-      img.alt = w.title;
-      if (n > 1) {
-        img.style.maxWidth = `calc((min(88vw, 1120px) - ${n - 1} * 1.2rem) / ${n})`;
-        // клик по конкретной части серии — открыть лайтбокс именно на ней
-        img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(pi); });
-      }
+      img.alt = w.parts?.[pi]?.title ? `${w.title} — ${w.parts[pi].title}` : w.title;
+      // клик по конкретной части серии — открыть лайтбокс именно на ней
+      if (n > 1) img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(pi); });
       layer.appendChild(img);
     });
   }
@@ -206,6 +215,7 @@
     const hideEl = usingA ? els.layerA : els.layerB;
     fillLayer(showEl, w);
     els.stack.classList.toggle('is-group', w.group);
+    els.stack.classList.toggle('is-grid', !!w.group && w.layout === 'grid');
     els.stack.classList.toggle('is-text', w.type === 'text');
 
     showEl.classList.remove('enter-left', 'enter-right');
@@ -293,7 +303,13 @@
       } else {
         const n = w.images.length;
         w.images.forEach((s, pi) => {
-          lbSlides.push({ type: 'art', src: s, title: w.title, info: w.info, workIndex: wi, part: pi + 1, parts: n });
+          const meta = w.parts?.[pi] || {};
+          lbSlides.push({
+            type: 'art', src: s, title: w.title,
+            partTitle: meta.title || '',
+            info: meta.info || w.info,
+            workIndex: wi, part: pi + 1, parts: n,
+          });
         });
       }
     });
@@ -336,8 +352,9 @@
     // одно изображение (часть серии или самостоятельная работа) — на весь экран
     els.lbImg.style.display = '';
     els.lbImg.src = sl.src;
-    els.lbImg.alt = sl.title;
-    let cap = sl.info ? `${sl.title} — ${sl.info}` : sl.title;
+    els.lbImg.alt = sl.partTitle ? `${sl.title} — ${sl.partTitle}` : sl.title;
+    let cap = sl.partTitle ? `${sl.title} · ${sl.partTitle}` : sl.title;
+    if (sl.info) cap += ` — ${sl.info}`;
     if (sl.parts > 1) cap += ` · ${sl.part}/${sl.parts}`;
     els.lbCap.textContent = cap;
   }

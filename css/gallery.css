@@ -94,8 +94,24 @@
   pointer-events: none; /* невидимый слой не должен перехватывать клики */
 }
 .cf-center .layer.show { opacity: 1; position: relative; pointer-events: auto; }
-/* серия: несколько частей в ряд, размер задаётся из JS */
-.cf-center .layer.multi img { max-height: 52vh; }
+
+/* ---- серия: части в ряд или «квадратом» ----
+   --cols/--rows приходят из JS, размер части считается так, чтобы вся серия
+   целиком укладывалась в сцену (и по ширине, и по высоте). */
+.cf-center .layer.multi { --cols: 1; --rows: 1; --cf-gap: clamp(0.4rem, 1.2vw, 1rem); }
+.cf-center .layer.multi img {
+  max-width: calc((min(88vw, 1120px) - (var(--cols) - 1) * var(--cf-gap)) / var(--cols));
+  max-height: calc((52vh - (var(--rows) - 1) * var(--cf-gap)) / var(--rows));
+}
+/* «квадратом»: сетка из --cols столбцов */
+.cf-center .layer.multi.as-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), auto);
+  justify-content: center; align-content: center;
+  justify-items: center; align-items: center;
+  gap: var(--cf-gap);
+}
+.cf-center .stack.is-group.is-grid { max-width: min(72vw, 900px); }
 
 /* текстовая работа в центре */
 .cf-center .stack.is-text { max-width: min(60vw, 640px); }
@@ -216,8 +232,12 @@
 .lightbox {
   position: fixed; inset: 0; z-index: 800;
   display: none;
+  /* вертикальный поток: картинка сверху, подпись под ней — они не перекрываются
+     ни на десктопе, ни на мобильном, как бы длинна ни была подпись */
+  flex-direction: column;
   align-items: center; justify-content: center;
-  padding: clamp(1rem, 4vw, 3rem);
+  gap: clamp(0.6rem, 1.5vh, 1.1rem);
+  padding: clamp(3.4rem, 7vh, 4.8rem) clamp(1rem, 4vw, 3rem) clamp(1.1rem, 2.6vh, 1.8rem);
   background: color-mix(in srgb, var(--ink) 92%, transparent);
   backdrop-filter: blur(8px);
   opacity: 0; transition: opacity 0.35s;
@@ -225,19 +245,20 @@
 .lightbox.show { display: flex; }
 .lightbox.open { opacity: 1; }
 .lightbox > img {
-  /* заполняем доступную область, сохраняя пропорции (мелкие исходники тоже
+  /* занимаем всю свободную высоту, сохраняя пропорции (мелкие исходники тоже
      показываем крупно); тень через drop-shadow — обнимает саму картинку */
-  width: 100%; height: 86vh;
-  max-width: 100%; max-height: 86vh;
+  flex: 1 1 0; min-height: 0;
+  width: 100%; height: auto; max-width: 100%;
   object-fit: contain;
   filter: drop-shadow(0 24px 55px rgba(0,0,0,0.55));
   background: var(--cream); padding: 12px;
   cursor: zoom-out;
 }
 .lb-caption {
-  position: absolute; bottom: 1.4rem; left: 0; right: 0;
+  flex: 0 0 auto; max-width: 100%;
   text-align: center; color: var(--paper);
-  font-family: var(--serif), serif; font-size: 1.3rem;
+  font-family: var(--serif), serif;
+  font-size: clamp(0.9rem, 1.5vw, 1.3rem); line-height: 1.4;
 }
 .lb-x {
   position: absolute; top: 1.3rem; right: 1.3rem;
@@ -373,12 +394,15 @@
 @media (max-width: 860px) {
   .cf-center .stack, .cf-center img { max-width: 92vw; max-height: 54vh; }
   .cf-center .stack.is-group { max-width: 96vw; }
+  .cf-center .stack.is-group.is-grid { max-width: 94vw; }
   .stage { padding: 0.5rem clamp(0.8rem, 4vw, 1.6rem); }
   /* стрелки скрыты — навигация свайпом и лентой миниатюр */
   .nav-arrow { display: none; }
   .lightbox.has-nav .lb-prev, .lightbox.has-nav .lb-next { display: none; }
   .lightbox.has-nav { padding-left: clamp(0.8rem, 4vw, 1.4rem); padding-right: clamp(0.8rem, 4vw, 1.4rem); }
-  .lightbox .lb-multi img { max-height: 74vh; }
+  /* лайтбокс: одна картина во всю доступную область, подпись под ней */
+  .lightbox { padding-top: 3.6rem; padding-bottom: 1rem; }
+  .lightbox > img { padding: 6px; }
 }
 
 @media (max-width: 640px) {
@@ -397,7 +421,7 @@
   .filmstrip { padding: 0.6rem 1rem 1rem; gap: 0.45rem; }
   .thumb { width: 52px; height: 52px; }
   .lb-x { top: 0.9rem; right: 0.9rem; width: 42px; height: 42px; }
-  .lb-caption { font-size: 1.05rem; bottom: 0.9rem; padding: 0 1rem; }
+  .lb-caption { font-size: 0.86rem; padding: 0 0.6rem; }
 }
 
 /* ============================================================
