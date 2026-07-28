@@ -22,8 +22,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Установить зависимости (sharp)
+        run: npm install --no-audit --no-fund
+      - name: Оптимизировать картинки (WebP ≤2000px + эскизы)
+        run: node scripts/optimize-images.mjs
       - name: Собрать каталог из папок (галерея, тексты, фото выставок)
         run: node scripts/build-gallery.mjs
+      - name: Убрать node_modules из публикации
+        run: rm -rf node_modules
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,15 @@
+{
+  "name": "art-gallery-mother",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Сайт-галерея Анны Векслер (статика + сборка каталога и оптимизация картинок)",
+  "scripts": {
+    "optimize": "node scripts/optimize-images.mjs",
+    "build": "node scripts/build-gallery.mjs",
+    "prepare-site": "npm run optimize && npm run build"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}

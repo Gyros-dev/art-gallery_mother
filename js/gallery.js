@@ -9,6 +9,8 @@
   let filter = 'все';
   let usingA = true;
   let cooldown = false;
+  let lbSlides = []; // плоский список: каждая часть серии = отдельный слайд
+  let lbIndex = 0;
 
   const els = {};
 
@@ -169,14 +171,14 @@
     }
     const n = w.images.length;
     layer.classList.add(n > 1 ? 'multi' : 'single');
-    w.images.forEach((src) => {
+    w.images.forEach((src, pi) => {
       const img = new Image();
       img.src = src;
       img.alt = w.title;
       if (n > 1) {
         img.style.maxWidth = `calc((min(88vw, 1120px) - ${n - 1} * 1.2rem) / ${n})`;
-        // клик по любой части серии — открыть работу целиком (все части)
-        img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(); });
+        // клик по конкретной части серии — открыть лайтбокс именно на ней
+        img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(pi); });
       }
       layer.appendChild(img);
     });
@@ -281,27 +283,46 @@
 
   /* ---------- лайтбокс ---------- */
   function activeList() { return filter === 'все' ? all : list; }
-  function openLightbox() {
+  // Плоский список слайдов: каждая часть серии — отдельный полноэкранный слайд.
+  function buildSlides() {
+    const src = activeList();
+    lbSlides = [];
+    src.forEach((w, wi) => {
+      if (w.type === 'text') {
+        lbSlides.push({ type: 'text', work: w, workIndex: wi });
+      } else {
+        const n = w.images.length;
+        w.images.forEach((s, pi) => {
+          lbSlides.push({ type: 'art', src: s, title: w.title, info: w.info, workIndex: wi, part: pi + 1, parts: n });
+        });
+      }
+    });
+  }
+  function openLightbox(startPart = 0) {
     const src = activeList();
     if (!src.length || !src[current]) return;
+    buildSlides();
+    const firstOfWork = lbSlides.findIndex((sl) => sl.workIndex === current);
+    lbIndex = Math.max(0, Math.min((firstOfWork < 0 ? 0 : firstOfWork) + (startPart || 0), lbSlides.length - 1));
     fillLightbox();
     els.lb.classList.add('show');
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => els.lb.classList.add('open'));
   }
   function fillLightbox() {
-    const src = activeList();
-    const w = src[current];
-    // сброс всех режимов
+    const sl = lbSlides[lbIndex];
+    if (!sl) return;
+    // сброс режимов
     els.lbImg.style.display = 'none';
     els.lbText.style.display = 'none';
     els.lbMulti.style.display = 'none';
     els.lbMulti.innerHTML = '';
-    els.lb.classList.toggle('has-nav', src.length > 1);
-    els.lb.classList.toggle('is-text', w.type === 'text');
+    els.lb.classList.toggle('has-nav', lbSlides.length > 1);
+    els.lb.classList.toggle('is-text', sl.type === 'text');
     els.lb.classList.remove('is-group');
 
-    if (w.type === 'text') {
+    if (sl.type === 'text') {
+      const w = sl.work;
       els.lbText.style.display = '';
       els.lbText.innerHTML = '';
       const h = document.createElement('h3'); h.textContent = w.title; els.lbText.appendChild(h);
@@ -312,33 +333,22 @@
       return;
     }
 
-    if (w.images.length > 1) {
-      // серия — показываем все части сразу
-      els.lb.classList.add('is-group');
-      els.lbMulti.style.display = 'flex';
-      w.images.forEach((s) => {
-        const img = new Image();
-        img.src = s; img.alt = w.title;
-        els.lbMulti.appendChild(img);
-      });
-      els.lbCap.textContent = (w.info ? `${w.title} — ${w.info}` : w.title) + ` · ${w.images.length} ${plural(w.images.length)}`;
-      return;
-    }
-
-    // одиночная работа
+    // одно изображение (часть серии или самостоятельная работа) — на весь экран
     els.lbImg.style.display = '';
-    els.lbImg.src = w.images[0];
-    els.lbImg.alt = w.title;
-    els.lbCap.textContent = w.info ? `${w.title} — ${w.info}` : w.title;
+    els.lbImg.src = sl.src;
+    els.lbImg.alt = sl.title;
+    let cap = sl.info ? `${sl.title} — ${sl.info}` : sl.title;
+    if (sl.parts > 1) cap += ` · ${sl.part}/${sl.parts}`;
+    els.lbCap.textContent = cap;
   }
   function lbStep(d) {
-    const src = activeList();
-    if (src.length < 2) return;
-    current = (current + d + src.length) % src.length;
-    els.lbMulti.scrollTop = 0;
+    if (lbSlides.length < 2) return;
+    const prevWork = lbSlides[lbIndex].workIndex;
+    lbIndex = (lbIndex + d + lbSlides.length) % lbSlides.length;
     fillLightbox();
-    // держим coverflow «под» лайтбоксом синхронным
-    if (filter !== 'все') render(d);
+    // синхронизируем coverflow, когда слайд перешёл на другую работу
+    const nowWork = lbSlides[lbIndex].workIndex;
+    if (filter !== 'все' && nowWork !== prevWork) { current = nowWork; render(d); }
   }
   function closeLightbox() {
     els.lb.classList.remove('open');
