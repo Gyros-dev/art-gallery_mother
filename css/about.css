@@ -265,14 +265,16 @@
     color-mix(in srgb, var(--cream) 22%, transparent));
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
 }
 /* тканая нить-акцент по левому краю */
-.credo::before {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: repeating-linear-gradient(180deg,
-    var(--terra) 0 10px, var(--gold) 10px 20px, var(--indigo) 20px 30px);
-  opacity: 0.75;
-}
+/*.credo::before {*/
+/*  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;*/
+/*  background: repeating-linear-gradient(180deg,*/
+/*    var(--terra) 0 10px, var(--gold) 10px 20px, var(--indigo) 20px 30px);*/
+/*  opacity: 0.75;*/
+/*}*/
 .credo-lead {
   font-family: var(--serif), serif;
   font-size: clamp(1.12rem, 1.9vw, 1.42rem);

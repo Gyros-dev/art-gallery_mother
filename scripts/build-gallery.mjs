@@ -22,6 +22,7 @@
 import { readdir, readFile, writeFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -46,10 +47,26 @@ async function read(rel) {
   try { return (await readFile(path.join(ROOT, rel), 'utf8')).trim(); }
   catch { return ''; }
 }
+/* Метка версии по содержимому файла: ...webp?v=ab12cd34
+   Нужна, чтобы после замены картинки браузер показал новую, а не старую из кэша
+   (имя файла ведь не изменилось). Пока файл прежний — метка та же, кэш работает. */
+const versionCache = new Map();
+async function withVersion(rel) {
+  if (versionCache.has(rel)) return versionCache.get(rel);
+  let out = rel;
+  try {
+    const buf = await readFile(path.join(ROOT, rel));
+    out = `${rel}?v=${createHash('md5').update(buf).digest('hex').slice(0, 8)}`;
+  } catch { /* файла нет — оставляем путь как есть */ }
+  versionCache.set(rel, out);
+  return out;
+}
+
 // Эскиз для сетки/ленты: images/art/... → images/thumbs/....webp (если файл есть).
 async function thumbFor(imgPath) {
-  const t = imgPath.replace(/^images\/art\//, 'images/thumbs/').replace(/\.[^.]+$/, '.webp');
-  try { await access(path.join(ROOT, t)); return t; }
+  const clean = imgPath.replace(/\?.*$/, '');
+  const t = clean.replace(/^images\/art\//, 'images/thumbs/').replace(/\.[^.]+$/, '.webp');
+  try { await access(path.join(ROOT, t)); return await withVersion(t); }
   catch { return null; }
 }
 
@@ -113,7 +130,7 @@ async function autoLayout(relPaths) {
   let portrait = 0;
   for (const rel of relPaths) {
     try {
-      const { width, height } = await sharp(path.join(ROOT, rel)).metadata();
+      const { width, height } = await sharp(path.join(ROOT, rel.replace(/\?.*$/, ''))).metadata();
       if (width && height && height > width * 1.15) portrait++;
     } catch { /* нечитаемый файл — не учитываем */ }
   }
@@ -133,7 +150,7 @@ async function buildCategory(dir) {
 
   // одиночные изображения
   for (const f of imageFiles.sort(byName)) {
-    const images = [`${base}/${f}`];
+    const images = [await withVersion(`${base}/${f}`)];
     works.push({
       title: baseName(f),
       type: 'art',
@@ -161,7 +178,8 @@ async function buildCategory(dir) {
     const parts = (await ls(`${base}/${d.name}`))
       .filter((e) => e.isFile() && isImage(e.name)).map((e) => e.name).sort(byName);
     if (!parts.length) continue;
-    const images = parts.map((p) => `${base}/${d.name}/${p}`);
+    const images = [];
+    for (const p of parts) images.push(await withVersion(`${base}/${d.name}/${p}`));
     // подпись и описание каждой части
     const partsMeta = [];
     for (const p of parts) {

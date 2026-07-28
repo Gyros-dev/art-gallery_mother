@@ -1,17 +1,20 @@
 #!/usr/bin/env node
 /**
- * Оптимизация картинок галереи. Идемпотентно — можно запускать сколько угодно раз,
- * трогает только новые/неоптимизированные файлы.
+ * Оптимизация картинок галереи.
  *
- *  images/art/**             — полноразмерные картины:
- *      jpg/png               → пережимаются в WebP ≤ 2000px, оригинал jpg/png удаляется
- *      webp > 2000px         → уменьшаются до 2000px
- *      webp ≤ 2000px         → остаются как есть
- *  images/thumbs/**          — эскизы 600px WebP для сетки/ленты (создаются, если их ещё нет)
+ *  images/art/**    — полноразмерные картины (лежат в репозитории):
+ *      jpg/png      → пережимаются в WebP ≤ 2000px, оригинал jpg/png удаляется
+ *      webp > 2000px→ уменьшаются до 2000px
+ *      webp ≤ 2000px→ остаются как есть (повторно НЕ пережимаются, чтобы не терять качество)
+ *
+ *  images/thumbs/** — эскизы 600px WebP для сетки и ленты миниатюр.
+ *      Пересобираются ПОЛНОСТЬЮ при каждом запуске (папка очищается): так эскиз
+ *      всегда соответствует картине, даже если файлы переименовали или заменили
+ *      картинку под тем же именем. В репозитории не хранятся — их делает сборка.
  *
  * Запуск: node scripts/optimize-images.mjs   (в CI выполняется автоматически перед сборкой)
  */
-import { readdir, rename, unlink, mkdir, access } from 'node:fs/promises';
+import { readdir, rename, unlink, mkdir, access, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -36,6 +39,10 @@ async function walk(dir, cb) {
 }
 
 let full = 0, thumbs = 0, kept = 0, removed = 0;
+
+// Эскизы пересобираем с нуля: иначе после переименования файла или замены
+// картинки под тем же именем в сетке остался бы старый эскиз.
+await rm(THUMBS, { recursive: true, force: true });
 
 await walk(ART, async (src) => {
   const ext = path.extname(src).toLowerCase();
@@ -67,16 +74,14 @@ await walk(ART, async (src) => {
     kept++;
   }
 
-  // Эскиз 600px — только если его ещё нет
+  // Эскиз 600px — всегда из актуального файла работы
   await mkdir(thumbDir, { recursive: true });
-  if (!(await exists(thumbOut))) {
-    const source = (await exists(webpOut)) ? webpOut : src;
-    await sharp(source)
-      .resize({ width: THUMB_MAX, height: THUMB_MAX, fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: THUMB_Q })
-      .toFile(thumbOut);
-    thumbs++;
-  }
+  const source = (await exists(webpOut)) ? webpOut : src;
+  await sharp(source)
+    .resize({ width: THUMB_MAX, height: THUMB_MAX, fit: 'inside', withoutEnlargement: true })
+    .webp({ quality: THUMB_Q })
+    .toFile(thumbOut);
+  thumbs++;
 });
 
-console.log(`Оптимизация: пережато full ${full}, создано эскизов ${thumbs}, оставлено webp ${kept}, удалено jpg/png ${removed}`);
+console.log(`Оптимизация: пережато full ${full}, эскизов пересобрано ${thumbs}, оставлено webp без изменений ${kept}, удалено jpg/png ${removed}`);
