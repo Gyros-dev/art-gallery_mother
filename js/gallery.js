@@ -133,9 +133,9 @@
       const fig = document.createElement('figure');
       fig.className = 'grid-card';
       const media = w.type === 'text'
-        ? `<div class="grid-media text"><span>${w.title[0] || 'Т'}</span></div>`
-        : `<div class="grid-media"><img src="${w.thumb || w.images[0]}" alt="${w.title}" loading="lazy">${w.group ? `<span class="grid-badge">${w.images.length}</span>` : ''}</div>`;
-      fig.innerHTML = `${media}<figcaption><h3></h3><span class="cat">${w.categoryLabel}</span></figcaption>`;
+        ? `<div class="grid-media text"><span>${esc(w.title[0] || 'Т')}</span></div>`
+        : `<div class="grid-media"><img src="${esc(w.thumb || w.images[0])}" alt="${esc(w.title)}" loading="lazy">${w.group ? `<span class="grid-badge">${w.images.length}</span>` : ''}</div>`;
+      fig.innerHTML = `${media}<figcaption><h3></h3><span class="cat">${esc(w.categoryLabel)}</span></figcaption>`;
       fig.querySelector('h3').textContent = w.title;
       fig.addEventListener('click', () => { current = i; openLightbox(); });
       els.grid.appendChild(fig);
@@ -149,7 +149,7 @@
       const b = document.createElement('button');
       b.className = 'thumb' + (w.type === 'text' ? ' text-thumb' : '');
       if (w.type === 'text') b.innerHTML = '<span>Т</span>';
-      else b.innerHTML = `<img src="${w.thumb || w.images[0]}" alt="${w.title}" loading="lazy">`;
+      else b.innerHTML = `<img src="${esc(w.thumb || w.images[0])}" alt="${esc(w.title)}" loading="lazy">`;
       if (w.group) b.insertAdjacentHTML('beforeend', `<span class="thumb-badge">${w.images.length}</span>`);
       b.addEventListener('click', () => go(i));
       els.strip.appendChild(b);
@@ -197,7 +197,7 @@
     const bits = [w.categoryLabel];
     if (w.group) bits.push(`серия · ${w.images.length} ${plural(w.images.length)}`);
     if (w.info) bits.push(w.info);
-    return bits.map((b) => `<span>${b}</span>`).join(' <span class="dot">·</span> ');
+    return bits.map((b) => `<span>${esc(b)}</span>`).join(' <span class="dot">·</span> ');
   }
   function plural(n) {
     const m10 = n % 10, m100 = n % 100;

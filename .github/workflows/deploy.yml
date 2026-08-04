@@ -18,20 +18,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Actions закреплены по SHA-коммиту (а не по тегу v4/v5): тег можно
+      # передвинуть на другой код, SHA — нет. Комментарий рядом = версия.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
+      # npm ci ставит строго то, что записано в package-lock.json,
+      # и не подтягивает более новые версии зависимостей.
       - name: Установить зависимости (sharp)
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Оптимизировать картинки (WebP ≤2000px + эскизы)
         run: node scripts/optimize-images.mjs
       - name: Собрать каталог из папок (галерея, тексты, фото выставок)
         run: node scripts/build-gallery.mjs
       - name: Убрать node_modules из публикации
         run: rm -rf node_modules
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: .
 
@@ -45,7 +49,7 @@ jobs:
       # Публикация Pages иногда падает с временной ошибкой GitHub
       # («Deployment failed, try again later») — делаем автоповтор.
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
         continue-on-error: true
       - name: Пауза перед повтором
         if: steps.deployment.outcome == 'failure'
@@ -53,4 +57,4 @@ jobs:
       - name: Повторная публикация
         id: deployment_retry
         if: steps.deployment.outcome == 'failure'
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-28T09:23:23.551Z",
+  "generated": "2026-08-03T17:47:52.066Z",
   "categories": [
     {
       "id": "гобелен",
@@ -658,7 +658,7 @@
           "title": "Аллегория чувств",
           "type": "art",
           "group": true,
-          "layout": "grid",
+          "layout": "row",
           "images": [
             "images/art/Коллаж/Аллегория чувств/Аллегория чувств - 1.webp?v=02434ba7",
             "images/art/Коллаж/Аллегория чувств/Аллегория чувств - 2.webp?v=dd9a85c6",
@@ -869,7 +869,7 @@
           "title": "Небо",
           "type": "art",
           "group": true,
-          "layout": "grid",
+          "layout": "row",
           "images": [
             "images/art/Коллаж/Небо/Небо - 1.webp?v=89d57a5b",
             "images/art/Коллаж/Небо/Небо - 3.webp?v=3d68ebb4",
@@ -945,7 +945,7 @@
           "title": "Осеннее чтиво",
           "type": "art",
           "group": true,
-          "layout": "grid",
+          "layout": "row",
           "images": [
             "images/art/Коллаж/Осеннее чтиво/Осеннее чтиво-1. Биллетристика.webp?v=6bd2a54a",
             "images/art/Коллаж/Осеннее чтиво/Осеннее чтиво-2. Дамский роман.webp?v=3d5beb1d",
@@ -982,7 +982,7 @@
           "title": "Осколки империй",
           "type": "art",
           "group": true,
-          "layout": "grid",
+          "layout": "row",
           "images": [
             "images/art/Коллаж/Осколки империй/1. Лотос.webp?v=28c966e4",
             "images/art/Коллаж/Осколки империй/2. Рог изобилия.webp?v=957f34cf",
@@ -1110,7 +1110,7 @@
           "title": "Цветные пути",
           "type": "art",
           "group": true,
-          "layout": "grid",
+          "layout": "row",
           "images": [
             "images/art/Коллаж/Цветные пути/Цветные пути - 1.webp?v=49915207",
             "images/art/Коллаж/Цветные пути/Цветные пути - 2.webp?v=a00079d2",
@@ -1153,7 +1153,7 @@
           "title": "Внутренние миры",
           "type": "art",
           "group": true,
-          "layout": "grid",
+          "layout": "row",
           "images": [
             "images/art/Арт-объект/Внутренние миры/Внутренние миры - 1.webp?v=d072e0cc",
             "images/art/Арт-объект/Внутренние миры/Внутренние миры - 2.webp?v=6f30f978",
@@ -1200,7 +1200,7 @@
           "title": "Куклы-итальянцы",
           "type": "art",
           "group": true,
-          "layout": "grid",
+          "layout": "row",
           "images": [
             "images/art/Арт-объект/Куклы-итальянцы/Куклы-итальянцы - 1.webp?v=3055efc3",
             "images/art/Арт-объект/Куклы-итальянцы/Куклы-итальянцы - 2.webp?v=7b834d6f",

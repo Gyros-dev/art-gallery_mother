@@ -5,6 +5,23 @@ const IN_PAGES = location.pathname.includes('/pages/');
 const BASE = IN_PAGES ? '..' : '.';
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ---- безопасность ----
+   Названия работ, папок и поля в data/*.json попадают в разметку. Чтобы
+   случайный или подставленный текст (кавычка, <script>, ссылка javascript:)
+   не превратился в код, всё подставляемое пропускаем через эти две функции. */
+const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (c) => ESC_MAP[c]);
+}
+/** Разрешаем только безопасные схемы и относительные пути. Иначе — пусто. */
+function safeUrl(value) {
+  const s = String(value ?? '').trim();
+  if (!s) return '';
+  if (/^(https?:|mailto:|tel:)/i.test(s)) return s;          // обычные ссылки
+  if (/^[^a-z]/i.test(s) || !/^[a-z][a-z0-9+.-]*:/i.test(s)) return s; // относительный путь
+  return '';                                                  // javascript:, data: и прочее
+}
+
 /* ---- зерно ---- */
 (function grain() {
   const g = document.createElement('div');
@@ -270,24 +287,25 @@ const SOCIAL_ICONS = {
   vk: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 17c-5.3 0-8.7-3.7-8.9-9.8h2.7c.1 4.5 2.1 6.3 3.6 6.7V7.2h2.5v3.8c1.5-.2 3-1.8 3.6-3.8h2.5c-.4 2.4-2 4-3.2 4.7 1.1.6 3 2 3.7 4.4h-2.8c-.6-1.7-2-3-3.8-3.2V17z"/></svg>',
   telegram: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 5.2 18.8 19c-.2 1-.9 1.2-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.7-7.9c.4-.3-.1-.5-.6-.2L6.7 12.9l-4.6-1.5c-1-.3-1-1 .2-1.5l17.9-6.9c.8-.3 1.5.2 1.2 1.2z"/></svg>',
   whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.4 0-.5l-.7-1.7c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1.1 2.6 1.8 2.8 4.3 3.9c1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1s.2-1 .1-1.1z"/></svg>',
-  instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>',
-  facebook: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.3-1.5 1.6-1.5h1.6V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.3H7.5V13h2.8v8z"/></svg>',
   youtube: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 8.2c-.2-1-.8-1.7-1.8-2C18.4 5.8 12 5.8 12 5.8s-6.4 0-8.2.4c-1 .3-1.6 1-1.8 2C1.6 10 1.6 12 1.6 12s0 2 .4 3.8c.2 1 .8 1.7 1.8 2 1.8.4 8.2.4 8.2.4s6.4 0 8.2-.4c1-.3 1.6-1 1.8-2 .4-1.8.4-3.8.4-3.8s0-2-.4-3.8zM10 15.3V8.7l5.3 3.3z"/></svg>',
 };
+/* Соцсети Meta (Instagram, Facebook) намеренно не поддерживаются:
+   организация признана в РФ экстремистской, её деятельность запрещена. */
 function socialKey(label) {
   const l = (label || '').toLowerCase();
   if (/вк|vk|вконтакт/.test(l)) return 'vk';
   if (/telegram|телеграм|тг/.test(l)) return 'telegram';
   if (/whats|ватсап|вотсап/.test(l)) return 'whatsapp';
-  if (/insta|инстаг/.test(l)) return 'instagram';
-  if (/face|фейсбук/.test(l)) return 'facebook';
   if (/youtube|ютуб/.test(l)) return 'youtube';
   return null;
 }
 function socialButton(s) {
   const k = socialKey(s.label);
   const icon = k ? SOCIAL_ICONS[k] : '';
-  return `<a class="social-btn${icon ? '' : ' is-text'}" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.label}" title="${s.label}">${icon || s.label}</a>`;
+  const url = safeUrl(s.url);
+  if (!url) return '';
+  const label = esc(s.label);
+  return `<a class="social-btn${icon ? '' : ' is-text'}" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="${label}" title="${label}">${icon || label}</a>`;
 }
 
 /* ---- конфиг сайта (контакты, соцсети) из data/site.json ---- */
@@ -303,8 +321,8 @@ function loadSiteConfig() {
         const anchor = footer.querySelector('.footer-links') || footer.querySelector('.footer-name');
         // контакты (текст)
         const contact = [];
-        if (site.email) contact.push(`<a href="mailto:${site.email}">${site.email}</a>`);
-        if (site.phone) contact.push(`<a href="tel:${site.phone.replace(/[^+\d]/g, '')}">${site.phone}</a>`);
+        if (site.email) contact.push(`<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>`);
+        if (site.phone) contact.push(`<a href="tel:${esc(site.phone.replace(/[^+\d]/g, ''))}">${esc(site.phone)}</a>`);
         if (contact.length && anchor) {
           const block = document.createElement('div');
           block.className = 'footer-socials';

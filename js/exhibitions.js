@@ -20,18 +20,19 @@
 
         const badge = isPast ? '' : '<span class="badge">Скоро</span>';
         const thumbs = photos.slice(0, 3).map((src, i) =>
-          `<button class="exh-thumb" data-i="${i}"><img src="${src}" alt="Фото с выставки" loading="lazy"></button>`
+          `<button class="exh-thumb" data-i="${i}"><img src="${esc(src)}" alt="Фото с выставки" loading="lazy"></button>`
         ).join('');
 
+        const siteUrl = safeUrl(item.url);
         const actions = [];
         if (photos.length) actions.push(`<button class="exh-btn exh-photos">▦ Фотографии · ${photos.length}</button>`);
-        if (item.url) actions.push(`<button class="exh-btn exh-site">Сайт выставки ↗</button>`);
+        if (siteUrl) actions.push(`<button class="exh-btn exh-site">Сайт выставки ↗</button>`);
 
-        const line = (cls, val) => (val ? `<p class="${cls}">${val}</p>` : '');
+        const line = (cls, val) => (val ? `<p class="${cls}">${esc(val)}</p>` : '');
         card.innerHTML = `
           <div class="inner">
             <div class="exhibition-content">
-              <h3>${item.title}${badge}</h3>
+              <h3>${esc(item.title)}${badge}</h3>
               ${line('exhibition-date', item.date)}
               ${line('exhibition-location', item.location)}
               ${line('exhibition-description', item.description)}
@@ -47,9 +48,9 @@
             t.addEventListener('click', () => openGallery(Number(t.dataset.i)))
           );
         }
-        if (item.url) {
+        if (siteUrl) {
           card.querySelector('.exh-site')?.addEventListener('click', () => {
-            frame.src = item.url;
+            frame.src = siteUrl;
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
           });

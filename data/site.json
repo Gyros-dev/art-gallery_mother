@@ -8,8 +8,7 @@
   "socials": [
     { "label": "ВКонтакте", "url": "" },
     { "label": "Telegram", "url": "" },
-    { "label": "WhatsApp", "url": "" },
-    { "label": "Instagram", "url": "" }
+    { "label": "WhatsApp", "url": "" }
   ],
   "_featuredComment": "Избранное на главной. Перечисли названия работ (как имена файлов в images/art/...) в нужном порядке. Регистр и ё/е не важны. Пусто [] — покажутся 6 случайных.",
   "featured": [
