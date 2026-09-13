@@ -211,22 +211,38 @@ const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
 /** Одиночное значение поля: пустой список из YAML («size:» без значения) = пусто. */
 const scalar = (v) => (Array.isArray(v) ? '' : String(v ?? '')).trim();
 
-/** Читает все карточки и раскладывает по категориям. */
+/** Читает все карточки и раскладывает по категориям.
+ *  Категория берётся ИЗ ПУТИ КАРТИНКИ (images/art/<Категория>/…), а не из имени
+ *  папки: папки внутри content/works — только способ разложить карточки в панели
+ *  управления, и названы латиницей намеренно. GitHub отдаёт содержимое папки
+ *  с кириллицей в имени через раз (проверено: 6 успехов из 10 на 32 файлах,
+ *  10 из 10 на латинице), а панель читает карточки именно этим запросом.
+ *  На имена самих файлов это не распространяется — они остаются русскими. */
 async function readWorkCards() {
   const byCategory = new Map();
+  const push = (cat, card) => {
+    const key = cat.normalize('NFC');
+    if (!byCategory.has(key)) byCategory.set(key, []);
+    byCategory.get(key).push(card);
+  };
+
   const dirs = await ls('content/works');
-  for (const d of dirs.filter((e) => e.isDirectory() && !e.name.startsWith('.'))) {
-    const list = [];
-    for (const f of (await ls(`content/works/${d.name}`))
+  const folders = ['', ...dirs.filter((e) => e.isDirectory() && !e.name.startsWith('.')).map((e) => e.name)];
+  for (const folder of folders) {
+    const base = folder ? `content/works/${folder}` : 'content/works';
+    for (const f of (await ls(base))
       .filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => e.name).sort(byName)) {
-      const card = parseCard(await read(`content/works/${d.name}/${f}`));
-      if (!card) { console.warn(`  ⚠ карточка без шапки: content/works/${d.name}/${f}`); continue; }
+      const file = `${base}/${f}`;
+      const card = parseCard(await read(file));
+      if (!card) { console.warn(`  ⚠ карточка без шапки: ${file}`); continue; }
       const images = asList(card.images).map(imgKey).filter(Boolean);
-      if (!images.length) { console.warn(`  ⚠ в карточке нет картинок: content/works/${d.name}/${f}`); continue; }
+      if (!images.length) { console.warn(`  ⚠ в карточке нет картинок: ${file}`); continue; }
+      const category = images[0].match(/^images\/art\/([^/]+)\//)?.[1];
+      if (!category) { console.warn(`  ⚠ картинка не из images/art/<Категория>: ${file}`); continue; }
       const orderRaw = scalar(card.order);
       const order = Number(orderRaw.replace(',', '.'));
-      list.push({
-        file: `content/works/${d.name}/${f}`,
+      push(category, {
+        file,
         title: nfc(scalar(card.title)) || baseName(f),
         info: composeInfo(card),
         layout: parseLayout(scalar(card.layout)),
@@ -234,7 +250,6 @@ async function readWorkCards() {
         images,
       });
     }
-    if (list.length) byCategory.set(d.name.normalize('NFC'), list);
   }
   return byCategory;
 }

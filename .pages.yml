@@ -44,7 +44,7 @@ content:
       После нажатия «Save» («Сохранить») сайт обновится сам за 1–2 минуты —
       просто откройте https://annaveksler.ru и посмотрите результат.
     type: collection
-    path: content/works/Гобелен
+    path: content/works/gobelen
     format: yaml-frontmatter
     filename: "{fields.title}.md"
     view:
@@ -149,7 +149,7 @@ content:
       После нажатия «Save» («Сохранить») сайт обновится сам за 1–2 минуты —
       просто откройте https://annaveksler.ru и посмотрите результат.
     type: collection
-    path: content/works/Коллаж
+    path: content/works/collage
     format: yaml-frontmatter
     filename: "{fields.title}.md"
     view:
@@ -254,7 +254,7 @@ content:
       После нажатия «Save» («Сохранить») сайт обновится сам за 1–2 минуты —
       просто откройте https://annaveksler.ru и посмотрите результат.
     type: collection
-    path: content/works/Арт-объект
+    path: content/works/object
     format: yaml-frontmatter
     filename: "{fields.title}.md"
     view:
