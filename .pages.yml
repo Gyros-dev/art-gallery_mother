@@ -1,0 +1,166 @@
+# Настройка панели управления сайтом (Pages CMS).
+# Открывается на app.pagescms.org — вход через GitHub, приглашение по email.
+
+media:
+  - name: works
+    label: Изображения работ
+    input: images/art
+    output: /images/art
+    categories: [image]
+  - name: exhibition_photos
+    label: Фотографии с выставок
+    input: images/exhibitions
+    output: /images/exhibitions
+    categories: [image]
+
+content:
+  # ---------- Выставки ----------
+  - name: exhibitions
+    label: Выставки
+    type: file
+    path: data/exhibitions.json
+    format: json
+    list: true
+    icon: calendar
+    fields:
+      - name: title
+        label: Название выставки
+        type: string
+        required: true
+      - name: date
+        label: Даты
+        type: string
+        required: true
+        description: "Как в афише: «07 августа — 18 октября 2026» или просто «2024». Сайт сам определит, прошла выставка, идёт сейчас или только будет."
+      - name: location
+        label: Место
+        type: string
+        description: "Зал, улица, город"
+      - name: description
+        label: Описание
+        type: text
+        description: "Необязательно. Короткое пояснение или «Совместно с И. Дьяковым»."
+      - name: url
+        label: Сайт выставки
+        type: string
+        pattern:
+          regex: "^(https://.*)?$"
+          message: "Ссылка должна начинаться с https:// либо остаться пустой"
+      - name: photos
+        label: Папка с фотографиями
+        type: string
+        description: "Название папки внутри «Фотографии с выставок». Оставьте пустым, если фото нет."
+
+  # ---------- Настройки сайта ----------
+  - name: settings
+    label: Настройки сайта
+    type: file
+    path: data/site.json
+    format: json
+    icon: settings
+    fields:
+      - name: title
+        label: Название сайта
+        type: string
+        required: true
+        description: "Видно во вкладке браузера и при отправке ссылки в мессенджер"
+      - name: shortTitle
+        label: Короткое имя
+        type: string
+      - name: tagline
+        label: Подзаголовок
+        type: string
+      - name: description
+        label: Описание для поисковиков
+        type: text
+        description: "Две-три строки. Показывается в Яндексе и Google под названием сайта."
+      - name: url
+        label: Адрес сайта
+        type: string
+        description: "Когда купите домен — впишите сюда, например https://annaveksler.ru. Всё остальное подстроится само."
+      - name: name
+        label: Имя художника
+        type: string
+      - name: location
+        label: Город
+        type: string
+      - name: email
+        label: Электронная почта
+        type: string
+        description: "Оставьте пустым — контакт не будет показан на сайте"
+      - name: phone
+        label: Телефон
+        type: string
+        description: "Оставьте пустым — контакт не будет показан на сайте"
+      - name: subscribeNote
+        label: Текст кнопки «написать»
+        type: string
+      - name: socials
+        label: Соцсети
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Название
+            type: string
+          - name: url
+            label: Ссылка
+            type: string
+            pattern:
+              regex: "^(https://.*)?$"
+              message: "Ссылка должна начинаться с https:// либо остаться пустой"
+      - name: featured
+        label: Избранное на главной
+        type: string
+        list: true
+        description: "Названия работ (как имена файлов) в нужном порядке. Первая станет картинкой-превью при отправке ссылки."
+
+  # ---------- Описания работ ----------
+  - name: descriptions_gobelen
+    label: Описания работ — Гобелен
+    type: collection
+    path: images/art/Гобелен
+    extension: txt
+    format: raw
+    icon: file-text
+    fields:
+      - name: body
+        label: Материал, размер, год
+        type: text
+        description: "Например: Шерсть, вискоза, ручное ткачество, 100х150 см, 2001"
+  - name: descriptions_collage
+    label: Описания работ — Коллаж
+    type: collection
+    path: images/art/Коллаж
+    extension: txt
+    format: raw
+    icon: file-text
+    fields:
+      - name: body
+        label: Материал, размер, год
+        type: text
+  - name: descriptions_object
+    label: Описания работ — Арт-объект
+    type: collection
+    path: images/art/Арт-объект
+    extension: txt
+    format: raw
+    icon: file-text
+    fields:
+      - name: body
+        label: Материал, размер, год
+        type: text
+
+  # ---------- Публикации ----------
+  - name: texts
+    label: Публикации и статьи
+    type: collection
+    path: content/texts
+    extension: md
+    format: raw
+    icon: book-open
+    fields:
+      - name: body
+        label: Текст
+        type: text
+        description: "Первая строка — заголовок публикации, дальше сам текст."
