@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gyros-dev.github.io/art-gallery_mother/sitemap.xml

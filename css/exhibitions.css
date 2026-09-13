@@ -129,6 +129,16 @@
   background: var(--terra); color: var(--cream); vertical-align: middle;
 }
 
+/* «Идёт сейчас» — выделяем ярче, с мягкой пульсацией */
+.badge.now { background: var(--indigo); }
+.badge.now::before {
+  content: ""; display: inline-block; vertical-align: middle;
+  width: 6px; height: 6px; margin-right: 0.4rem; border-radius: 50%;
+  background: var(--cream); animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .badge.now::before { animation: none; } }
+
 /* Оверлей-превью сайта выставки */
 #preview-overlay {
   position: fixed; inset: 0; z-index: 800;

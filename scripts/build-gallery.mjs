@@ -255,6 +255,175 @@ async function buildExhibitionMedia() {
   return out;
 }
 
+/* ================= Мета-теги, карта сайта и проверка данных =================
+   Всё берётся из data/site.json. Поменяли домен там — обновится везде. */
+
+const PAGES = [
+  { file: 'index.html',            loc: '',                       priority: '1.0',
+    title: (s) => s.title,
+    desc:  (s) => s.description },
+  { file: 'pages/gallery.html',    loc: 'pages/gallery.html',     priority: '0.9',
+    title: (s) => `Галерея работ — ${s.name}`,
+    desc:  () => 'Гобелены ручного ткачества, текстильные коллажи и арт-объекты Анны Векслер: более 70 работ с описанием техники, размеров и года создания.' },
+  { file: 'pages/exhibitions.html', loc: 'pages/exhibitions.html', priority: '0.8',
+    title: (s) => `Выставки — ${s.name}`,
+    desc:  () => 'Выставки Анны Векслер: текущие и будущие экспозиции, архив участия в российских и зарубежных выставках, персональные проекты.' },
+  { file: 'pages/about.html',      loc: 'pages/about.html',       priority: '0.8',
+    title: (s) => `Об авторе — ${s.name}`,
+    desc:  () => 'Анна Векслер — художник декоративного искусства, член Союза художников России, кандидат педагогических наук, профессор. Биография, выставки, награды, работы в собраниях музеев.' },
+  { file: 'pages/literature.html', loc: 'pages/literature.html',  priority: '0.6',
+    title: (s) => `Публикации и пособия — ${s.name}`,
+    desc:  () => 'Публикации о творчестве Анны Векслер и учебно-методические пособия по ручному ткачеству и художественному текстилю.' },
+];
+
+const OG_IMAGE = 'assets/og-preview.jpg';
+
+function metaBlock(site, page, indent) {
+  const base = String(site.url || '').replace(/\/+$/, '');
+  const abs = (p) => (p ? `${base}/${p}` : `${base}/`);
+  const t = page.title(site), d = page.desc(site);
+  const tags = [
+    `<title>${escAttr(t)}</title>`,
+    `<meta name="description" content="${escAttr(d)}">`,
+    `<link rel="canonical" href="${escAttr(abs(page.loc))}">`,
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:site_name" content="${escAttr(site.title)}">`,
+    `<meta property="og:title" content="${escAttr(t)}">`,
+    `<meta property="og:description" content="${escAttr(d)}">`,
+    `<meta property="og:url" content="${escAttr(abs(page.loc))}">`,
+    `<meta property="og:image" content="${escAttr(abs(OG_IMAGE))}">`,
+    `<meta property="og:image:width" content="1200">`,
+    `<meta property="og:image:height" content="630">`,
+    `<meta property="og:locale" content="ru_RU">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+  ];
+  return tags.map((x) => indent + x).join('\n');
+}
+const escAttr = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/** Разметка для поисковиков: кто автор и что за работы. */
+function jsonLd(site, gallery) {
+  const base = String(site.url || '').replace(/\/+$/, '');
+  const works = gallery.categories.flatMap((c) => c.works.filter((w) => w.type !== 'text').map((w) => ({ w, c })));
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person', '@id': `${base}/#person`,
+        name: site.name, jobTitle: 'Художник декоративного искусства',
+        description: site.description,
+        url: `${base}/`,
+        address: { '@type': 'PostalAddress', addressLocality: 'Санкт-Петербург', addressCountry: 'RU' },
+        knowsAbout: ['Гобелен', 'Ручное ткачество', 'Текстильный коллаж', 'Декоративно-прикладное искусство'],
+      },
+      {
+        '@type': 'WebSite', '@id': `${base}/#website`,
+        name: site.title, url: `${base}/`, inLanguage: 'ru-RU',
+        author: { '@id': `${base}/#person` },
+      },
+      ...works.slice(0, 60).map(({ w, c }) => ({
+        '@type': 'VisualArtwork',
+        name: w.title,
+        artform: c.label,
+        creator: { '@id': `${base}/#person` },
+        image: `${base}/${String(w.images[0]).replace(/\?.*$/, '')}`,
+        ...(w.info ? { description: w.info } : {}),
+      })),
+    ],
+  };
+}
+
+/** Картинка-превью для соцсетей (1200×630): работа на «бумажном» фоне.
+    Берётся первая работа из «Избранного» — меняете её, меняется и превью. */
+async function generateOgImage(site, gallery) {
+  const sharp = await getSharp();
+  if (!sharp) { console.warn('  ! sharp недоступен — превью для соцсетей не обновлено'); return; }
+  const nfc = (x) => (x || '').normalize('NFC').toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+  const works = gallery.categories.flatMap((c) => c.works).filter((w) => w.type !== 'text' && w.images?.length);
+  const wanted = (site.featured || [])[0];
+  const pick = works.find((w) => nfc(w.title) === nfc(wanted)) || works[0];
+  if (!pick) return;
+  const src = path.join(ROOT, String(pick.images[0]).replace(/\?.*$/, ''));
+  const art = await sharp(src)
+    .resize({ width: 1040, height: 510, fit: 'inside', withoutEnlargement: false })
+    .toBuffer();
+  await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#efece4' } })
+    .composite([{ input: art, gravity: 'centre' }])
+    .jpeg({ quality: 86 })
+    .toFile(path.join(ROOT, 'assets/og-preview.jpg'));
+  console.log(`Превью для соцсетей обновлено (работа «${pick.title}»)`);
+}
+
+async function writeMetaAndSeo(site, gallery) {
+  const base = String(site.url || '').replace(/\/+$/, '');
+  // 1) мета-теги в каждую страницу — между маркерами
+  for (const page of PAGES) {
+    const file = path.join(ROOT, page.file);
+    let html;
+    try { html = await readFile(file, 'utf8'); } catch { continue; }
+    const re = /([ \t]*)<!-- meta:start[^>]*-->[\s\S]*?<!-- meta:end -->/;
+    const m = re.exec(html);
+    if (!m) { console.warn(`  ! в ${page.file} нет маркеров meta:start/meta:end`); continue; }
+    const indent = m[1] || '  ';
+    const replacement = `${indent}<!-- meta:start — заполняется сборкой из data/site.json, вручную не править -->\n`
+      + metaBlock(site, page, indent) + `\n${indent}<!-- meta:end -->`;
+    await writeFile(file, html.replace(re, replacement));
+  }
+  // 2) карта сайта
+  const today = new Date().toISOString().slice(0, 10);
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
+    + PAGES.map((p) => `  <url>\n    <loc>${base}/${p.loc}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${p.priority}</priority>\n  </url>`).join('\n')
+    + `\n</urlset>\n`;
+  await writeFile(path.join(ROOT, 'sitemap.xml'), sitemap);
+  // 3) robots.txt
+  await writeFile(path.join(ROOT, 'robots.txt'),
+    `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`);
+  // 4) разметка Schema.org
+  await writeFile(path.join(ROOT, 'data/schema.json'), JSON.stringify(jsonLd(site, gallery), null, 2) + '\n');
+
+  // 5) разметка Schema.org прямо в главную страницу
+  const idx = path.join(ROOT, 'index.html');
+  let home = await readFile(idx, 'utf8');
+  const ldRe = /([ \t]*)<!-- schema:start[^>]*-->[\s\S]*?<!-- schema:end -->/;
+  if (ldRe.test(home)) {
+    const ind = ldRe.exec(home)[1] || '  ';
+    const json = JSON.stringify(jsonLd(site, gallery));
+    home = home.replace(ldRe,
+      `${ind}<!-- schema:start — заполняется сборкой, вручную не править -->\n`
+      + `${ind}<script type="application/ld+json">${json}</script>\n`
+      + `${ind}<!-- schema:end -->`);
+    await writeFile(idx, home);
+  }
+  await generateOgImage(site, gallery);
+  console.log(`Мета-теги, sitemap.xml, robots.txt и разметка обновлены (адрес сайта: ${base})`);
+}
+
+/* ---------- Проверка данных: ловим ошибки до публикации ---------- */
+function checkData(site, exhibitions) {
+  const problems = [];
+  if (!site.url || !/^https?:\/\//.test(site.url)) problems.push('в data/site.json поле "url" пустое или без https://');
+  if (!site.title) problems.push('в data/site.json не заполнено "title" (название сайта)');
+  (site.socials || []).forEach((s, i) => {
+    if (s.url && !/^https?:\/\//i.test(s.url)) problems.push(`соцсеть №${i + 1} ("${s.label}"): ссылка должна начинаться с https://`);
+  });
+  exhibitions.forEach((e, i) => {
+    const n = `выставка №${i + 1}` + (e.title ? ` («${String(e.title).slice(0, 40)}»)` : '');
+    if (!e.title) problems.push(`${n}: не заполнено "title" (название)`);
+    if (!e.date) problems.push(`${n}: не заполнено "date" (дата)`);
+    if (e.url && !/^https?:\/\//i.test(e.url)) problems.push(`${n}: "url" должен начинаться с https://`);
+  });
+  return problems;
+}
+
+async function readJson(rel, fallback) {
+  try { return JSON.parse(await readFile(path.join(ROOT, rel), 'utf8')); }
+  catch (e) {
+    console.error(`\n  ОШИБКА в файле ${rel}: ${e.message}`);
+    console.error('  Скорее всего пропущена запятая или кавычка. Проверьте файл — сайт собран со старыми данными.\n');
+    return fallback;
+  }
+}
+
 async function main() {
   const gallery = await buildGallery();
   const texts = await buildTexts();
@@ -262,7 +431,21 @@ async function main() {
   await writeFile(path.join(ROOT, 'data/gallery.json'), JSON.stringify(gallery, null, 2) + '\n');
   await writeFile(path.join(ROOT, 'data/texts.json'), JSON.stringify(texts, null, 2) + '\n');
   await writeFile(path.join(ROOT, 'data/exhibitions-media.json'), JSON.stringify(media, null, 2) + '\n');
-  console.log('Готово: data/gallery.json, data/texts.json, data/exhibitions-media.json');
+
+  const site = await readJson('data/site.json', null);
+  const exhibitions = await readJson('data/exhibitions.json', []);
+  if (!site) { console.error('Без data/site.json мета-теги не собрать.'); process.exit(1); }
+
+  const problems = checkData(site, exhibitions);
+  if (problems.length) {
+    console.error('\n  НАЙДЕНЫ ОШИБКИ В ДАННЫХ — исправьте и загрузите снова:');
+    problems.forEach((p) => console.error('   • ' + p));
+    console.error('');
+    process.exit(1);
+  }
+
+  await writeMetaAndSeo(site, gallery);
+  console.log('Готово: каталог, мета-теги, sitemap.xml, robots.txt');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

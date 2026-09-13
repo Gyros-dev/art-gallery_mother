@@ -3,7 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Литература — Анна Векслер</title>
+  <!-- meta:start — заполняется сборкой из data/site.json, вручную не править -->
+  <title>Публикации и пособия — Анна Векслер</title>
+  <meta name="description" content="Публикации о творчестве Анны Векслер и учебно-методические пособия по ручному ткачеству и художественному текстилю.">
+  <link rel="canonical" href="https://gyros-dev.github.io/art-gallery_mother/pages/literature.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Анна Векслер — страницы творчества">
+  <meta property="og:title" content="Публикации и пособия — Анна Векслер">
+  <meta property="og:description" content="Публикации о творчестве Анны Векслер и учебно-методические пособия по ручному ткачеству и художественному текстилю.">
+  <meta property="og:url" content="https://gyros-dev.github.io/art-gallery_mother/pages/literature.html">
+  <meta property="og:image" content="https://gyros-dev.github.io/art-gallery_mother/assets/og-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- meta:end -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' https:; base-uri 'self'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="256x256" href="../assets/favicon-256.png">
   <link rel="apple-touch-icon" href="../assets/favicon-180.png">
@@ -80,70 +96,11 @@
       <a href="literature.html">Литература</a>
       <a href="about.html">Художник</a>
     </div>
-    <p class="footer-note">© <span data-year></span> · Санкт-Петербург</p>
+    <p class="footer-note">© <span data-year></span> Анна Векслер · Санкт-Петербург</p>
+    <p class="footer-rights">Изображения работ — объекты авторского права. Воспроизведение и использование без письменного разрешения автора не допускается.</p>
   </footer>
 
   <script src="../js/common.js"></script>
-  <script>
-    (function () {
-      const overlay = document.getElementById('pdf-overlay');
-      const viewer = document.getElementById('pdf-viewer');
-      document.querySelectorAll('.lit-link[data-pdf]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          viewer.src = `${BASE}/${btn.dataset.pdf}`;
-          overlay.style.display = 'flex';
-          document.body.style.overflow = 'hidden';
-        });
-      });
-      function close() { overlay.style.display = 'none'; viewer.src = ''; document.body.style.overflow = ''; }
-      document.getElementById('pdf-close').addEventListener('click', close);
-      overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-
-      // Публикации из content/texts (data/texts.json)
-      const textOverlay = document.getElementById('text-overlay');
-      const reader = document.getElementById('text-reader');
-      function openText(item) {
-        reader.innerHTML = '';
-        const h = document.createElement('h2'); h.textContent = item.title; reader.appendChild(h);
-        item.body.split(/\n\s*\n/).filter(Boolean).forEach((par) => {
-          const p = document.createElement('p'); p.textContent = par; reader.appendChild(p);
-        });
-        textOverlay.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
-      function closeText() { textOverlay.style.display = 'none'; document.body.style.overflow = ''; }
-      document.getElementById('text-close').addEventListener('click', closeText);
-      textOverlay.addEventListener('click', (e) => { if (e.target === textOverlay) closeText(); });
-
-      fetch(`${BASE}/data/texts.json`).then((r) => (r.ok ? r.json() : [])).then((texts) => {
-        if (!texts.length) return;
-        const section = document.getElementById('publications-section');
-        const listEl = document.getElementById('publications-list');
-        section.hidden = false;
-        texts.forEach((item, i) => {
-          const li = document.createElement('li');
-          li.className = 'reveal';
-          const preview = item.body.replace(/\n+/g, ' ').slice(0, 110);
-          li.innerHTML = `
-            <button class="lit-link">
-              <span class="lit-num">${String(i + 1).padStart(2, '0')}</span>
-              <span class="lit-body"><span class="lit-title"></span><span class="lit-kind"></span></span>
-              <span class="lit-arrow">↗</span>
-            </button>`;
-          li.querySelector('.lit-title').textContent = item.title;
-          li.querySelector('.lit-kind').textContent = preview + (item.body.length > 110 ? '…' : '');
-          li.querySelector('.lit-link').addEventListener('click', () => openText(item));
-          listEl.appendChild(li);
-        });
-        if (typeof initReveals === 'function') initReveals();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key !== 'Escape') return;
-        if (overlay.style.display === 'flex') close();
-        if (textOverlay.style.display === 'flex') closeText();
-      });
-    })();
-  </script>
+  <script src="../js/literature.js"></script>
 </body>
 </html>
