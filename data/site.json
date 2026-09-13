@@ -9,7 +9,6 @@
   "photo": "images/other/artist1.jpg",
   "email": "",
   "phone": "",
-  "subscribeNote": "Получать письма о новых работах и выставках",
   "socials": [
     {
       "label": "ВКонтакте",
@@ -17,10 +16,6 @@
     },
     {
       "label": "Telegram",
-      "url": ""
-    },
-    {
-      "label": "WhatsApp",
       "url": ""
     }
   ],

@@ -462,10 +462,6 @@ content:
         label: Телефон
         type: string
         description: "Оставьте пустым — и телефон просто не будет показан на сайте."
-      - name: subscribeNote
-        label: Текст кнопки «написать»
-        type: string
-        description: "Надпись на кнопке письма художнику. Работает, только если заполнена почта."
       - name: socials
         label: Соцсети
         type: object
@@ -477,7 +473,7 @@ content:
           - name: label
             label: Название
             type: string
-            description: "ВКонтакте, Telegram, WhatsApp — название определяет, какой значок покажется."
+            description: "ВКонтакте, Telegram или YouTube — название определяет, какой значок покажется."
           - name: url
             label: Ссылка
             type: string

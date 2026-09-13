@@ -171,9 +171,6 @@
 }
 .contact-socials a { color: var(--ink-soft); }
 .contact-socials a:hover { color: var(--terra); }
-.contact-block .subscribe { margin-top: 1.6rem; }
-.contact-block .subscribe a { color: var(--ink); border-bottom: none; }
-.contact-block .subscribe a:hover { color: var(--paper); }
 
 @media (max-width: 860px) {
   .about-hero { grid-template-columns: 1fr; }

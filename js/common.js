@@ -286,16 +286,14 @@ function openPhotos(images, index, title) {
 const SOCIAL_ICONS = {
   vk: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 17c-5.3 0-8.7-3.7-8.9-9.8h2.7c.1 4.5 2.1 6.3 3.6 6.7V7.2h2.5v3.8c1.5-.2 3-1.8 3.6-3.8h2.5c-.4 2.4-2 4-3.2 4.7 1.1.6 3 2 3.7 4.4h-2.8c-.6-1.7-2-3-3.8-3.2V17z"/></svg>',
   telegram: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 5.2 18.8 19c-.2 1-.9 1.2-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.7-7.9c.4-.3-.1-.5-.6-.2L6.7 12.9l-4.6-1.5c-1-.3-1-1 .2-1.5l17.9-6.9c.8-.3 1.5.2 1.2 1.2z"/></svg>',
-  whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.4 0-.5l-.7-1.7c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1.1 2.6 1.8 2.8 4.3 3.9c1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1s.2-1 .1-1.1z"/></svg>',
   youtube: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 8.2c-.2-1-.8-1.7-1.8-2C18.4 5.8 12 5.8 12 5.8s-6.4 0-8.2.4c-1 .3-1.6 1-1.8 2C1.6 10 1.6 12 1.6 12s0 2 .4 3.8c.2 1 .8 1.7 1.8 2 1.8.4 8.2.4 8.2.4s6.4 0 8.2-.4c1-.3 1.6-1 1.8-2 .4-1.8.4-3.8.4-3.8s0-2-.4-3.8zM10 15.3V8.7l5.3 3.3z"/></svg>',
 };
-/* Соцсети Meta (Instagram, Facebook) намеренно не поддерживаются:
-   организация признана в РФ экстремистской, её деятельность запрещена. */
+/* Список намеренно короткий: поддерживаются только сервисы, разрешённые
+   в РФ. Прежде чем добавлять сюда новый значок, проверьте статус сервиса. */
 function socialKey(label) {
   const l = (label || '').toLowerCase();
   if (/вк|vk|вконтакт/.test(l)) return 'vk';
   if (/telegram|телеграм|тг/.test(l)) return 'telegram';
-  if (/whats|ватсап|вотсап/.test(l)) return 'whatsapp';
   if (/youtube|ютуб/.test(l)) return 'youtube';
   return null;
 }
@@ -362,14 +360,6 @@ function loadSiteConfig() {
         socBox.className = 'social-buttons';
         socBox.innerHTML = socials.map(socialButton).join('');
       }
-      setContact('[data-subscribe]', site.email, (el) => {
-        const a = el.querySelector('a');
-        const note = site.subscribeNote || 'Написать';
-        a.href = `mailto:${site.email}?subject=${encodeURIComponent(note)}`;
-        const noteEl = a.querySelector('[data-subscribe-note]');
-        if (noteEl) noteEl.textContent = note;
-      });
-
       document.dispatchEvent(new CustomEvent('siteconfig', { detail: site }));
     })
     .catch(() => {});
