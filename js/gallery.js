@@ -290,7 +290,29 @@
     els.lb.querySelector('.lb-x').addEventListener('click', closeLightbox);
     els.lb.querySelector('.lb-prev').addEventListener('click', (e) => { e.stopPropagation(); lbStep(-1); });
     els.lb.querySelector('.lb-next').addEventListener('click', (e) => { e.stopPropagation(); lbStep(1); });
-    els.lb.addEventListener('click', (e) => { if (e.target === els.lb || e.target === els.lbImg) closeLightbox(); });
+
+    // Листание свайпом в самом лайтбоксе. Без него на телефоне работу нельзя
+    // было пролистать вовсе: стрелки там мелкие, а серия открывалась
+    // на первой части и дальше не двигалась.
+    let lsx = 0, lsy = 0, lbSwiped = false;
+    els.lb.addEventListener('touchstart', (e) => {
+      lsx = e.touches[0].clientX; lsy = e.touches[0].clientY; lbSwiped = false;
+    }, { passive: true });
+    els.lb.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - lsx;
+      const dy = e.changedTouches[0].clientY - lsy;
+      // только заметное горизонтальное движение: вертикальное оставляем
+      // прокрутке — в текстовых работах её видно
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+        lbSwiped = true;
+        lbStep(dx < 0 ? 1 : -1);
+      }
+    }, { passive: true });
+
+    els.lb.addEventListener('click', (e) => {
+      if (lbSwiped) { lbSwiped = false; return; }   // свайп — это не «закрыть»
+      if (e.target === els.lb || e.target === els.lbImg) closeLightbox();
+    });
   }
 
   /* ---------- лайтбокс ---------- */
@@ -324,6 +346,9 @@
     lbIndex = Math.max(0, Math.min((firstOfWork < 0 ? 0 : firstOfWork) + (startPart || 0), lbSlides.length - 1));
     fillLightbox();
     els.lb.classList.add('show');
+    // без этого программы чтения с экрана не видели открытую работу:
+    // в разметке стоит aria-hidden="true", и его нужно снимать
+    els.lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => els.lb.classList.add('open'));
   }
@@ -380,6 +405,7 @@
   }
   function closeLightbox() {
     els.lb.classList.remove('open');
+    els.lb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     setTimeout(() => els.lb.classList.remove('show'), 350);
   }

@@ -411,9 +411,22 @@
   .cf-center .stack.is-group { max-width: 96vw; }
   .cf-center .stack.is-group.is-grid { max-width: 94vw; }
   .stage { padding: 0.5rem clamp(0.8rem, 4vw, 1.6rem); }
-  /* стрелки скрыты — навигация свайпом и лентой миниатюр */
+  /* в самой галерее стрелки скрыты — там листают свайпом и лентой миниатюр */
   .nav-arrow { display: none; }
-  .lightbox.has-nav .lb-prev, .lightbox.has-nav .lb-next { display: none; }
+  /* а в лайтбоксе стрелки нужны: без них серию не пролистать. Плетёный шнур
+     на телефоне закрыл бы половину работы, поэтому здесь компактные кнопки
+     с уголком — размер 44px, чтобы уверенно попадать пальцем. */
+  .lightbox.has-nav .lb-prev, .lightbox.has-nav .lb-next {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,0,0,0.4);
+    opacity: 0.92; filter: none;
+  }
+  .lb-prev img, .lb-next img { display: none; }
+  .lightbox.has-nav .lb-prev::before, .lightbox.has-nav .lb-next::before {
+    content: "\2039"; color: #fff; font-size: 1.9rem; line-height: 1; margin-top: -0.16em;
+  }
+  .lightbox.has-nav .lb-next::before { content: "\203A"; }
   .lightbox.has-nav { padding-left: clamp(0.8rem, 4vw, 1.4rem); padding-right: clamp(0.8rem, 4vw, 1.4rem); }
   /* лайтбокс: одна картина во всю доступную область, подпись под ней */
   .lightbox { padding-top: 3.6rem; padding-bottom: 1rem; }
