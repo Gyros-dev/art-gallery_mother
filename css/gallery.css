@@ -70,14 +70,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  max-width: min(58vw, 680px);
-  max-height: 56vh;
+  max-width: min(58vw, 980px);
+  max-height: 58vh;
 }
 .cf-center .stack.is-group { max-width: min(88vw, 1120px); }
 .cf-center img {
   display: block;
-  max-width: min(58vw, 680px);
-  max-height: 56vh;
+  max-width: min(58vw, 980px);
+  max-height: 58vh;
   width: auto;
   object-fit: contain;
   box-shadow: 0 30px 70px -30px rgba(33,28,23,0.85);
@@ -187,7 +187,15 @@
 .art-info .meta {
   font-size: 0.76rem; letter-spacing: 0.06em; color: var(--ink-soft);
 }
+/* на широком экране части подписи не рвутся, на узком — переносятся,
+   иначе длинное описание обрезалось краем экрана */
 .art-info .meta span { white-space: nowrap; }
+@media (max-width: 560px) {
+  .art-info .meta { line-height: 1.45; }
+  .art-info .meta span { white-space: normal; }
+  .art-info .meta .dot { display: none; }
+  .art-info .meta span + span { display: block; }
+}
 .art-info .meta .dot { color: var(--line); margin: 0 0.5rem; }
 .art-info.swap { animation: infoswap 0.5s var(--ease); }
 @keyframes infoswap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
@@ -223,7 +231,7 @@
   position: absolute; right: 2px; bottom: 2px;
   min-width: 15px; height: 15px; padding: 0 3px;
   display: grid; place-items: center;
-  font-size: 0.56rem; line-height: 1;
+  font-size: 0.62rem; line-height: 1;
   color: var(--cream); background: color-mix(in srgb, var(--ink) 78%, transparent);
   border-radius: 8px;
 }

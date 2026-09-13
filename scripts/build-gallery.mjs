@@ -354,6 +354,43 @@ async function generateOgImage(site, gallery) {
   console.log(`Превью для соцсетей обновлено (работа «${pick.title}»)`);
 }
 
+/** К ссылкам на css/js дописываем метку версии по содержимому файла.
+    Иначе после обновления сайта у посетителя останутся старые стили из кэша
+    браузера — и вёрстка поедет. Содержимое не менялось — метка та же. */
+async function versionAssets() {
+  const pages = ['index.html', '404.html', 'pages/gallery.html', 'pages/exhibitions.html',
+                 'pages/about.html', 'pages/literature.html'];
+  const cache = new Map();
+  const hashOf = async (rel) => {
+    if (cache.has(rel)) return cache.get(rel);
+    let h = '';
+    try { h = createHash('md5').update(await readFile(path.join(ROOT, rel))).digest('hex').slice(0, 8); }
+    catch { h = ''; }
+    cache.set(rel, h); return h;
+  };
+  let touched = 0;
+  for (const page of pages) {
+    const file = path.join(ROOT, page);
+    let html;
+    try { html = await readFile(file, 'utf8'); } catch { continue; }
+    const dir = path.dirname(page);
+    const re = /(href|src)="((?:\.\.\/|\.\/)?(?:css|js)\/[^"?]+\.(?:css|js))(?:\?v=[a-f0-9]+)?"/g;
+    const parts = [];
+    let last = 0, m;
+    while ((m = re.exec(html)) !== null) {
+      const rel = path.normalize(path.join(dir === '.' ? '' : dir, m[2])).replace(/\\/g, '/');
+      const h = await hashOf(rel);
+      parts.push(html.slice(last, m.index), `${m[1]}="${m[2]}${h ? `?v=${h}` : ''}"`);
+      last = m.index + m[0].length;
+    }
+    if (!parts.length) continue;
+    parts.push(html.slice(last));
+    await writeFile(file, parts.join(''));
+    touched++;
+  }
+  console.log(`Метки версий проставлены в ${touched} страницах (css/js обновятся у посетителей сразу)`);
+}
+
 async function writeMetaAndSeo(site, gallery) {
   const base = String(site.url || '').replace(/\/+$/, '');
   // 1) мета-теги в каждую страницу — между маркерами
@@ -445,6 +482,7 @@ async function main() {
   }
 
   await writeMetaAndSeo(site, gallery);
+  await versionAssets();
   console.log('Готово: каталог, мета-теги, sitemap.xml, robots.txt');
 }
 
