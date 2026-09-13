@@ -22,6 +22,7 @@ import sharp from 'sharp';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ART = path.join(ROOT, 'images/art');
 const THUMBS = path.join(ROOT, 'images/thumbs');
+const ORIGINALS = path.join(ROOT, 'images/originals');
 const IMG = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 const FULL_MAX = 2000, THUMB_MAX = 600, FULL_Q = 82, THUMB_Q = 74;
 
@@ -38,7 +39,7 @@ async function walk(dir, cb) {
   }
 }
 
-let full = 0, thumbs = 0, kept = 0, removed = 0;
+let full = 0, thumbs = 0, kept = 0, removed = 0, originals = 0;
 
 // Эскизы пересобираем с нуля: иначе после переименования файла или замены
 // картинки под тем же именем в сетке остался бы старый эскиз.
@@ -59,6 +60,18 @@ await walk(ART, async (src) => {
   const longside = Math.max(meta.width || 0, meta.height || 0);
   const isRaster = ext !== '.webp';
   const needFull = isRaster || longside > FULL_MAX;
+
+  // Слой «полный размер»: сохраняем исходник во всю величину до уменьшения.
+  // Он отдаётся только при открытии работы на весь экран.
+  if (longside > FULL_MAX) {
+    const origDir = path.join(ORIGINALS, rel);
+    const origOut = path.join(origDir, base + '.webp');
+    if (!(await exists(origOut))) {
+      await mkdir(origDir, { recursive: true });
+      await sharp(src).webp({ quality: 90 }).toFile(origOut);
+      originals++;
+    }
+  }
 
   // Полноразмерный WebP ≤ 2000px
   if (needFull) {
@@ -84,4 +97,4 @@ await walk(ART, async (src) => {
   thumbs++;
 });
 
-console.log(`Оптимизация: пережато full ${full}, эскизов пересобрано ${thumbs}, оставлено webp без изменений ${kept}, удалено jpg/png ${removed}`);
+console.log(`Оптимизация: сохранено оригиналов ${originals}, пережато full ${full}, эскизов пересобрано ${thumbs}, оставлено webp без изменений ${kept}, удалено jpg/png ${removed}`);

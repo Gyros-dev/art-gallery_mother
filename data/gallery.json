@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-13T07:14:43.408Z",
+  "generated": "2026-09-13T10:15:15.218Z",
   "categories": [
     {
       "id": "гобелен",
@@ -12,6 +12,9 @@
           "images": [
             "images/art/Гобелен/Амстердам.webp?v=c659fe8d"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Амстердам.webp?v=215c520f",
           "info": "Шерсть, вискоза, ручное ткачество, 100х150 см, 2001"
         },
@@ -22,15 +25,21 @@
           "images": [
             "images/art/Гобелен/Ангел для Маруси.webp?v=469397cb"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Ангел для Маруси.webp?v=53a4b061",
           "info": "Шерсть, вискоза, ручное ткачество, 130х102 см, 2008"
         },
         {
-          "title": "Ангел, сворачивающий небо",
+          "title": "Ангел, сворачивающий небо",
           "type": "art",
           "group": false,
           "images": [
             "images/art/Гобелен/Ангел, сворачивающий небо.webp?v=cf8ffebc"
+          ],
+          "full": [
+            "images/originals/Гобелен/Ангел, сворачивающий небо.webp?v=68cb6e35"
           ],
           "thumb": "images/thumbs/Гобелен/Ангел, сворачивающий небо.webp?v=e8495e12",
           "info": "Шерсть, вискоза, ручное ткачество, 80х80 см, 2024"
@@ -42,6 +51,9 @@
           "images": [
             "images/art/Гобелен/Арлекин.webp?v=f2501054"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Арлекин.webp?v=ade17623",
           "info": "Шерсть, вискоза, ручное ткачество, 200х100 см, 2001"
         },
@@ -51,6 +63,9 @@
           "group": false,
           "images": [
             "images/art/Гобелен/Бабочка и цветы.webp?v=43ea2d2b"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Гобелен/Бабочка и цветы.webp?v=3d79bcbe",
           "info": "Шерсть, вискоза, ручное ткачество, 100х150 см, 2002"
@@ -62,15 +77,21 @@
           "images": [
             "images/art/Гобелен/Бабочки.webp?v=0c29f4e1"
           ],
+          "full": [
+            "images/originals/Гобелен/Бабочки.webp?v=4faca3ae"
+          ],
           "thumb": "images/thumbs/Гобелен/Бабочки.webp?v=f2e49851",
-          "info": "Шерсть, вискоза, ручное ткачество, 80х80 см. 2004"
+          "info": "Шерсть, вискоза, ручное ткачество, 80х80 см, 2004"
         },
         {
-          "title": "Белый натюрморт",
+          "title": "Белый натюрморт",
           "type": "art",
           "group": false,
           "images": [
             "images/art/Гобелен/Белый натюрморт.webp?v=f542a6c1"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Гобелен/Белый натюрморт.webp?v=d7a09cf3",
           "info": "Шерсть, вискоза, ручное ткачество, 50х70 см, 1997"
@@ -82,6 +103,9 @@
           "images": [
             "images/art/Гобелен/Бильярд.webp?v=05b28a22"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Бильярд.webp?v=3b63e72d",
           "info": "Шерсть, вискоза, ручное ткачество, 100х130 см, 1998"
         },
@@ -91,6 +115,9 @@
           "group": false,
           "images": [
             "images/art/Гобелен/Бог в помощь.webp?v=cbf5b0fe"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Гобелен/Бог в помощь.webp?v=8a498739",
           "info": "Шерсть, вискоза, ручное ткачество, 130х155 см, 2018"
@@ -102,6 +129,9 @@
           "images": [
             "images/art/Гобелен/Венеция.webp?v=db1a9561"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Венеция.webp?v=820c20e4",
           "info": "Шерсть, вискоза, ручное ткачество, 100х170 см, 2011"
         },
@@ -111,6 +141,9 @@
           "group": false,
           "images": [
             "images/art/Гобелен/Весна в городе.webp?v=bf3e0b78"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Гобелен/Весна в городе.webp?v=e940a8b4",
           "info": "Шерсть, вискоза, ручное ткачество, 60х40 см, 1999"
@@ -122,6 +155,9 @@
           "images": [
             "images/art/Гобелен/Весна.webp?v=448b057a"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Весна.webp?v=8c5db44f",
           "info": "Шерсть, вискоза, ручное ткачество, 60х120 см, 2010"
         },
@@ -131,6 +167,9 @@
           "group": false,
           "images": [
             "images/art/Гобелен/Город.webp?v=fd909ff8"
+          ],
+          "full": [
+            "images/originals/Гобелен/Город.webp?v=12586b6e"
           ],
           "thumb": "images/thumbs/Гобелен/Город.webp?v=769e4064",
           "info": "Шерсть, вискоза, ручное ткачество, 40х30 см, 1997"
@@ -142,6 +181,9 @@
           "images": [
             "images/art/Гобелен/Данила.webp?v=ba744318"
           ],
+          "full": [
+            "images/originals/Гобелен/Данила.webp?v=a3782e74"
+          ],
           "thumb": "images/thumbs/Гобелен/Данила.webp?v=244d5b1e",
           "info": "Шерсть, вискоза, ручное ткачество, 40х40 см, 1996"
         },
@@ -152,8 +194,11 @@
           "images": [
             "images/art/Гобелен/Дары природы (центральная часть триптиха).webp?v=f3923e97"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Дары природы (центральная часть триптиха).webp?v=8a95b35c",
-          "info": "Шерсть, вискоза, ручное ткачество, 150х100 см. 2016"
+          "info": "Шерсть, вискоза, ручное ткачество, 150х100 см, 2016"
         },
         {
           "title": "Заря",
@@ -162,25 +207,34 @@
           "images": [
             "images/art/Гобелен/Заря.webp?v=ced5a70e"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Заря.webp?v=655e53b6",
           "info": "Шерсть, вискоза, ручное ткачество, 114х210 см, 2010"
         },
         {
-          "title": "Над землёй",
+          "title": "Над землёй",
           "type": "art",
           "group": false,
           "images": [
             "images/art/Гобелен/Над землёй.webp?v=4980ff60"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Над землёй.webp?v=73a5a5ef",
           "info": "Шерсть, вискоза, ручное ткачество, 155х150 см, 2014"
         },
         {
-          "title": "Натюрморт с дыней",
+          "title": "Натюрморт с дыней",
           "type": "art",
           "group": false,
           "images": [
             "images/art/Гобелен/Натюрморт с дыней.webp?v=2312e1ac"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Гобелен/Натюрморт с дыней.webp?v=fd7d64dc",
           "info": "Шерсть, вискоза, ручное ткачество, 60х70 см, 1997"
@@ -192,6 +246,9 @@
           "images": [
             "images/art/Гобелен/Осень в городе.webp?v=751d8a7d"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Осень в городе.webp?v=e221aac6",
           "info": "Шерсть, вискоза, ручное ткачество, 182х109 см, 2009"
         },
@@ -202,15 +259,21 @@
           "images": [
             "images/art/Гобелен/Река времени.webp?v=8831d56c"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Река времени.webp?v=7434f3d0",
           "info": "Шерсть, вискоза, ручное ткачество, 130х173 см, 2014"
         },
         {
-          "title": "Сан-Марко. Между небом и землей",
+          "title": "Сан-Марко. Между небом и землей",
           "type": "art",
           "group": false,
           "images": [
             "images/art/Гобелен/Сан-Марко. Между небом и землей.webp?v=f516b93e"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Гобелен/Сан-Марко. Между небом и землей.webp?v=2723869b",
           "info": "Шерсть, вискоза, ручное ткачество, 141х156 см, 2020"
@@ -222,6 +285,9 @@
           "images": [
             "images/art/Гобелен/Северная рыба.webp?v=2b50d587"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Северная рыба.webp?v=358573ae",
           "info": "Шерсть, вискоза, ручное ткачество, 100х140 см, 2008"
         },
@@ -231,6 +297,9 @@
           "group": false,
           "images": [
             "images/art/Гобелен/Тюльпаны в городе.webp?v=7c6d32c9"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Гобелен/Тюльпаны в городе.webp?v=5dbcd163",
           "info": "Шерсть, вискоза, ручное ткачество, 100х100 см, 2003"
@@ -242,17 +311,24 @@
           "images": [
             "images/art/Гобелен/Цветы.webp?v=cc1880dd"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Гобелен/Цветы.webp?v=8209d5ff",
           "info": "Шерсть, вискоза, ручное ткачество, 100х100 см, 2001"
         },
         {
-          "title": "Большой улов",
+          "title": "Большой улов",
           "type": "art",
           "group": true,
           "layout": "row",
           "images": [
             "images/art/Гобелен/Большой улов/Большой улов - 1.webp?v=46d39132",
             "images/art/Гобелен/Большой улов/Большой улов - 2.webp?v=feac2269"
+          ],
+          "full": [
+            null,
+            null
           ],
           "parts": [
             {
@@ -275,6 +351,10 @@
           "images": [
             "images/art/Гобелен/Готика. Ночь в Тарту/Готика.webp?v=8b7975b9",
             "images/art/Гобелен/Готика. Ночь в Тарту/Ночь в Тарту.webp?v=569d9368"
+          ],
+          "full": [
+            "images/originals/Гобелен/Готика. Ночь в Тарту/Готика.webp?v=4ef2865f",
+            "images/originals/Гобелен/Готика. Ночь в Тарту/Ночь в Тарту.webp?v=99acf52f"
           ],
           "parts": [
             {
@@ -300,6 +380,12 @@
             "images/art/Гобелен/Евангелисты/3. Иоанн.webp?v=064e208f",
             "images/art/Гобелен/Евангелисты/4. Марк.webp?v=b208371d"
           ],
+          "full": [
+            null,
+            null,
+            null,
+            "images/originals/Гобелен/Евангелисты/4. Марк.webp?v=db32401c"
+          ],
           "parts": [
             {
               "title": "Матфей",
@@ -322,7 +408,7 @@
           "info": "Шерсть, вискоза, ручное ткачество, 100х100 см, 2024-2025"
         },
         {
-          "title": "Клондайк",
+          "title": "Клондайк",
           "type": "art",
           "group": true,
           "layout": "row",
@@ -330,6 +416,11 @@
             "images/art/Гобелен/Клондайк/Клондайк - 1.webp?v=2c6ae956",
             "images/art/Гобелен/Клондайк/Клондайк - 2.webp?v=cecec261",
             "images/art/Гобелен/Клондайк/Клондайк - 3.webp?v=29cae3c7"
+          ],
+          "full": [
+            "images/originals/Гобелен/Клондайк/Клондайк - 1.webp?v=245de081",
+            null,
+            null
           ],
           "parts": [
             {
@@ -359,6 +450,12 @@
             "images/art/Гобелен/Мексика/Мексика - 3.webp?v=34ebf017",
             "images/art/Гобелен/Мексика/Мексика - 4.webp?v=a0abe01b"
           ],
+          "full": [
+            null,
+            null,
+            null,
+            null
+          ],
           "parts": [
             {
               "title": "",
@@ -381,7 +478,7 @@
           "info": "Шерсть, вискоза, ручное ткачество, 100х200 см, 2001"
         },
         {
-          "title": "Триптих. Заячий остров",
+          "title": "Триптих. Заячий остров",
           "type": "art",
           "group": true,
           "layout": "row",
@@ -389,6 +486,11 @@
             "images/art/Гобелен/Триптих. Заячий остров/Триптих. Заячий остров. Голубь.webp?v=21ce3656",
             "images/art/Гобелен/Триптих. Заячий остров/Триптих. Заячий остров. Город.webp?v=295af38f",
             "images/art/Гобелен/Триптих. Заячий остров/Триптих. Заячий остров. Заяц.webp?v=aa877fd3"
+          ],
+          "full": [
+            null,
+            null,
+            null
           ],
           "parts": [
             {
@@ -408,13 +510,17 @@
           "info": "Шерсть, вискоза, ручное ткачество, 30х30 см, 2020"
         },
         {
-          "title": "Уходящая натура. Последний дракон",
+          "title": "Уходящая натура. Последний дракон",
           "type": "art",
           "group": true,
           "layout": "row",
           "images": [
             "images/art/Гобелен/Уходящая натура. Последний дракон/Уходящая натура. Последний дракон - 1.webp?v=de2cd294",
             "images/art/Гобелен/Уходящая натура. Последний дракон/Уходящая натура. Последний дракон - 2.webp?v=aa70f5dc"
+          ],
+          "full": [
+            null,
+            null
           ],
           "parts": [
             {
@@ -437,6 +543,10 @@
           "images": [
             "images/art/Гобелен/Япония/Япония - 1.webp?v=daec0c3b",
             "images/art/Гобелен/Япония/Япония - 2.webp?v=32caffde"
+          ],
+          "full": [
+            null,
+            null
           ],
           "parts": [
             {
@@ -464,6 +574,9 @@
           "images": [
             "images/art/Коллаж/Арбуз.webp?v=85e83a22"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Коллаж/Арбуз.webp?v=69242596",
           "info": "Текстиль, ручное ткачество, 120х150 см, 2006"
         },
@@ -473,6 +586,9 @@
           "group": false,
           "images": [
             "images/art/Коллаж/Астрахань.webp?v=a3b44e39"
+          ],
+          "full": [
+            "images/originals/Коллаж/Астрахань.webp?v=c35145ea"
           ],
           "thumb": "images/thumbs/Коллаж/Астрахань.webp?v=c743f3b4",
           "info": "Текстиль, 100х200 см, 2011"
@@ -484,6 +600,9 @@
           "images": [
             "images/art/Коллаж/Большие кувшины.webp?v=689fb22b"
           ],
+          "full": [
+            "images/originals/Коллаж/Большие кувшины.webp?v=b575ee21"
+          ],
           "thumb": "images/thumbs/Коллаж/Большие кувшины.webp?v=2e1ee8c2",
           "info": "Текстиль, 100х200 см, 2000"
         },
@@ -493,6 +612,9 @@
           "group": false,
           "images": [
             "images/art/Коллаж/В папоротнике.webp?v=13a048b9"
+          ],
+          "full": [
+            "images/originals/Коллаж/В папоротнике.webp?v=5ee4e454"
           ],
           "thumb": "images/thumbs/Коллаж/В папоротнике.webp?v=27e541a0",
           "info": "Текстиль, 210х150 см, 2010"
@@ -504,6 +626,9 @@
           "images": [
             "images/art/Коллаж/Венеция. Мост вздохов.webp?v=dd93948e"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Коллаж/Венеция. Мост вздохов.webp?v=2f53506a",
           "info": "Текстиль, 60х80 см, 2012"
         },
@@ -513,6 +638,9 @@
           "group": false,
           "images": [
             "images/art/Коллаж/Вера-Надежда-Любовь-София.webp?v=6c5e075f"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Коллаж/Вера-Надежда-Любовь-София.webp?v=30207297",
           "info": "Текстильные материалы, 60х60 см, 2024"
@@ -524,6 +652,9 @@
           "images": [
             "images/art/Коллаж/Город.webp?v=32f9b3f8"
           ],
+          "full": [
+            "images/originals/Коллаж/Город.webp?v=12586b6e"
+          ],
           "thumb": "images/thumbs/Коллаж/Город.webp?v=d546ef37",
           "info": "Текстиль, 100х100 см, 2001"
         },
@@ -533,6 +664,9 @@
           "group": false,
           "images": [
             "images/art/Коллаж/Гуаньинь.webp?v=2f3ac43f"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Коллаж/Гуаньинь.webp?v=66961f18",
           "info": "Текстиль, 190х120 см, 2011"
@@ -544,6 +678,9 @@
           "images": [
             "images/art/Коллаж/Дама с единорогом.webp?v=fa4d97b5"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Коллаж/Дама с единорогом.webp?v=45fb670c",
           "info": "Текстиль, 190х120 см, 2009"
         },
@@ -553,6 +690,9 @@
           "group": false,
           "images": [
             "images/art/Коллаж/Защитник.webp?v=1258227e"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Коллаж/Защитник.webp?v=bb35d445",
           "info": "Текстиль, 190х120 см, 2015"
@@ -564,6 +704,9 @@
           "images": [
             "images/art/Коллаж/Золото инков.webp?v=87c9efef"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Коллаж/Золото инков.webp?v=ba6f62b2",
           "info": "Текстиль, 150х200 см, 2010"
         },
@@ -573,6 +716,9 @@
           "group": false,
           "images": [
             "images/art/Коллаж/Пещерные рыбы.webp?v=1921e604"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Коллаж/Пещерные рыбы.webp?v=0808a94c",
           "info": "Текстиль, 40х60 см"
@@ -584,6 +730,9 @@
           "images": [
             "images/art/Коллаж/Птица-ночь.webp?v=e84dc07f"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Коллаж/Птица-ночь.webp?v=96b003a6",
           "info": "Текстиль, медь, гор. эмаль, 100х100 см, 2025"
         },
@@ -593,6 +742,9 @@
           "group": false,
           "images": [
             "images/art/Коллаж/Серафим.webp?v=b5d4bf0a"
+          ],
+          "full": [
+            null
           ],
           "thumb": "images/thumbs/Коллаж/Серафим.webp?v=3a117c17",
           "info": "Текстиль, медь, гор. эмаль, 100х100 см, 2021"
@@ -604,28 +756,37 @@
           "images": [
             "images/art/Коллаж/Стрекоза.webp?v=328163ce"
           ],
+          "full": [
+            "images/originals/Коллаж/Стрекоза.webp?v=3ac5b6cb"
+          ],
           "thumb": "images/thumbs/Коллаж/Стрекоза.webp?v=2087a419",
           "info": "Текстиль, 150х75 см, 2002"
         },
         {
-          "title": "Чёрная рыба",
+          "title": "Чёрная рыба",
           "type": "art",
           "group": false,
           "images": [
             "images/art/Коллаж/Чёрная рыба.webp?v=7978dc8c"
           ],
+          "full": [
+            "images/originals/Коллаж/Чёрная рыба.webp?v=ff9de2c3"
+          ],
           "thumb": "images/thumbs/Коллаж/Чёрная рыба.webp?v=b5b38440",
           "info": "Текстиль, 75х150 см, 2001"
         },
         {
-          "title": "Черный квадрат",
+          "title": "Черный квадрат",
           "type": "art",
           "group": false,
           "images": [
             "images/art/Коллаж/Черный квадрат.webp?v=79aad3f3"
           ],
+          "full": [
+            null
+          ],
           "thumb": "images/thumbs/Коллаж/Черный квадрат.webp?v=4dec48ea",
-          "info": "текстиль, 100х100 см, 2001"
+          "info": "Текстиль, 100х100 см, 2001"
         },
         {
           "title": "Агора",
@@ -636,6 +797,11 @@
             "images/art/Коллаж/Агора/Агора - 1.webp?v=54c330c6",
             "images/art/Коллаж/Агора/Агора - 2.webp?v=1edc57e8",
             "images/art/Коллаж/Агора/Агора - 3.webp?v=3d29b4ee"
+          ],
+          "full": [
+            "images/originals/Коллаж/Агора/Агора - 1.webp?v=d09a95cc",
+            "images/originals/Коллаж/Агора/Агора - 2.webp?v=3842d52b",
+            "images/originals/Коллаж/Агора/Агора - 3.webp?v=49b77511"
           ],
           "parts": [
             {
@@ -665,6 +831,13 @@
             "images/art/Коллаж/Аллегория чувств/Аллегория чувств - 3.webp?v=5aee88de",
             "images/art/Коллаж/Аллегория чувств/Аллегория чувств - 4.webp?v=fb28722d",
             "images/art/Коллаж/Аллегория чувств/Аллегория чувств - 5.webp?v=99e2de78"
+          ],
+          "full": [
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "parts": [
             {
@@ -700,6 +873,10 @@
             "images/art/Коллаж/Венеция — Арлекины/1. Коломбина.webp?v=871d7f88",
             "images/art/Коллаж/Венеция — Арлекины/2. Арлекин.webp?v=2a65c9f9"
           ],
+          "full": [
+            null,
+            null
+          ],
           "parts": [
             {
               "title": "Коломбина",
@@ -723,6 +900,12 @@
             "images/art/Коллаж/Времена года/Времена года - 2.webp?v=14df427a",
             "images/art/Коллаж/Времена года/Времена года - 3.webp?v=6ff79a58",
             "images/art/Коллаж/Времена года/Времена года - 4.webp?v=61decb19"
+          ],
+          "full": [
+            null,
+            null,
+            null,
+            null
           ],
           "parts": [
             {
@@ -754,6 +937,10 @@
             "images/art/Коллаж/День – Ночь/День – Ночь - 1.webp?v=3fb2e65d",
             "images/art/Коллаж/День – Ночь/День – Ночь - 2.webp?v=e3bf2276"
           ],
+          "full": [
+            null,
+            null
+          ],
           "parts": [
             {
               "title": "",
@@ -776,6 +963,10 @@
             "images/art/Коллаж/Диптих. Монохром/Диптих. Монохром - 1. Белый квадрат.webp?v=11d78781",
             "images/art/Коллаж/Диптих. Монохром/Диптих. Монохром - 2. Чёрный квадрат.webp?v=8d50fe2f"
           ],
+          "full": [
+            null,
+            null
+          ],
           "parts": [
             {
               "title": "Белый квадрат",
@@ -797,6 +988,10 @@
           "images": [
             "images/art/Коллаж/Диптих. Светлые бабочки/Светлые бабочки - 1.webp?v=b3aa1439",
             "images/art/Коллаж/Диптих. Светлые бабочки/Светлые бабочки - 2.webp?v=c1b30e9b"
+          ],
+          "full": [
+            "images/originals/Коллаж/Диптих. Светлые бабочки/Светлые бабочки - 1.webp?v=74f637fe",
+            "images/originals/Коллаж/Диптих. Светлые бабочки/Светлые бабочки - 2.webp?v=fc9ec87c"
           ],
           "parts": [
             {
@@ -821,6 +1016,11 @@
             "images/art/Коллаж/Карманные секреты/Карманные секреты - 2.webp?v=8f268bc0",
             "images/art/Коллаж/Карманные секреты/Карманные секреты - 3.webp?v=c3505797"
           ],
+          "full": [
+            null,
+            null,
+            null
+          ],
           "parts": [
             {
               "title": "",
@@ -839,7 +1039,7 @@
           "info": "Текстиль, медь, гор. эмаль, 30х30 см, 2017"
         },
         {
-          "title": "Мировой океан",
+          "title": "Мировой океан",
           "type": "art",
           "group": true,
           "layout": "row",
@@ -847,6 +1047,11 @@
             "images/art/Коллаж/Мировой океан/Мировой океан - 1.webp?v=d692d67b",
             "images/art/Коллаж/Мировой океан/Мировой океан - 2.webp?v=36343e36",
             "images/art/Коллаж/Мировой океан/Мировой океан - 3.webp?v=d2f7d332"
+          ],
+          "full": [
+            null,
+            null,
+            null
           ],
           "parts": [
             {
@@ -875,6 +1080,12 @@
             "images/art/Коллаж/Небо/Небо - 3.webp?v=3d68ebb4",
             "images/art/Коллаж/Небо/Небо - 4.webp?v=a6f17fa9",
             "images/art/Коллаж/Небо/Небо-2.webp?v=88b7f48f"
+          ],
+          "full": [
+            "images/originals/Коллаж/Небо/Небо - 1.webp?v=6771ac29",
+            null,
+            "images/originals/Коллаж/Небо/Небо - 4.webp?v=0accaab6",
+            null
           ],
           "parts": [
             {
@@ -906,6 +1117,10 @@
             "images/art/Коллаж/Небо — Венеция/Анна Векслер. Венеция-1. 20х30 см. Коллаж. Бумага. 2013.webp?v=4131cd29",
             "images/art/Коллаж/Небо — Венеция/Анна Векслер. Венеция-2. 18х30 см. Коллаж. Бумага. 2013.webp?v=30adc466"
           ],
+          "full": [
+            "images/originals/Коллаж/Небо — Венеция/Анна Векслер. Венеция-1. 20х30 см. Коллаж. Бумага. 2013.webp?v=d5f54a06",
+            "images/originals/Коллаж/Небо — Венеция/Анна Векслер. Венеция-2. 18х30 см. Коллаж. Бумага. 2013.webp?v=2d78363b"
+          ],
           "parts": [
             {
               "title": "Анна Векслер. Венеция-1. 20х30 см. Коллаж. Бумага. 2013",
@@ -927,6 +1142,10 @@
           "images": [
             "images/art/Коллаж/Новгород/Новгород - 1.webp?v=f8dd63e2",
             "images/art/Коллаж/Новгород/Новгород - 2.webp?v=eb91f770"
+          ],
+          "full": [
+            null,
+            null
           ],
           "parts": [
             {
@@ -952,6 +1171,13 @@
             "images/art/Коллаж/Осеннее чтиво/Осеннее чтиво-3. Детектив.webp?v=ee460a35",
             "images/art/Коллаж/Осеннее чтиво/Осеннее чтиво-4. Пресса.webp?v=4699d0a2",
             "images/art/Коллаж/Осеннее чтиво/Осеннее чтиво-5. Сказки для детей.webp?v=8401bbe1"
+          ],
+          "full": [
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "parts": [
             {
@@ -979,7 +1205,7 @@
           "info": "Бумага, текстиль, 90х60 см, 2009"
         },
         {
-          "title": "Осколки империй",
+          "title": "Осколки империй",
           "type": "art",
           "group": true,
           "layout": "row",
@@ -994,6 +1220,18 @@
             "images/art/Коллаж/Осколки империй/8. Маскарон.webp?v=e1f9e1b8",
             "images/art/Коллаж/Осколки империй/9. Ламбри.webp?v=a430ee39",
             "images/art/Коллаж/Осколки империй/10. Терраццо.webp?v=33147e57"
+          ],
+          "full": [
+            "images/originals/Коллаж/Осколки империй/1. Лотос.webp?v=8dd8ceb5",
+            "images/originals/Коллаж/Осколки империй/2. Рог изобилия.webp?v=4ab361ee",
+            "images/originals/Коллаж/Осколки империй/3. Пальмета.webp?v=6cf41445",
+            "images/originals/Коллаж/Осколки империй/4. Рокайль.webp?v=583ba97f",
+            "images/originals/Коллаж/Осколки империй/5. Розетка.webp?v=deb4af6a",
+            "images/originals/Коллаж/Осколки империй/6. Атлант.webp?v=f696163b",
+            "images/originals/Коллаж/Осколки империй/7. Акант.webp?v=077001ad",
+            "images/originals/Коллаж/Осколки империй/8. Маскарон.webp?v=88f9314a",
+            "images/originals/Коллаж/Осколки империй/9. Ламбри.webp?v=5e03f70b",
+            "images/originals/Коллаж/Осколки империй/10. Терраццо.webp?v=1eb2dcfd"
           ],
           "parts": [
             {
@@ -1049,6 +1287,10 @@
             "images/art/Коллаж/Птицы и фрукты/Птицы и фрукты - 1.webp?v=7c11ccb8",
             "images/art/Коллаж/Птицы и фрукты/Птицы и фрукты - 2.webp?v=df5de40a"
           ],
+          "full": [
+            "images/originals/Коллаж/Птицы и фрукты/Птицы и фрукты - 1.webp?v=d1c79f6d",
+            "images/originals/Коллаж/Птицы и фрукты/Птицы и фрукты - 2.webp?v=50a568e2"
+          ],
           "parts": [
             {
               "title": "",
@@ -1071,6 +1313,10 @@
             "images/art/Коллаж/Танец/Танец 1.webp?v=0758ebc4",
             "images/art/Коллаж/Танец/Танец 2.webp?v=f97af0a1"
           ],
+          "full": [
+            null,
+            null
+          ],
           "parts": [
             {
               "title": "",
@@ -1085,13 +1331,17 @@
           "info": "Бумага, текстиль, 90х70 см, 2011"
         },
         {
-          "title": "Тёмные бабочки",
+          "title": "Тёмные бабочки",
           "type": "art",
           "group": true,
           "layout": "row",
           "images": [
             "images/art/Коллаж/Тёмные бабочки/Тёмные бабочки - 1.webp?v=c706db5c",
             "images/art/Коллаж/Тёмные бабочки/Тёмные бабочки - 2.webp?v=4c60b356"
+          ],
+          "full": [
+            "images/originals/Коллаж/Тёмные бабочки/Тёмные бабочки - 1.webp?v=f7ec6bc5",
+            "images/originals/Коллаж/Тёмные бабочки/Тёмные бабочки - 2.webp?v=47ff6226"
           ],
           "parts": [
             {
@@ -1117,6 +1367,13 @@
             "images/art/Коллаж/Цветные пути/Цветные пути - 3.webp?v=11535d1f",
             "images/art/Коллаж/Цветные пути/Цветные пути - 4.webp?v=b686994d",
             "images/art/Коллаж/Цветные пути/Цветные пути - 5.webp?v=7dc6d9c3"
+          ],
+          "full": [
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "parts": [
             {
@@ -1162,6 +1419,15 @@
             "images/art/Арт-объект/Внутренние миры/Внутренние миры - 5.webp?v=e7a46ffd",
             "images/art/Арт-объект/Внутренние миры/Внутренние миры - 6.webp?v=4e3f5f0f",
             "images/art/Арт-объект/Внутренние миры/Внутренние миры - 7.webp?v=dad5a84a"
+          ],
+          "full": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
           ],
           "parts": [
             {
@@ -1211,6 +1477,16 @@
             "images/art/Арт-объект/Куклы-итальянцы/Куклы-итальянцы - 7.webp?v=5e143efb",
             "images/art/Арт-объект/Куклы-итальянцы/Куклы-итальянцы - 8.webp?v=9fa6ed0e"
           ],
+          "full": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
           "parts": [
             {
               "title": "",
@@ -1256,6 +1532,10 @@
           "images": [
             "images/art/Арт-объект/Подводные мифы/1. Темная сторона.webp?v=1a67451c",
             "images/art/Арт-объект/Подводные мифы/2. Светлая сторона.webp?v=078fa1a6"
+          ],
+          "full": [
+            null,
+            null
           ],
           "parts": [
             {

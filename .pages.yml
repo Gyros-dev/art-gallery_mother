@@ -2,10 +2,20 @@
 # Открывается на app.pagescms.org — вход через GitHub, приглашение по email.
 
 media:
-  - name: works
-    label: Изображения работ
-    input: images/art
-    output: /images/art
+  - name: gobelen
+    label: Картинки — Гобелен
+    input: images/art/Гобелен
+    output: /images/art/Гобелен
+    categories: [image]
+  - name: collage
+    label: Картинки — Коллаж
+    input: images/art/Коллаж
+    output: /images/art/Коллаж
+    categories: [image]
+  - name: object
+    label: Картинки — Арт-объект
+    input: images/art/Арт-объект
+    output: /images/art/Арт-объект
     categories: [image]
   - name: exhibition_photos
     label: Фотографии с выставок
@@ -115,41 +125,165 @@ content:
         list: true
         description: "Названия работ (как имена файлов) в нужном порядке. Первая станет картинкой-превью при отправке ссылки."
 
-  # ---------- Описания работ ----------
-  - name: descriptions_gobelen
-    label: Описания работ — Гобелен
+  # ---------- Работы ----------
+  - name: works_gobelen
+    label: Работы — Гобелен
     type: collection
-    path: images/art/Гобелен
-    extension: txt
-    format: raw
-    icon: file-text
+    path: content/works/Гобелен
+    extension: md
+    filename: "{fields.title}.md"
+    icon: image
+    view:
+      fields: [title, size, year]
+      primary: title
     fields:
-      - name: body
-        label: Материал, размер, год
-        type: text
-        description: "Например: Шерсть, вискоза, ручное ткачество, 100х150 см, 2001"
-  - name: descriptions_collage
-    label: Описания работ — Коллаж
+      - name: title
+        label: Название работы
+        type: string
+        required: true
+        description: "Так работа подписана на сайте. Оно же станет именем карточки."
+      - name: images
+        label: Изображения
+        type: image
+        list: true
+        required: true
+        options:
+          media: gobelen
+        description: "Одна картинка — обычная работа. Несколько — серия: их можно перетаскивать, порядок на сайте будет такой же. Размер подгоняется сам, при открытии во весь экран показывается оригинал."
+      - name: materials
+        label: Материалы
+        type: select
+        options:
+          multiple: true
+          creatable: true
+          values: [Шерсть, Вискоза, Ручное ткачество, Текстиль, Текстильные материалы, Бумага, Медь, Гор. эмаль, Стекло]
+        description: "Выберите из списка. Если нужного нет — впишите своё, оно появится в списке в следующий раз."
+      - name: size
+        label: Размер
+        type: string
+        description: "Например: 100х150 см. Если у частей серии размеры разные — перечислите через запятую."
+      - name: year
+        label: Год
+        type: string
+      - name: layout
+        label: Расположение частей серии
+        type: select
+        options:
+          values:
+            - { value: "авто", label: "Автоматически — сайт решит сам" }
+            - { value: "ряд", label: "В ряд  ▭ ▭ ▭" }
+            - { value: "квадрат", label: "Квадратом  ▭ ▭ / ▭ ▭" }
+        description: "Нужно только для серии из нескольких картинок. «Автоматически»: до трёх частей — в ряд, вытянутые вверх — в ряд, остальные — квадратом."
+      - name: order
+        label: Номер в категории
+        type: number
+        description: "Необязательно. Работы с номером встают в начало категории по возрастанию, остальные — как обычно, по алфавиту."
+
+  - name: works_collage
+    label: Работы — Коллаж
     type: collection
-    path: images/art/Коллаж
-    extension: txt
-    format: raw
-    icon: file-text
+    path: content/works/Коллаж
+    extension: md
+    filename: "{fields.title}.md"
+    icon: image
+    view:
+      fields: [title, size, year]
+      primary: title
     fields:
-      - name: body
-        label: Материал, размер, год
-        type: text
-  - name: descriptions_object
-    label: Описания работ — Арт-объект
+      - name: title
+        label: Название работы
+        type: string
+        required: true
+        description: "Так работа подписана на сайте. Оно же станет именем карточки."
+      - name: images
+        label: Изображения
+        type: image
+        list: true
+        required: true
+        options:
+          media: collage
+        description: "Одна картинка — обычная работа. Несколько — серия: их можно перетаскивать, порядок на сайте будет такой же. Размер подгоняется сам, при открытии во весь экран показывается оригинал."
+      - name: materials
+        label: Материалы
+        type: select
+        options:
+          multiple: true
+          creatable: true
+          values: [Шерсть, Вискоза, Ручное ткачество, Текстиль, Текстильные материалы, Бумага, Медь, Гор. эмаль, Стекло]
+        description: "Выберите из списка. Если нужного нет — впишите своё, оно появится в списке в следующий раз."
+      - name: size
+        label: Размер
+        type: string
+        description: "Например: 100х150 см. Если у частей серии размеры разные — перечислите через запятую."
+      - name: year
+        label: Год
+        type: string
+      - name: layout
+        label: Расположение частей серии
+        type: select
+        options:
+          values:
+            - { value: "авто", label: "Автоматически — сайт решит сам" }
+            - { value: "ряд", label: "В ряд  ▭ ▭ ▭" }
+            - { value: "квадрат", label: "Квадратом  ▭ ▭ / ▭ ▭" }
+        description: "Нужно только для серии из нескольких картинок. «Автоматически»: до трёх частей — в ряд, вытянутые вверх — в ряд, остальные — квадратом."
+      - name: order
+        label: Номер в категории
+        type: number
+        description: "Необязательно. Работы с номером встают в начало категории по возрастанию, остальные — как обычно, по алфавиту."
+
+  - name: works_object
+    label: Работы — Арт-объект
     type: collection
-    path: images/art/Арт-объект
-    extension: txt
-    format: raw
-    icon: file-text
+    path: content/works/Арт-объект
+    extension: md
+    filename: "{fields.title}.md"
+    icon: image
+    view:
+      fields: [title, size, year]
+      primary: title
     fields:
-      - name: body
-        label: Материал, размер, год
-        type: text
+      - name: title
+        label: Название работы
+        type: string
+        required: true
+        description: "Так работа подписана на сайте. Оно же станет именем карточки."
+      - name: images
+        label: Изображения
+        type: image
+        list: true
+        required: true
+        options:
+          media: object
+        description: "Одна картинка — обычная работа. Несколько — серия: их можно перетаскивать, порядок на сайте будет такой же. Размер подгоняется сам, при открытии во весь экран показывается оригинал."
+      - name: materials
+        label: Материалы
+        type: select
+        options:
+          multiple: true
+          creatable: true
+          values: [Шерсть, Вискоза, Ручное ткачество, Текстиль, Текстильные материалы, Бумага, Медь, Гор. эмаль, Стекло]
+        description: "Выберите из списка. Если нужного нет — впишите своё, оно появится в списке в следующий раз."
+      - name: size
+        label: Размер
+        type: string
+        description: "Например: 100х150 см. Если у частей серии размеры разные — перечислите через запятую."
+      - name: year
+        label: Год
+        type: string
+      - name: layout
+        label: Расположение частей серии
+        type: select
+        options:
+          values:
+            - { value: "авто", label: "Автоматически — сайт решит сам" }
+            - { value: "ряд", label: "В ряд  ▭ ▭ ▭" }
+            - { value: "квадрат", label: "Квадратом  ▭ ▭ / ▭ ▭" }
+        description: "Нужно только для серии из нескольких картинок. «Автоматически»: до трёх частей — в ряд, вытянутые вверх — в ряд, остальные — квадратом."
+      - name: order
+        label: Номер в категории
+        type: number
+        description: "Необязательно. Работы с номером встают в начало категории по возрастанию, остальные — как обычно, по алфавиту."
 
   # ---------- Публикации ----------
   - name: texts

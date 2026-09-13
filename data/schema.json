@@ -3,11 +3,11 @@
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://gyros-dev.github.io/art-gallery_mother/#person",
+      "@id": "https://annaveksler.ru/#person",
       "name": "Анна Векслер",
       "jobTitle": "Художник декоративного искусства",
       "description": "Страницы творчества художника Анны Векслер: гобелены ручного ткачества, текстильные коллажи и арт-объекты. Выставки, публикации, биография.",
-      "url": "https://gyros-dev.github.io/art-gallery_mother/",
+      "url": "https://annaveksler.ru/",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Санкт-Петербург",
@@ -22,12 +22,12 @@
     },
     {
       "@type": "WebSite",
-      "@id": "https://gyros-dev.github.io/art-gallery_mother/#website",
+      "@id": "https://annaveksler.ru/#website",
       "name": "Анна Векслер — страницы творчества",
-      "url": "https://gyros-dev.github.io/art-gallery_mother/",
+      "url": "https://annaveksler.ru/",
       "inLanguage": "ru-RU",
       "author": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       }
     },
     {
@@ -35,9 +35,9 @@
       "name": "Амстердам",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Амстердам.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Амстердам.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х150 см, 2001"
     },
     {
@@ -45,19 +45,19 @@
       "name": "Ангел для Маруси",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Ангел для Маруси.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Ангел для Маруси.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 130х102 см, 2008"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Ангел, сворачивающий небо",
+      "name": "Ангел, сворачивающий небо",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Ангел, сворачивающий небо.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Ангел, сворачивающий небо.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 80х80 см, 2024"
     },
     {
@@ -65,9 +65,9 @@
       "name": "Арлекин",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Арлекин.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Арлекин.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 200х100 см, 2001"
     },
     {
@@ -75,9 +75,9 @@
       "name": "Бабочка и цветы",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Бабочка и цветы.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Бабочка и цветы.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х150 см, 2002"
     },
     {
@@ -85,19 +85,19 @@
       "name": "Бабочки",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Бабочки.webp",
-      "description": "Шерсть, вискоза, ручное ткачество, 80х80 см. 2004"
+      "image": "https://annaveksler.ru/images/art/Гобелен/Бабочки.webp",
+      "description": "Шерсть, вискоза, ручное ткачество, 80х80 см, 2004"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Белый натюрморт",
+      "name": "Белый натюрморт",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Белый натюрморт.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Белый натюрморт.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 50х70 см, 1997"
     },
     {
@@ -105,9 +105,9 @@
       "name": "Бильярд",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Бильярд.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Бильярд.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х130 см, 1998"
     },
     {
@@ -115,9 +115,9 @@
       "name": "Бог в помощь",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Бог в помощь.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Бог в помощь.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 130х155 см, 2018"
     },
     {
@@ -125,9 +125,9 @@
       "name": "Венеция",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Венеция.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Венеция.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х170 см, 2011"
     },
     {
@@ -135,9 +135,9 @@
       "name": "Весна в городе",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Весна в городе.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Весна в городе.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 60х40 см, 1999"
     },
     {
@@ -145,9 +145,9 @@
       "name": "Весна",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Весна.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Весна.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 60х120 см, 2010"
     },
     {
@@ -155,9 +155,9 @@
       "name": "Город",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Город.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Город.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 40х30 см, 1997"
     },
     {
@@ -165,9 +165,9 @@
       "name": "Данила",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Данила.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Данила.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 40х40 см, 1996"
     },
     {
@@ -175,39 +175,39 @@
       "name": "Дары природы (центральная часть триптиха)",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Дары природы (центральная часть триптиха).webp",
-      "description": "Шерсть, вискоза, ручное ткачество, 150х100 см. 2016"
+      "image": "https://annaveksler.ru/images/art/Гобелен/Дары природы (центральная часть триптиха).webp",
+      "description": "Шерсть, вискоза, ручное ткачество, 150х100 см, 2016"
     },
     {
       "@type": "VisualArtwork",
       "name": "Заря",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Заря.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Заря.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 114х210 см, 2010"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Над землёй",
+      "name": "Над землёй",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Над землёй.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Над землёй.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 155х150 см, 2014"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Натюрморт с дыней",
+      "name": "Натюрморт с дыней",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Натюрморт с дыней.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Натюрморт с дыней.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 60х70 см, 1997"
     },
     {
@@ -215,9 +215,9 @@
       "name": "Осень в городе",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Осень в городе.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Осень в городе.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 182х109 см, 2009"
     },
     {
@@ -225,19 +225,19 @@
       "name": "Река времени",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Река времени.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Река времени.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 130х173 см, 2014"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Сан-Марко. Между небом и землей",
+      "name": "Сан-Марко. Между небом и землей",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Сан-Марко. Между небом и землей.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Сан-Марко. Между небом и землей.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 141х156 см, 2020"
     },
     {
@@ -245,9 +245,9 @@
       "name": "Северная рыба",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Северная рыба.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Северная рыба.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х140 см, 2008"
     },
     {
@@ -255,9 +255,9 @@
       "name": "Тюльпаны в городе",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Тюльпаны в городе.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Тюльпаны в городе.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х100 см, 2003"
     },
     {
@@ -265,19 +265,19 @@
       "name": "Цветы",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Цветы.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Цветы.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х100 см, 2001"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Большой улов",
+      "name": "Большой улов",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Большой улов/Большой улов - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Большой улов/Большой улов - 1.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 30х15 см, 2002"
     },
     {
@@ -285,9 +285,9 @@
       "name": "Готика. Ночь в Тарту",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Готика. Ночь в Тарту/Готика.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Готика. Ночь в Тарту/Готика.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 40х30 см, 2001"
     },
     {
@@ -295,19 +295,19 @@
       "name": "Евангелисты",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Евангелисты/1. Матфей.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Евангелисты/1. Матфей.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х100 см, 2024-2025"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Клондайк",
+      "name": "Клондайк",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Клондайк/Клондайк - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Клондайк/Клондайк - 1.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 150х150 см, 2000"
     },
     {
@@ -315,29 +315,29 @@
       "name": "Мексика",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Мексика/Мексика - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Мексика/Мексика - 1.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 100х200 см, 2001"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Триптих. Заячий остров",
+      "name": "Триптих. Заячий остров",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Триптих. Заячий остров/Триптих. Заячий остров. Голубь.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Триптих. Заячий остров/Триптих. Заячий остров. Голубь.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 30х30 см, 2020"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Уходящая натура. Последний дракон",
+      "name": "Уходящая натура. Последний дракон",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Уходящая натура. Последний дракон/Уходящая натура. Последний дракон - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Уходящая натура. Последний дракон/Уходящая натура. Последний дракон - 1.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 190х110 см, 2017"
     },
     {
@@ -345,9 +345,9 @@
       "name": "Япония",
       "artform": "Гобелен",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Гобелен/Япония/Япония - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Гобелен/Япония/Япония - 1.webp",
       "description": "Шерсть, вискоза, ручное ткачество, 200х100 см, 2004"
     },
     {
@@ -355,9 +355,9 @@
       "name": "Арбуз",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Арбуз.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Арбуз.webp",
       "description": "Текстиль, ручное ткачество, 120х150 см, 2006"
     },
     {
@@ -365,9 +365,9 @@
       "name": "Астрахань",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Астрахань.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Астрахань.webp",
       "description": "Текстиль, 100х200 см, 2011"
     },
     {
@@ -375,9 +375,9 @@
       "name": "Большие кувшины",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Большие кувшины.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Большие кувшины.webp",
       "description": "Текстиль, 100х200 см, 2000"
     },
     {
@@ -385,9 +385,9 @@
       "name": "В папоротнике",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/В папоротнике.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/В папоротнике.webp",
       "description": "Текстиль, 210х150 см, 2010"
     },
     {
@@ -395,9 +395,9 @@
       "name": "Венеция. Мост вздохов",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Венеция. Мост вздохов.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Венеция. Мост вздохов.webp",
       "description": "Текстиль, 60х80 см, 2012"
     },
     {
@@ -405,9 +405,9 @@
       "name": "Вера-Надежда-Любовь-София",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Вера-Надежда-Любовь-София.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Вера-Надежда-Любовь-София.webp",
       "description": "Текстильные материалы, 60х60 см, 2024"
     },
     {
@@ -415,9 +415,9 @@
       "name": "Город",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Город.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Город.webp",
       "description": "Текстиль, 100х100 см, 2001"
     },
     {
@@ -425,9 +425,9 @@
       "name": "Гуаньинь",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Гуаньинь.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Гуаньинь.webp",
       "description": "Текстиль, 190х120 см, 2011"
     },
     {
@@ -435,9 +435,9 @@
       "name": "Дама с единорогом",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Дама с единорогом.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Дама с единорогом.webp",
       "description": "Текстиль, 190х120 см, 2009"
     },
     {
@@ -445,9 +445,9 @@
       "name": "Защитник",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Защитник.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Защитник.webp",
       "description": "Текстиль, 190х120 см, 2015"
     },
     {
@@ -455,9 +455,9 @@
       "name": "Золото инков",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Золото инков.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Золото инков.webp",
       "description": "Текстиль, 150х200 см, 2010"
     },
     {
@@ -465,9 +465,9 @@
       "name": "Пещерные рыбы",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Пещерные рыбы.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Пещерные рыбы.webp",
       "description": "Текстиль, 40х60 см"
     },
     {
@@ -475,9 +475,9 @@
       "name": "Птица-ночь",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Птица-ночь.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Птица-ночь.webp",
       "description": "Текстиль, медь, гор. эмаль, 100х100 см, 2025"
     },
     {
@@ -485,9 +485,9 @@
       "name": "Серафим",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Серафим.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Серафим.webp",
       "description": "Текстиль, медь, гор. эмаль, 100х100 см, 2021"
     },
     {
@@ -495,39 +495,39 @@
       "name": "Стрекоза",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Стрекоза.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Стрекоза.webp",
       "description": "Текстиль, 150х75 см, 2002"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Чёрная рыба",
+      "name": "Чёрная рыба",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Чёрная рыба.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Чёрная рыба.webp",
       "description": "Текстиль, 75х150 см, 2001"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Черный квадрат",
+      "name": "Черный квадрат",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Черный квадрат.webp",
-      "description": "текстиль, 100х100 см, 2001"
+      "image": "https://annaveksler.ru/images/art/Коллаж/Черный квадрат.webp",
+      "description": "Текстиль, 100х100 см, 2001"
     },
     {
       "@type": "VisualArtwork",
       "name": "Агора",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Агора/Агора - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Агора/Агора - 1.webp",
       "description": "Текстиль, 100х100 см, 2019-2021"
     },
     {
@@ -535,9 +535,9 @@
       "name": "Аллегория чувств",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Аллегория чувств/Аллегория чувств - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Аллегория чувств/Аллегория чувств - 1.webp",
       "description": "Текстиль, медь, гор. эмаль, 45х45 см, 2019"
     },
     {
@@ -545,9 +545,9 @@
       "name": "Венеция — Арлекины",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Венеция — Арлекины/1. Коломбина.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Венеция — Арлекины/1. Коломбина.webp",
       "description": "Текстиль, 50х40 см, 2012"
     },
     {
@@ -555,9 +555,9 @@
       "name": "Времена года",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Времена года/Времена года - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Времена года/Времена года - 1.webp",
       "description": "Текстиль, 135х100 см, 2014-2015"
     },
     {
@@ -565,9 +565,9 @@
       "name": "День – Ночь",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/День – Ночь/День – Ночь - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/День – Ночь/День – Ночь - 1.webp",
       "description": "Текстиль, 80х70 см, 2013"
     },
     {
@@ -575,9 +575,9 @@
       "name": "Диптих. Монохром",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Диптих. Монохром/Диптих. Монохром - 1. Белый квадрат.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Диптих. Монохром/Диптих. Монохром - 1. Белый квадрат.webp",
       "description": "Текстиль, 100х100 см, 2000"
     },
     {
@@ -585,9 +585,9 @@
       "name": "Диптих. Светлые бабочки",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Диптих. Светлые бабочки/Светлые бабочки - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Диптих. Светлые бабочки/Светлые бабочки - 1.webp",
       "description": "Текстиль, 80х80 см, 2007"
     },
     {
@@ -595,19 +595,19 @@
       "name": "Карманные секреты",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Карманные секреты/Карманные секреты - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Карманные секреты/Карманные секреты - 1.webp",
       "description": "Текстиль, медь, гор. эмаль, 30х30 см, 2017"
     },
     {
       "@type": "VisualArtwork",
-      "name": "Мировой океан",
+      "name": "Мировой океан",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Мировой океан/Мировой океан - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Мировой океан/Мировой океан - 1.webp",
       "description": "Текстиль, ручное ткачество, 200 х 60 см, 2018"
     },
     {
@@ -615,9 +615,9 @@
       "name": "Небо",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Небо/Небо - 1.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Небо/Небо - 1.webp",
       "description": "Бумага, текстиль, 15х30 см, 25х25 см, 20х42 см, 20х30 см, 2010"
     },
     {
@@ -625,9 +625,9 @@
       "name": "Небо — Венеция",
       "artform": "Коллаж",
       "creator": {
-        "@id": "https://gyros-dev.github.io/art-gallery_mother/#person"
+        "@id": "https://annaveksler.ru/#person"
       },
-      "image": "https://gyros-dev.github.io/art-gallery_mother/images/art/Коллаж/Небо — Венеция/Анна Векслер. Венеция-1. 20х30 см. Коллаж. Бумага. 2013.webp",
+      "image": "https://annaveksler.ru/images/art/Коллаж/Небо — Венеция/Анна Векслер. Венеция-1. 20х30 см. Коллаж. Бумага. 2013.webp",
       "description": "Бумага, 20х30 см, 18х30 см, 2013"
     }
   ]

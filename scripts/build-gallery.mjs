@@ -62,6 +62,15 @@ async function withVersion(rel) {
   return out;
 }
 
+/** Полноразмерная версия для открытия на весь экран (если она есть):
+    images/art/... → images/originals/....webp */
+async function fullFor(imgPath) {
+  const clean = imgPath.replace(/\?.*$/, '');
+  const f = clean.replace(/^images\/art\//, 'images/originals/').replace(/\.[^.]+$/, '.webp');
+  try { await access(path.join(ROOT, f)); return await withVersion(f); }
+  catch { return null; }
+}
+
 // Эскиз для сетки/ленты: images/art/... → images/thumbs/....webp (если файл есть).
 async function thumbFor(imgPath) {
   const clean = imgPath.replace(/\?.*$/, '');
@@ -137,8 +146,150 @@ async function autoLayout(relPaths) {
   return portrait > n / 2 ? 'row' : 'grid';
 }
 
+/* ---------- Карточки работ (content/works) ----------
+   Карточка — это то, что художник заполняет в панели управления:
+   название, материалы, размер, год, порядок и раскладка частей серии.
+   Папки с картинками остаются главным источником: карточка только
+   уточняет данные найденной работы. Нет карточки — работает как раньше,
+   по имени файла и сайдкару .txt. */
+
+/** Мини-разбор YAML-шапки карточки. Нам нужны только простые поля
+ *  «ключ: значение» и списки «  - значение», без вложенности. */
+function parseCard(raw) {
+  const text = raw.replace(/^﻿/, '');
+  const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!m) return null;
+  const out = {};
+  let key = null;
+  for (const line of m[1].split(/\r?\n/)) {
+    if (!line.trim() || /^\s*#/.test(line)) continue;
+    const item = line.match(/^\s+-\s+(.*)$/);
+    if (item && key) {
+      if (!Array.isArray(out[key])) out[key] = [];
+      out[key].push(unquote(item[1]));
+      continue;
+    }
+    const pair = line.match(/^([A-Za-z_][\w-]*)\s*:\s*(.*)$/);
+    if (!pair) continue;
+    key = pair[1];
+    const val = pair[2].trim();
+    if (val === '') out[key] = [];                       // пусто = начало списка ниже
+    else if (/^\[[\s\S]*\]$/.test(val)) {                // список в одну строку
+      out[key] = val.slice(1, -1).split(',').map(unquote).filter((x) => x !== '');
+    } else out[key] = unquote(val);
+  }
+  return out;
+}
+function unquote(s) {
+  const t = String(s).trim();
+  if (/^"[\s\S]*"$/.test(t)) return t.slice(1, -1).replace(/\\"/g, '"');
+  if (/^'[\s\S]*'$/.test(t)) return t.slice(1, -1).replace(/''/g, "'");
+  return t;
+}
+
+/** Путь к картинке в едином виде: без ?v=, без ведущего слэша, NFC и БЕЗ расширения.
+ *  Расширение отбрасываем намеренно: панель управления записывает в карточку тот
+ *  файл, который загрузил художник (например .jpg), а оптимизация в CI переводит
+ *  его в .webp и удаляет исходник. Без этого карточка «теряла» бы свою картинку. */
+const imgKey = (s) => nfc(String(s || '').replace(/\?.*$/, '').replace(/^\/+/, '').replace(/\.[^./]+$/, ''));
+
+/** Строка «Шерсть, вискоза, ручное ткачество, 100х150 см, 2001»
+ *  из полей карточки. Первый материал с заглавной, остальные строчными. */
+function composeInfo(card) {
+  const mats = asList(card.materials).map((m) => nfc(m)).filter(Boolean);
+  const chunks = [];
+  if (mats.length) {
+    chunks.push(mats.map((m, i) => (i ? m.charAt(0).toLowerCase() + m.slice(1) : m)).join(', '));
+  }
+  chunks.push(scalar(card.size), scalar(card.year));
+  return chunks.filter(Boolean).join(', ');
+}
+const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+/** Одиночное значение поля: пустой список из YAML («size:» без значения) = пусто. */
+const scalar = (v) => (Array.isArray(v) ? '' : String(v ?? '')).trim();
+
+/** Читает все карточки и раскладывает по категориям. */
+async function readWorkCards() {
+  const byCategory = new Map();
+  const dirs = await ls('content/works');
+  for (const d of dirs.filter((e) => e.isDirectory() && !e.name.startsWith('.'))) {
+    const list = [];
+    for (const f of (await ls(`content/works/${d.name}`))
+      .filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => e.name).sort(byName)) {
+      const card = parseCard(await read(`content/works/${d.name}/${f}`));
+      if (!card) { console.warn(`  ⚠ карточка без шапки: content/works/${d.name}/${f}`); continue; }
+      const images = asList(card.images).map(imgKey).filter(Boolean);
+      if (!images.length) { console.warn(`  ⚠ в карточке нет картинок: content/works/${d.name}/${f}`); continue; }
+      const orderRaw = scalar(card.order);
+      const order = Number(orderRaw.replace(',', '.'));
+      list.push({
+        file: `content/works/${d.name}/${f}`,
+        title: nfc(scalar(card.title)) || baseName(f),
+        info: composeInfo(card),
+        layout: parseLayout(scalar(card.layout)),
+        order: orderRaw !== '' && Number.isFinite(order) ? order : null,
+        images,
+      });
+    }
+    if (list.length) byCategory.set(d.name.normalize('NFC'), list);
+  }
+  return byCategory;
+}
+
+/** Накладывает карточки на работы, найденные в папках.
+ *  Карточка с несколькими картинками, лежащими в категории вразброс
+ *  (так их кладёт панель управления), собирает их в одну серию. */
+async function applyCards(works, cards) {
+  if (!cards || !cards.length) return works;
+  const indexOfImage = new Map();          // картинка → работа
+  works.forEach((w) => (w.images || []).forEach((p) => indexOfImage.set(imgKey(p), w)));
+  const dropped = new Set();
+
+  for (const card of cards) {
+    const present = card.images.filter((p) => indexOfImage.has(p));
+    if (!present.length) { console.warn(`  ⚠ картинки не найдены: ${card.file}`); continue; }
+    const hosts = [...new Set(present.map((p) => indexOfImage.get(p)))].filter((w) => !dropped.has(w));
+    if (!hosts.length) continue;
+    const work = hosts[0];
+    if (work.type !== 'art') continue;
+
+    // несколько одиночных работ по одной карточке → склеиваем в серию
+    for (const extra of hosts.slice(1)) dropped.add(extra);
+    const merged = hosts.length > 1;
+    if (merged) {
+      const ordered = present.map((p) => ({ p, src: indexOfImage.get(p) }));
+      work.images = ordered.map(({ p, src }) => (src.images || []).find((x) => imgKey(x) === p));
+      work.full = ordered.map(({ p, src }) => (src.full || [])[(src.images || []).findIndex((x) => imgKey(x) === p)] ?? null);
+      work.parts = work.images.map((p) => ({ title: partTitle(baseName(imgKey(p)), card.title), info: '' }));
+    } else if (work.group) {
+      // порядок частей внутри серии задаётся карточкой
+      const pos = new Map(present.map((p, i) => [p, i]));
+      const idx = work.images.map((p, i) => i)
+        .sort((a, b) => (pos.get(imgKey(work.images[a])) ?? 1e6) - (pos.get(imgKey(work.images[b])) ?? 1e6));
+      work.images = idx.map((i) => work.images[i]);
+      if (work.full) work.full = idx.map((i) => work.full[i]);
+      if (work.parts) work.parts = idx.map((i) => work.parts[i]);
+    }
+
+    work.title = card.title;
+    if (card.info) work.info = card.info;
+    if (merged || work.group) {
+      work.group = true;
+      work.layout = card.layout || work.layout || (await autoLayout(work.images));
+    }
+    work.thumb = await thumbFor(work.images[0]);
+    if (card.order !== null) work._order = card.order;
+  }
+
+  const kept = works.filter((w) => !dropped.has(w));
+  // сортировка стабильная: работы без номера остаются на своих местах
+  kept.sort((a, b) => (a._order ?? 1e6) - (b._order ?? 1e6));
+  kept.forEach((w) => delete w._order);
+  return kept;
+}
+
 /* ---------- Галерея ---------- */
-async function buildCategory(dir) {
+async function buildCategory(dir, cards) {
   const base = `images/art/${dir}`;
   const entries = await ls(base);
   const files = entries.filter((e) => e.isFile() && !e.name.startsWith('.'));
@@ -156,6 +307,7 @@ async function buildCategory(dir) {
       type: 'art',
       group: false,
       images,
+      full: await Promise.all(images.map(fullFor)),
       thumb: await thumbFor(images[0]),
       info: await read(`${base}/${baseName(f)}.txt`),
     });
@@ -197,13 +349,14 @@ async function buildCategory(dir) {
       group: true,
       layout,
       images,
+      full: await Promise.all(images.map(fullFor)),
       parts: partsMeta,
       thumb: await thumbFor(images[0]),
       info: await read(`${base}/${d.name}/_info.txt`),
     });
   }
 
-  return works;
+  return await applyCards(works, cards);
 }
 
 async function buildGallery() {
@@ -216,9 +369,10 @@ async function buildGallery() {
     return byName(a, b);
   });
 
+  const cards = await readWorkCards();
   const categories = [];
   for (const dir of dirs) {
-    const works = await buildCategory(dir);
+    const works = await buildCategory(dir, cards.get(dir.normalize('NFC')));
     if (!works.length) continue;
     categories.push({ id: dir.toLowerCase(), label: CATEGORY_LABELS[dir] || dir, works });
     console.log(`Категория «${CATEGORY_LABELS[dir] || dir}»: ${works.length} работ`);

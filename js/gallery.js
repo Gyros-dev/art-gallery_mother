@@ -9,6 +9,7 @@
   let filter = 'все';
   let usingA = true;
   let cooldown = false;
+  let lbFullToken = 0; // отменяет подгрузку полного размера при быстром листании
   let lbSlides = []; // плоский список: каждая часть серии = отдельный слайд
   let lbIndex = 0;
 
@@ -61,6 +62,7 @@
           layout: w.layout === 'grid' ? 'grid' : 'row',
           parts: w.parts || [],
           images: (w.images || []).map((s) => `${BASE}/${s}`),
+          full: (w.full || []).map((s) => (s ? `${BASE}/${s}` : null)),
           thumb: w.thumb ? `${BASE}/${w.thumb}` : ((w.images || [])[0] ? `${BASE}/${w.images[0]}` : ''),
           info: w.info || '',
           body: w.body || '',
@@ -305,7 +307,7 @@
         w.images.forEach((s, pi) => {
           const meta = w.parts?.[pi] || {};
           lbSlides.push({
-            type: 'art', src: s, title: w.title,
+            type: 'art', src: s, full: (w.full || [])[pi] || null, title: w.title,
             partTitle: meta.title || '',
             info: meta.info || w.info,
             workIndex: wi, part: pi + 1, parts: n,
@@ -353,6 +355,15 @@
     els.lbImg.style.display = '';
     els.lbImg.src = sl.src;
     els.lbImg.alt = sl.partTitle ? `${sl.title} — ${sl.partTitle}` : sl.title;
+    // Полный размер подгружаем следом и подменяем, когда он готов:
+    // работа открывается мгновенно, а качество дотягивается до максимума.
+    lbFullToken++;
+    if (sl.full) {
+      const token = lbFullToken;
+      const hi = new Image();
+      hi.onload = () => { if (token === lbFullToken) els.lbImg.src = hi.src; };
+      hi.src = sl.full;
+    }
     let cap = sl.partTitle ? `${sl.title} · ${sl.partTitle}` : sl.title;
     if (sl.info) cap += ` — ${sl.info}`;
     if (sl.parts > 1) cap += ` · ${sl.part}/${sl.parts}`;
