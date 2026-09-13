@@ -6,17 +6,14 @@
   "url": "https://annaveksler.ru",
   "name": "Анна Векслер",
   "location": "Санкт-Петербург, Россия",
-  "photo": "images/other/artist1.jpg",
-  "email": "",
-  "phone": "",
+  "photo": "/images/other/artist1.jpg",
   "socials": [
     {
       "label": "ВКонтакте",
-      "url": ""
+      "url": "https://vk.ru/annavexler"
     },
     {
-      "label": "Telegram",
-      "url": ""
+      "label": "Telegram"
     }
   ],
   "featured": [
