@@ -563,6 +563,54 @@ async function versionAssets() {
   console.log(`Метки версий проставлены в ${touched} страницах (css/js обновятся у посетителей сразу)`);
 }
 
+/* ---------- Счётчик посещений (GoatCounter) ----------
+   Включается кодом сайта в data/site.json → analytics.goatcounter.
+   Пусто — счётчика нет и политика безопасности остаётся строгой:
+   никаких внешних адресов в неё не попадает. */
+const GC_CODE_RE = /^[a-z0-9][a-z0-9-]{0,60}$/i;
+
+function analyticsCode(site) {
+  const raw = String(site?.analytics?.goatcounter || '').trim()
+    .replace(/^https?:\/\//, '').replace(/\.goatcounter\.com.*$/, '');
+  if (!raw) return '';
+  if (!GC_CODE_RE.test(raw)) {
+    console.warn(`  ⚠ код счётчика «${raw}» выглядит неправильно — счётчик не подключён`);
+    return '';
+  }
+  return raw;
+}
+
+/** Политика безопасности: внешние адреса появляются только под счётчик. */
+function cspContent(site) {
+  const code = analyticsCode(site);
+  const gc = code ? `https://${code}.goatcounter.com` : '';
+  const dir = {
+    'default-src': ["'self'"],
+    'img-src': ["'self'", 'data:'],
+    'style-src': ["'self'", "'unsafe-inline'"],
+    'script-src': ["'self'"],
+    'font-src': ["'self'"],
+    'connect-src': ["'self'"],
+    'frame-src': ["'self'", 'https:'],
+    'base-uri': ["'self'"],
+    'form-action': ["'none'"],
+    'object-src': ["'none'"],
+  };
+  if (gc) {
+    dir['script-src'].push('https://gc.zgo.at');
+    dir['connect-src'].push(gc);   // счётчик шлёт через sendBeacon
+    dir['img-src'].push(gc);       // запасной путь — картинка-пиксель
+  }
+  return Object.entries(dir).map(([k, v]) => `${k} ${v.join(' ')}`).join('; ');
+}
+
+function analyticsBlock(site, indent) {
+  const code = analyticsCode(site);
+  if (!code) return '';
+  return `${indent}<script data-goatcounter="https://${code}.goatcounter.com/count"\n`
+       + `${indent}        async src="https://gc.zgo.at/count.js"></script>\n`;
+}
+
 async function writeMetaAndSeo(site, gallery) {
   const base = String(site.url || '').replace(/\/+$/, '');
   // 1) мета-теги в каждую страницу — между маркерами
@@ -576,7 +624,23 @@ async function writeMetaAndSeo(site, gallery) {
     const indent = m[1] || '  ';
     const replacement = `${indent}<!-- meta:start — заполняется сборкой из data/site.json, вручную не править -->\n`
       + metaBlock(site, page, indent) + `\n${indent}<!-- meta:end -->`;
-    await writeFile(file, html.replace(re, replacement));
+    html = html.replace(re, replacement);
+
+    // политика безопасности — тоже из сборки: внешние адреса в ней появляются
+    // только когда включён счётчик посещений
+    html = html.replace(
+      /<meta http-equiv="Content-Security-Policy" content="[^"]*">/,
+      `<meta http-equiv="Content-Security-Policy" content="${cspContent(site)}">`);
+
+    // счётчик посещений — между маркерами, чтобы его можно было убрать
+    const aRe = /[ \t]*<!-- analytics:start[^>]*-->[\s\S]*?<!-- analytics:end -->\n?/;
+    const aBlock = analyticsBlock(site, indent);
+    const aFull = `${indent}<!-- analytics:start — заполняется сборкой, вручную не править -->\n`
+      + aBlock + `${indent}<!-- analytics:end -->\n`;
+    if (aRe.test(html)) html = html.replace(aRe, aFull);
+    else html = html.replace(/([ \t]*)<\/head>/, `${aFull}$1</head>`);
+
+    await writeFile(file, html);
   }
   // 2) карта сайта
   const today = new Date().toISOString().slice(0, 10);
