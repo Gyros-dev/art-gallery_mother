@@ -1,5 +1,12 @@
 /* Галерея — иммерсивный coverflow */
 
+/* Сколько по высоте занимает всё, кроме самой картины: шапка, фильтры,
+   подпись под работой и лента миниатюр. Высота картины считается от того,
+   что осталось, а не только от высоты экрана: на планшете в альбомной
+   ориентации панели браузера съедают высоту, и картина наезжала
+   на фильтры сверху и на подпись снизу. */
+:root { --cf-chrome: 22.5rem; }
+
 .gallery-page {
   height: 100svh;
   padding-top: calc(var(--nav-h) + 0.5rem);
@@ -71,13 +78,13 @@
   align-items: center;
   justify-content: center;
   max-width: min(58vw, 980px);
-  max-height: 58vh;
+  max-height: min(58vh, calc(100svh - var(--cf-chrome)));
 }
 .cf-center .stack.is-group { max-width: min(88vw, 1120px); }
 .cf-center img {
   display: block;
   max-width: min(58vw, 980px);
-  max-height: 58vh;
+  max-height: min(58vh, calc(100svh - var(--cf-chrome)));
   width: auto;
   object-fit: contain;
   box-shadow: 0 30px 70px -30px rgba(33,28,23,0.85);
@@ -101,7 +108,7 @@
 .cf-center .layer.multi { --cols: 1; --rows: 1; --cf-gap: clamp(0.4rem, 1.2vw, 1rem); }
 .cf-center .layer.multi img {
   max-width: calc((min(88vw, 1120px) - (var(--cols) - 1) * var(--cf-gap)) / var(--cols));
-  max-height: calc((52vh - (var(--rows) - 1) * var(--cf-gap)) / var(--rows));
+  max-height: calc((min(52vh, 100svh - var(--cf-chrome)) - (var(--rows) - 1) * var(--cf-gap)) / var(--rows));
 }
 /* «квадратом»: сетка из --cols столбцов */
 .cf-center .layer.multi.as-grid {
@@ -119,7 +126,7 @@
   background: color-mix(in srgb, var(--cream) 75%, transparent);
   border: 1px solid var(--line);
   padding: clamp(1.6rem, 4vw, 3rem);
-  max-height: 52vh; overflow: hidden;
+  max-height: min(52vh, calc(100svh - var(--cf-chrome))); overflow: hidden;
   text-align: left;
   box-shadow: 0 30px 70px -35px rgba(33,28,23,0.7);
 }
@@ -394,13 +401,13 @@
 /* ============ Адаптив ============ */
 /* Планшеты */
 @media (max-width: 1024px) {
-  .cf-center .stack, .cf-center img { max-width: min(64vw, 560px); max-height: 52vh; }
+  .cf-center .stack, .cf-center img { max-width: min(64vw, 560px); max-height: min(52vh, calc(100svh - var(--cf-chrome))); }
   .cf-center .stack.is-group { max-width: min(90vw, 900px); }
 }
 
 /* Мобильные */
 @media (max-width: 860px) {
-  .cf-center .stack, .cf-center img { max-width: 92vw; max-height: 54vh; }
+  .cf-center .stack, .cf-center img { max-width: 92vw; max-height: min(54vh, calc(100svh - var(--cf-chrome))); }
   .cf-center .stack.is-group { max-width: 96vw; }
   .cf-center .stack.is-group.is-grid { max-width: 94vw; }
   .stage { padding: 0.5rem clamp(0.8rem, 4vw, 1.6rem); }
@@ -420,6 +427,7 @@
   .grid-card figcaption { flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.1rem 0; }
   .grid-card figcaption h3 { font-size: 1rem; }
   .grid-card figcaption .cat { margin-left: 0; }
+  :root { --cf-chrome: 19.5rem; }
   .gallery-filters { gap: 0.4rem; padding: 0.4rem 0.5rem 0.2rem; }
   .chip { padding: 0.42rem 0.85rem; font-size: 0.6rem; letter-spacing: 0.1em; }
   .art-info { padding: 0.3rem 1rem 0.15rem; min-height: 64px; }
