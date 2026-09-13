@@ -338,6 +338,11 @@ function loadSiteConfig() {
         }
       });
 
+      // Фото художника на странице «Художник» — путь из настроек сайта.
+      // Кадрируется рамкой 4:5, поэтому подходит снимок любого размера и формата.
+      const photoEl = document.querySelector('[data-artist-photo]');
+      if (photoEl && site.photo) photoEl.src = `${BASE}/${String(site.photo).replace(/^\/+/, '')}`;
+
       // Контакты на странице «Художник»
       const setContact = (sel, cond, fill) => {
         const el = document.querySelector(sel);

@@ -196,7 +196,10 @@ const imgKey = (s) => nfc(String(s || '').replace(/\?.*$/, '').replace(/^\/+/, '
 /** Строка «Шерсть, вискоза, ручное ткачество, 100х150 см, 2001»
  *  из полей карточки. Первый материал с заглавной, остальные строчными. */
 function composeInfo(card) {
-  const mats = asList(card.materials).map((m) => nfc(m)).filter(Boolean);
+  // «Другие материалы» — то, чего не нашлось в списке панели; вписывается
+  // обычным текстом через запятую и встаёт после отмеченных галочками.
+  const extra = scalar(card.materials_other).split(',');
+  const mats = [...asList(card.materials), ...extra].map((m) => nfc(m)).filter(Boolean);
   const chunks = [];
   if (mats.length) {
     chunks.push(mats.map((m, i) => (i ? m.charAt(0).toLowerCase() + m.slice(1) : m)).join(', '));
