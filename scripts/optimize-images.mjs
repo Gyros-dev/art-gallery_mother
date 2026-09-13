@@ -97,4 +97,28 @@ await walk(ART, async (src) => {
   thumbs++;
 });
 
-console.log(`Оптимизация: сохранено оригиналов ${originals}, пережато full ${full}, эскизов пересобрано ${thumbs}, оставлено webp без изменений ${kept}, удалено jpg/png ${removed}`);
+/* ---------- Производные файлы оформления ----------
+   Их размер на экране известен заранее, поэтому держать их в исходной
+   величине незачем: логотип в шапке показывается кружком 30px, а грузился
+   файл 256x256 на 81 КБ — и так на каждой странице. Пересобираются каждый
+   запуск, поэтому не устаревают при замене исходника. */
+const DERIVED = [
+  { from: 'assets/favicon-256.png',            to: 'assets/logo-64.webp',    width: 64,   quality: 85 },
+  { from: 'assets/arrow-left.png',             to: 'assets/arrow-left.webp', width: 208,  quality: 88 },
+  { from: 'assets/arrow-right.png',            to: 'assets/arrow-right.webp',width: 208,  quality: 88 },
+  // фон главной: показывается во всю ширину под текстом, 1600px хватает
+  { from: 'images/art/Гобелен/Венеция.webp',   to: 'assets/hero.webp',       width: 1600, quality: 74 },
+];
+
+let derived = 0;
+for (const d of DERIVED) {
+  const src = path.join(ROOT, d.from);
+  if (!(await exists(src))) { console.warn(`  ⚠ нет исходника для ${d.to}: ${d.from}`); continue; }
+  await sharp(src)
+    .resize({ width: d.width, height: d.width === 64 ? 64 : undefined, withoutEnlargement: true })
+    .webp({ quality: d.quality, alphaQuality: 90 })
+    .toFile(path.join(ROOT, d.to));
+  derived++;
+}
+
+console.log(`Оптимизация: сохранено оригиналов ${originals}, пережато full ${full}, эскизов пересобрано ${thumbs}, оставлено webp без изменений ${kept}, удалено jpg/png ${removed}, файлов оформления ${derived}`);

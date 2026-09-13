@@ -29,7 +29,7 @@
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 0;
   /*background: url("../images/art/Гобелен/Река времени.webp") center / cover no-repeat;*/
-  background: url("../images/art/Гобелен/Венеция.webp") center / cover no-repeat;
+  background: url("../assets/hero.webp") center / cover no-repeat;
   opacity: 0.92; filter: saturate(1.08) contrast(1.05);
 }
 

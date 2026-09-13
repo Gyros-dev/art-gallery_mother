@@ -51,7 +51,7 @@ function initNavbar(navHtmlPath) {
         home.setAttribute('href', IN_PAGES ? '../index.html' : 'index.html');
         home.addEventListener('click', () => { try { sessionStorage.setItem('loomReplay', '1'); } catch {} });
         const mark = home.querySelector('.logo-mark');
-        if (mark && mark.tagName === 'IMG') mark.src = `${BASE}/assets/favicon-256.png`;
+        if (mark && mark.tagName === 'IMG') mark.src = `${BASE}/assets/logo-64.webp`;
       }
 
       // Активная ссылка
