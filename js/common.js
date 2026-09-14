@@ -5,6 +5,12 @@ const IN_PAGES = location.pathname.includes('/pages/');
 const BASE = IN_PAGES ? '..' : '.';
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Данные всегда сверяем с сервером: GitHub Pages кеширует файлы на 10 минут,
+   и без этого художник сохраняла правку в панели, сайт пересобирался,
+   а в браузере ещё висели старые контакты. 'no-cache' не качает файл заново,
+   если он не менялся — сервер отвечает «без изменений». */
+const NOCACHE = { cache: 'no-cache' };
+
 /* ---- безопасность ----
    Названия работ, папок и поля в data/*.json попадают в разметку. Чтобы
    случайный или подставленный текст (кавычка, <script>, ссылка javascript:)
@@ -34,7 +40,7 @@ function safeUrl(value) {
 function initNavbar(navHtmlPath) {
   const holder = document.getElementById('navbar-placeholder');
   if (!holder) return Promise.resolve();
-  return fetch(navHtmlPath)
+  return fetch(navHtmlPath, NOCACHE)
     .then((r) => r.text())
     .then((html) => {
       holder.innerHTML = html;
@@ -308,7 +314,7 @@ function socialButton(s) {
 
 /* ---- конфиг сайта (контакты, соцсети) из data/site.json ---- */
 function loadSiteConfig() {
-  return fetch(`${BASE}/data/site.json`)
+  return fetch(`${BASE}/data/site.json`, NOCACHE)
     .then((r) => (r.ok ? r.json() : null))
     .then((site) => {
       if (!site) return;

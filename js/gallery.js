@@ -43,7 +43,7 @@
 
   async function loadData() {
     try {
-      const r = await fetch(`${BASE}/data/gallery.json`, { cache: 'no-store' });
+      const r = await fetch(`${BASE}/data/gallery.json`, NOCACHE);
       if (r.ok) return await r.json();
     } catch { /* нет файла */ }
     return { categories: [] };

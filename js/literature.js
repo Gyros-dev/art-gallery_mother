@@ -29,7 +29,7 @@
   document.getElementById('text-close').addEventListener('click', closeText);
   textOverlay.addEventListener('click', (e) => { if (e.target === textOverlay) closeText(); });
 
-  fetch(`${BASE}/data/texts.json`).then((r) => (r.ok ? r.json() : [])).then((texts) => {
+  fetch(`${BASE}/data/texts.json`, NOCACHE).then((r) => (r.ok ? r.json() : [])).then((texts) => {
     if (!texts.length) return;
     const section = document.getElementById('publications-section');
     const listEl = document.getElementById('publications-list');

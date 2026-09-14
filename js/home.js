@@ -1,8 +1,8 @@
 /* Главная: канвас-«станок» в хиро и лента «Избранное» из data/site.json. */
 initLoom(document.getElementById('loom'));
 Promise.all([
-  fetch('data/gallery.json', { cache: 'no-store' }).then((r) => r.json()),
-  fetch('data/site.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+  fetch('data/gallery.json', NOCACHE).then((r) => r.json()),
+  fetch('data/site.json', NOCACHE).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
 ]).then(([data, site]) => {
   const strip = document.querySelector('[data-strip]');
   if (!strip) return;

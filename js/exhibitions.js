@@ -45,8 +45,8 @@ function exhibitionPhase(dateText, today = new Date()) {
     const frame = document.getElementById('preview-frame');
 
     Promise.all([
-      fetch(`${BASE}/data/exhibitions.json`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
-      fetch(`${BASE}/data/exhibitions-media.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      fetch(`${BASE}/data/exhibitions.json`, NOCACHE).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+      fetch(`${BASE}/data/exhibitions-media.json`, NOCACHE).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
     ]).then(([data, media]) => {
       data.forEach((item) => {
         const phase = exhibitionPhase(item.date);
