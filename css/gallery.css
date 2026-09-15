@@ -332,18 +332,29 @@
 }
 
 /* ============ Сетка «Все работы» — кладка с сохранением пропорций ============ */
+/* Раскладка «кладкой» собирается из настоящих колонок, а не из column-width.
+   На колоночной раскладке Safari пересчитывал разбивку при наведении на работу,
+   и соседние карточки прыгали. Колонки — обычные блоки: сдвинуть друг друга
+   они не могут в принципе, на любом браузере. Ширину колонки держим ту же. */
 .works-grid {
-  column-width: clamp(210px, 21vw, 270px);
-  column-gap: clamp(0.8rem, 2vw, 1.6rem);
+  --grid-col: clamp(210px, 21vw, 270px);
+  --grid-gap: clamp(0.8rem, 2vw, 1.6rem);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--grid-gap);
   padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+}
+.grid-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
 }
 .grid-card {
   cursor: pointer;
-  display: inline-block;
+  display: block;
   width: 100%;
-  margin-bottom: clamp(0.8rem, 2vw, 1.6rem);
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
@@ -434,7 +445,7 @@
 
 @media (max-width: 640px) {
   /* «Все работы» — одна работа в ряд во всю ширину, вертикальная прокрутка */
-  .works-grid { column-width: auto; column-count: 1; column-gap: 0; padding: 1rem 1rem 3rem; }
+  .works-grid { padding: 1rem 1rem 3rem; }
   .grid-card { margin-bottom: 1.2rem; }
   .grid-card figcaption { flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.1rem 0; }
   .grid-card figcaption h3 { font-size: 1rem; }

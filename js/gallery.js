@@ -127,14 +127,39 @@
     }
   }
 
-  /* ---------- сетка «Все работы» ---------- */
+  /* ---------- сетка «Все работы» ----------
+     Карточки раскладываем по настоящим колонкам сами: каждая следующая уходит
+     в самую короткую колонку. Высоту знаем заранее из пропорций картинки,
+     поэтому раскладка получается сразу правильной и больше не пересчитывается.
+     Так убран целый класс проблем: на колоночной раскладке Safari переставлял
+     карточки при наведении на соседнюю. */
+  let gridCols = 0;
+
+  function gridColumnCount() {
+    const cs = getComputedStyle(els.grid);
+    const inner = els.grid.clientWidth - parseFloat(cs.paddingLeft || 0) - parseFloat(cs.paddingRight || 0);
+    const col = parseFloat(cs.getPropertyValue('--grid-col')) || 240;
+    const gap = parseFloat(cs.getPropertyValue('--grid-gap')) || 16;
+    return Math.max(1, Math.floor((inner + gap) / (col + gap)));
+  }
+
   function buildGrid() {
     els.grid.innerHTML = '';
+    const cols = gridCols = gridColumnCount();
     const reveal = !REDUCED && 'IntersectionObserver' in window
       ? new IntersectionObserver((entries, obs) => {
           entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
         }, { rootMargin: '0px 0px -6% 0px' })
       : null;
+
+    const boxes = [];
+    for (let c = 0; c < cols; c++) {
+      const col = document.createElement('div');
+      col.className = 'grid-col';
+      els.grid.appendChild(col);
+      boxes.push({ el: col, h: 0 });
+    }
+
     all.forEach((w, i) => {
       const fig = document.createElement('figure');
       fig.className = 'grid-card';
@@ -144,7 +169,14 @@
       fig.innerHTML = `${media}<figcaption><h3></h3><span class="cat">${esc(w.categoryLabel)}</span></figcaption>`;
       fig.querySelector('h3').textContent = w.title;
       fig.addEventListener('click', () => { current = i; openLightbox(); });
-      els.grid.appendChild(fig);
+
+      // в самую короткую колонку; высота — по пропорции картинки плюс подпись
+      const target = boxes.reduce((a, b) => (b.h < a.h ? b : a));
+      target.el.appendChild(fig);
+      const ratio = w.type === 'text' ? 3 / 4
+        : (w.width && w.height ? w.height / w.width : 3 / 4);
+      target.h += ratio + 0.22;   // 0.22 — доля подписи от ширины колонки
+
       if (reveal) reveal.observe(fig); else fig.classList.add('in');
     });
   }
@@ -318,6 +350,17 @@
       if (e.target === els.lb || e.target === els.lbImg) closeLightbox();
     });
   }
+
+  // при смене ширины окна число колонок может измениться — пересобираем,
+  // но только когда оно действительно стало другим
+  let gridResizeTimer = 0;
+  window.addEventListener('resize', () => {
+    if (els.grid.hidden) return;
+    clearTimeout(gridResizeTimer);
+    gridResizeTimer = setTimeout(() => {
+      if (!els.grid.hidden && gridColumnCount() !== gridCols) buildGrid();
+    }, 180);
+  });
 
   /* ---------- лайтбокс ---------- */
   function activeList() { return filter === 'все' ? all : list; }
