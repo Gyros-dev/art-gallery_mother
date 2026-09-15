@@ -146,6 +146,18 @@ async function autoLayout(relPaths) {
   return portrait > n / 2 ? 'row' : 'grid';
 }
 
+/** Размеры картинки для разметки. Нужны, чтобы браузер заранее оставил под неё
+    место: без этого в сетке «Все работы» карточки прыгали между колонками, пока
+    картинки догружались — высота сетки росла с 1569 до 6972 px. */
+async function imageSize(rel) {
+  const sharp = await getSharp();
+  if (!sharp) return null;
+  try {
+    const { width, height } = await sharp(path.join(ROOT, String(rel).replace(/\?.*$/, ''))).metadata();
+    return width && height ? { width, height } : null;
+  } catch { return null; }
+}
+
 /* ---------- Карточки работ (content/works) ----------
    Карточка — это то, что художник заполняет в панели управления:
    название, материалы, размер, год, порядок и раскладка частей серии.
@@ -392,6 +404,12 @@ async function buildGallery() {
   for (const dir of dirs) {
     const works = await buildCategory(dir, cards.get(dir.normalize('NFC')));
     if (!works.length) continue;
+    // размеры первой картинки — под них в сетке резервируется место
+    for (const w of works) {
+      if (w.type !== 'art' || !w.images || !w.images.length) continue;
+      const size = await imageSize(w.images[0]);
+      if (size) { w.width = size.width; w.height = size.height; }
+    }
     categories.push({ id: dir.toLowerCase(), label: CATEGORY_LABELS[dir] || dir, works });
     console.log(`Категория «${CATEGORY_LABELS[dir] || dir}»: ${works.length} работ`);
   }

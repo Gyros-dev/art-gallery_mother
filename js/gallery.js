@@ -66,6 +66,10 @@
           thumb: w.thumb ? `${BASE}/${w.thumb}` : ((w.images || [])[0] ? `${BASE}/${w.images[0]}` : ''),
           info: w.info || '',
           body: w.body || '',
+          // размеры первой картинки: под них резервируется место в сетке,
+          // иначе карточки прыгают между колонками, пока картинки грузятся
+          width: w.width || 0,
+          height: w.height || 0,
         });
       });
     });
@@ -136,7 +140,7 @@
       fig.className = 'grid-card';
       const media = w.type === 'text'
         ? `<div class="grid-media text"><span>${esc(w.title[0] || 'Т')}</span></div>`
-        : `<div class="grid-media"><img src="${esc(w.thumb || w.images[0])}" alt="${esc(w.title)}" loading="lazy">${w.group ? `<span class="grid-badge">${w.images.length}</span>` : ''}</div>`;
+        : `<div class="grid-media"><img src="${esc(w.thumb || w.images[0])}" alt="${esc(w.title)}"${w.width && w.height ? ` width="${w.width}" height="${w.height}"` : ''} loading="lazy">${w.group ? `<span class="grid-badge">${w.images.length}</span>` : ''}</div>`;
       fig.innerHTML = `${media}<figcaption><h3></h3><span class="cat">${esc(w.categoryLabel)}</span></figcaption>`;
       fig.querySelector('h3').textContent = w.title;
       fig.addEventListener('click', () => { current = i; openLightbox(); });
